@@ -24,6 +24,7 @@ public class FormFragment extends Fragment implements View.OnClickListener {
     View parentView;
     String productTypeName,productTypeCode;
     TextView tvPageHeader;
+    CustomViewPager viewPager;
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
@@ -42,6 +43,9 @@ public class FormFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         parentView = view;
 
+        viewPager = view.findViewById(R.id.viewPager);
+        viewPager.setPagingEnabled(true);
+
        /* *//** Get bundle data **//*
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -53,7 +57,7 @@ public class FormFragment extends Fragment implements View.OnClickListener {
        // initViews(view);
 
         /** set view pager **/
-        new EngineBean(getActivity()).Builder("");
+        new EngineBean(getActivity()).Builder("forms.json", viewPager);
 
     }
 

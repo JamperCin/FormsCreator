@@ -3,8 +3,10 @@ package com.kode.formscreatorlib.Engine;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ScrollView;
 
 import com.google.gson.Gson;
@@ -22,6 +24,7 @@ public class EngineBean {
     private String json;
     private int pageSize;
     private MainPagerAdapter pagerAdapter;
+    private ViewPager viewPager;
 
 
     /**
@@ -41,13 +44,32 @@ public class EngineBean {
      *
      * @param jsonFileName This is the json file name saved in the asset
      **/
-    public EngineBean Builder(String jsonFileName) {
+    public EngineBean Builder(String jsonFileName, ViewPager viewPager) {
+        this.viewPager = viewPager;
+
         this.readJsonFile(jsonFileName);
+
+        if (json == null)
+            return this;
+
+        setViewPager();
+
         this.convertJsonToObj();
         this.generateViews();
 
 
         return this;
+    }
+
+
+    private void setViewPager() {
+        try {
+            pagerAdapter = new MainPagerAdapter();
+            viewPager.setAdapter(pagerAdapter);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -113,7 +135,7 @@ public class EngineBean {
             svFormPage = (ScrollView) inflater.inflate(R.layout.form_controls_fragment, null);
 
             /** use the controls creator to create form controls **/
-            controlsCreator = new ControlsCreator(mContext,svFormPage,formFormat.getPages().get(i));
+            controlsCreator = new ControlsCreator(mContext, svFormPage, formFormat.getPages().get(i));
             svFormPage = controlsCreator.generate(formFormat.getPages().get(i));
 
             pagerAdapter.addView(svFormPage, i);

@@ -83,6 +83,9 @@ public class ViewsCreator {
 
 
     private int getType(String type) {
+        if (type == null)
+            type = "3";
+
         switch (type) {
             case "0":
                 return InputType.TYPE_CLASS_TEXT;
@@ -101,10 +104,11 @@ public class ViewsCreator {
         EditText editText = new EditText(mContext);
         editText.setLayoutParams(params);
         editText.setInputType(getType(type));
-        if (type.equalsIgnoreCase("1"))
+        if (type != null && type.equalsIgnoreCase("1"))
             editText.setKeyListener(DigitsKeyListener.getInstance("0123456789-."));
         editText.setHint(hint);
-        editText.setTag(tag);
+        if (tag != null)
+            editText.setTag(tag);
         editText.setTextSize(14f);
         editText.setHintTextColor(mContext.getResources().getColor(R.color.transparent_black_hex_5));
         editText.setTextColor(mContext.getResources().getColor(R.color.black_eel));
@@ -123,7 +127,8 @@ public class ViewsCreator {
         editText.setLayoutParams(params);
 
         editText.setHint(hint);
-        editText.setTag(tag);
+        if (tag != null)
+            editText.setTag(tag);
         editText.setTextSize(14f);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             editText.setBackground(mContext.getResources().getDrawable(R.drawable.white_smoke_square_bg));
@@ -159,7 +164,7 @@ public class ViewsCreator {
         button.setLayoutParams(params);
         button.setTextSize(16);
         button.setBackgroundColor(mContext.getResources().getColor(R.color.black));
-       // button.setFocusBackgroundColor(mContext.getResources().getColor(R.color.blue));
+        // button.setFocusBackgroundColor(mContext.getResources().getColor(R.color.blue));
         //button.setRadius(30);
         viewList.add(button);
         return button;
@@ -171,8 +176,8 @@ public class ViewsCreator {
         button.setLayoutParams(params);
         button.setTextSize(16);
         button.setBackgroundColor(color);
-       // button.setFocusBackgroundColor(mContext.getResources().getColor(R.color.blue));
-       // button.setRadius(30);
+        // button.setFocusBackgroundColor(mContext.getResources().getColor(R.color.blue));
+        // button.setRadius(30);
         viewList.add(button);
         return button;
     }
@@ -338,7 +343,7 @@ public class ViewsCreator {
                     @Override
                     public void onClick(View view) {
                         radioGroup.setTag(radioButton.getText().toString());
-                      //  Fso.getTransaction().setGender(radioButton.getText().toString());
+                        //  Fso.getTransaction().setGender(radioButton.getText().toString());
                     }
                 });
                 radioGroup.addView(radioButton);
@@ -413,7 +418,7 @@ public class ViewsCreator {
                 .placeholder(R.drawable.calendar_32)
                 .into(imageView);*/
 
-       new FormsUtils(mContext).setImageResource(R.drawable.calendar_icon, imageView);
+        new FormsUtils(mContext).setImageResource(R.drawable.calendar_icon, imageView);
 
         linearLayout.addView(editText);
         linearLayout.addView(imageView);
@@ -606,7 +611,6 @@ public class ViewsCreator {
             }
         return phone;
     }
-
 
 
     public CheckBox checkBox(String text, final CallBack callBack) {
