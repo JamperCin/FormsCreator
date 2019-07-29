@@ -1,5 +1,5 @@
 # FormsCreator
-This project is to easily use son to create forms for quick onboarding  used by most developers.
+This project is to easily use json to create forms for quick onboarding  used by most developers.
 [![](https://jitpack.io/v/JamperCin/FormsCreator.svg)](https://jitpack.io/#JamperCin/FormsCreator)
 
 **Step 1: Add this to your root build.gradle(Project level) at the end of repositories:**
