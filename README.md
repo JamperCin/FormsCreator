@@ -25,7 +25,7 @@ This project is to easily use json to create forms for quick onboarding  used by
   new EngineBean(getActivity(), getFragmentManager()).Builder("forms.json", viewPager);
 ```
 
- **Step 3: Just call it from your activity or fragment like this:**
+ **: If you have a textView which will display a text as a header, you can pass the textView before calling your Builder():**
   ```
   new EngineBean(getActivity(), getFragmentManager()).setHeaderView(tvPageHeader).Builder("forms.json", viewPager);
 
