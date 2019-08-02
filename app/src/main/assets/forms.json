@@ -1,1881 +1,1940 @@
+{
+	"form":"PHC1A",
+	"title":"Household Population Questionaire",
+	"section":"Section B: Socio-Demographic Characteristics",
+	"pages":[
+		{
+			"fields":[
+				{
+					"label":"Detailed Physical Address of House/Compound",
+					"code":"A01",
+					"type":"textarea",
+					"inputType":"0"
+				},
+				{
+					"label":"Ghana Post Digital Address",
+					"code":"A02",
+					"type":"text",
+					"inputType":"0"
+				},
+				{
+					"label":"HH Contact Phone Number 1",
+					"code":"A03a",
+					"type":"text",
+					"inputType":"1"
+				},
+				{
+					"label":"HH Contact Phone Number 2",
+					"code":"A03b",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"code":"A04",
+					"type":"space"
+				},
 
-	{
-		"form": "PHC1A",
-		"title": "Household Population Questionaire",
-		"section": "Section B: Socio-Demographic Characteristics",
-		"pages": [
-			{
-				"fields": [
-					{
-						"label": "Detailed Physical Address of House/Compound",
-						"code": "A01",
-						"type": "textarea",
-						"inputType": "0"
-					},
-					{
-						"label": "Ghana Post Digital Address",
-						"code": "A02",
-						"type": "text",
-						"inputType": "0"
-					},
-					{
-						"label": "HH Contact Phone Number 1",
-						"code": "A03a",
-						"type": "text",
-						"inputType": "1"
-					},
-					{
-						"label": "HH Contact Phone Number 2",
-						"code": "A03b",
-						"type": "text",
-						"required": "false",
-						"inputType": "1"
-					}
-				]
-			},
-			{
-				"fields": [
-					{
-						"label": "Enumeration Area Code",
-						"code": "A04",
-						"type": "textarea"
-					},
-					{
-						"label": "Structure number of house/compound",
-						"code": "A05",
-						"type": "text"
-					},
-					{
-						"label": "Serial Number of household within house/compound",
-						"code": "A06",
-						"type": "text"
-					},
-					{
-						"label": "Type of recidence",
-						"code": "A07",
-						"type": "radio",
-						"options": [
-							{
-								"1": "Occupied housing unit",
-								"2": "Vacant housing Unit"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "2",
-								"next": "H01"
-							}
-						]
-					}
-				]
-			},
-			{
-				"fields": [
-					{
-						"label": "Date Started",
-						"code": "A08",
-						"type": "date"
-					},
-					{
-						"label": "Date Completed",
-						"code": "A09",
-						"type": "date"
-					},
-					{
-						"label": "Total Number of Visists",
-						"code": "A10a",
-						"type": "numeric"
-					}
-				]
-			},
-			{
-				"fields": [
-					{
-						"label": "Usual Members Presentp - Male",
-						"code": "A12i",
-						"type": "numeric"
-					},
-					{
-						"label": "Usual Members Present - Female",
-						"code": "A12ii",
-						"type": "numeric"
-					},
-					{
-						"label": "Visitors Present - Male",
-						"code": "A13i",
-						"type": "numeric"
-					},
-					{
-						"label": "Visitors Present - Female",
-						"code": "A13ii",
-						"type": "numeric"
-					},
-					{
-						"label": "Usual Members Absent - Male",
-						"code": "A14i",
-						"type": "numeric"
-					},
-					{
-						"label": "Usual Members Absent - Female",
-						"code": "A14ii",
-						"type": "numeric"
-					},
-					{
-						"label": "Totals of A12a and A13a",
-						"code": "A15i",
-						"type": "numeric"
-					},
-					{
-						"label": "Totals of A12b and A13b",
-						"code": "A15ii",
-						"type": "numeric"
-					}
-				]
-			},
-			{
-				"repeat": "5",
-				"isRepeat": true,
-				"label": "Usual member or visitor present on census night(A12 or B12)",
-				"fields": [
-					{
-						"label": "Name ",
-						"code": "A11a",
-						"type": "text"
-					},
-					{
-						"label": "Relationship to head",
-						"code": "A11a",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Head",
-								"02": "Spouse(Wife/Husband)",
-								"03": "Child(Son/Daughter)",
-								"04": "Parent/Parent in-law",
-								"05": "Son in-law/Daughter in-law",
-								"06": "Grandchild",
-								"07": "Brother/Sister",
-								"08": "Step Child",
-								"09": "Foster Child"
-							}
-						]
-					},
-					{
-						"label": "Sex",
-						"code": "A11a",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Male",
-								"02": "Female"
-							}
-						]
-					},
-					{
-						"label": "Status",
-						"code": "A11a",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Usual Member(A)",
-								"02": "Visitor(B)"
-							}
-						]
-					}
-				]
-			},
-			{
-				"repeat": "5",
-				"label": "Usual members absent on census night(status c)",
-				"fields": [
-					{
-						"label": "Name ",
-						"code": "A13Bi",
-						"type": "text"
-					},
-					{
-						"label": "Relationship to head",
-						"code": "A13Bii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Head",
-								"02": "Spouse(Wife/Husband)",
-								"03": "Child(Son/Daughter)",
-								"04": "Parent/Parent in-law",
-								"05": "Son in-law/Daughter in-law",
-								"06": "Grandchild",
-								"07": "Brother/Sister",
-								"08": "Step Child",
-								"09": "Foster Child"
-							}
-						]
-					},
-					{
-						"label": "Age ",
-						"code": "A13Biii",
-						"type": "numeric"
-					},
-					{
-						"label": "Destination (Village/Town/Country) ",
-						"code": "A13Biv",
-						"type": "text"
-					},
-					{
-						"label": "District/Country Code",
-						"code": "A13Bv",
-						"type": "text"
-					},
-					{
-						"label": "Months Absent",
-						"code": "A13Bvi",
-						"type": "numeric"
-					}
-				]
-			},
-			{
-				"fields": [
-					{
-						"label": "Has any former member of this household been living or intend to live continuously for 6 months or more outside Ghana? ",
-						"code": "E01",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "2",
-								"next": "P00"
-							}
-						]
-					}
-				]
-			},
-			{
-				"repeat": "5",
-				"fields": [
-					{
-						"label": "Full Name ",
-						"code": "E02i",
-						"type": "text"
-					},
-					{
-						"label": "Relationship to head",
-						"code": "E02ii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Head",
-								"02": "Spouse(Wife/Husband)",
-								"03": "Child(Son/Daughter)",
-								"04": "Parent/Parent in-law",
-								"05": "Son in-law/Daughter in-law",
-								"06": "Grandchild",
-								"07": "Brother/Sister",
-								"08": "Step Child",
-								"09": "Foster Child"
-							}
-						]
-					},
-					{
-						"label": "Sex",
-						"code": "E02ii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Male",
-								"02": "Female"
-							}
-						]
-					},
-					{
-						"label": "Destination Country Name",
-						"code": "E02iv",
-						"type": "text"
-					},
-					{
-						"label": "Destination Country Code",
-						"code": "E02v",
-						"type": "text"
-					},
-					{
-						"label": "Year of Departure",
-						"code": "E02vi",
-						"type": "date"
-					},
-					{
-						"label": "Main reason for travelling",
-						"code": "E02vii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Medical Reson",
-								"02": "Another reason"
-							}
-						]
-					},
-					{
-						"label": "Main reason for travelling",
-						"code": "E02viii",
-						"type": "text",
-						"showIf": [
-							{
-								"answer": "2"
-							}
-						]
-					}
-				]
-			},
-			{
-				"fields": [
-					{
-						"label": "Destination Country Code",
-						"code": "E02v",
-						"type": "text"
-					},
-					{
-						"label": "Year of Departure",
-						"code": "E02vi",
-						"type": "date"
-					},
-					{
-						"label": "Main reason for travelling",
-						"code": "E02vii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Medical Reson",
-								"02": "Another reason"
-							}
-						]
-					},
-					{
-						"label": "Main reason for travelling",
-						"code": "E02viii",
-						"type": "text",
-						"showIf": [
-							{
-								"answer": "2"
-							}
-						]
-					}
-				]
-			},
-			{
-				"label": "Social Demographic Characteristics",
-				"repeat": "5",
-				"fields": [
-					{
-						"label": "Full Name  ",
-						"code": "P00",
-						"type": "text"
-					},
-					{
-						"label": "Date of Birth",
-						"code": "P01",
-						"type": "date"
-					},
-					{
-						"label": "Age (How old is [Name], in completed years?)",
-						"code": "P02",
-						"type": "numeric"
-					},
-					{
-						"label": "What is [Name]'s Nationality",
-						"code": "P03a",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Ghanaian by Birth",
-								"02": "Ghanaian by Naturalization",
-								"03": "Dual Nationality",
-								"04": "Non-Ghanaian"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "1",
-								"next": "P04"
-							},
-							{
-								"answer": "2",
-								"next": "P05"
-							}
-						]
-					},
-					{
-						"label": "Name of which ethnic group does he/she belong?",
-						"code": "P04i",
-						"type": "text"
-					},
-					{
-						"label": "Code of which ethnic group does he/she belong?",
-						"code": "P04ii",
-						"type": "text"
-					},
-					{
-						"label": "Was he/she born in this village/town?",
-						"code": "P05",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "1",
-								"next": "P07"
-							}
-						]
-					},
-					{
-						"label": "What is the NAME of District or country was born?",
-						"code": "P06i",
-						"type": "text"
-					},
-					{
-						"label": "What is the Code of District or country was born?",
-						"code": "P06ii",
-						"type": "text",
-						"gotoIf": [
-							{
-								"answer": "0",
-								"next": "P08a"
-							}
-						]
-					},
-					{
-						"label": "Has he/she been living in this village or town since birth?",
-						"code": "P07",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "1",
-								"next": "P09"
-							}
-						]
-					},
-					{
-						"label": "For how long has he/she been living continuously in this village or town?(Years)",
-						"code": "P08a",
-						"type": "numeric"
-					},
-					{
-						"label": "What was his/her main reason for moving to this village/town",
-						"code": "P08b",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Employment",
-								"02": "Settlement",
-								"03": "Marriage/Family reunification",
-								"04": "Education/Training",
-								"05": "Asylum/refugee",
-								"06": "Conflict (war,ethnic, political)",
-								"07": "Disaster (flood, drought, fire, etc)",
-								"08": "Other"
-							}
-						]
-					},
-					{
-						"label": "In what district or country was he/she usual place of residence?",
-						"code": "P08c",
-						"type": "numeric"
-					},
-					{
-						"label": "What is his/her religious affiliation?",
-						"code": "P09",
-						"type": "radio",
-						"options": [
-							{
-								"01": "No Religion",
-								"02": "Catholic",
-								"03": "Protestant(Anglican, Lutheran, Presbyterian, Methodist, etc)",
-								"04": "Pentecoastal/Charismatic",
-								"05": "Other Christian",
-								"06": "Islam",
-								"07": "Ahmadi",
-								"08": "Traditionalist",
-								"09": "Other"
-							}
-						]
-					},
-					{
-						"label": "What is his/her current marital status",
-						"code": "P10",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Never married",
-								"02": "Informal/consenual union/Living together",
-								"03": "Married",
-								"04": "Separated",
-								"05": "Divorced",
-								"06": "Widowed"
-							}
-						]
-					},
-					{
-						"label": "Can he/she read and write in any language?",
-						"code": "P11a",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes, read only",
-								"02": "Yes, read and write",
-								"03": "No"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "3",
-								"next": "P12a"
-							}
-						]
-					},
-					{
-						"label": "If Yes, read only in p11a; In what language can he/she read",
-						"code": "P11b",
-						"type": "radio",
-						"options": [
-							{
-								"01": "English Only",
-								"02": "Ghanaian language only",
-								"03": "French only",
-								"04": "English and Ghanaian language",
-								"05": "English and French",
-								"06": "French and Ghanaian language",
-								"07": "English, French and Ghanaian language",
-								"08": "Other, Specify"
-							}
-						]
-					},
-					{
-						"label": "Has he/she ever attended school or is he or she attending school now?",
-						"code": "P12a",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Never",
-								"02": "Now",
-								"03": "past"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "1",
-								"next": "P13a"
-							}
-						]
-					},
-					{
-						"label": "What is the highest level of schooling he/she is attending now/attended in the past",
-						"code": "P12b",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Nursery",
-								"02": "Kindergarten",
-								"03": "Primary",
-								"04": "JSS/JHS",
-								"05": "Middle",
-								"06": "SSS/SHS",
-								"07": "Secondary",
-								"08": "Voc/technical/commercial",
-								"09": "Post middle/secondary certificate (teacher training/college of education, agric, nursing, etc)",
-								"10": "Post-secondary Diploma/(Universtiy diploma, HND, teacher training/college of education diploma, etc)",
-								"11": "Bachelor Degree)",
-								"12": "Masters",
-								"12": "PhD",
-								"13": "Other"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "12",
-								"next": "P13a"
-							},
-							{
-								"answer": "13",
-								"next": "P13a"
-							}
-						]
-					},
-					{
-						"label": "What is the highest grade (form/class/level, etc) he or she has completed at that level of schooling?",
-						"code": "P12c",
-						"type": "text"
-					},
-					{
-						"label": "During the 7 days before census night, did he or she work in any activity for pay (cash or kind) or profit for at least one hour?",
-						"code": "P13a",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "1",
-								"next": "P14"
-							}
-						]
-					},
-					{
-						"label": "During the 7 days, how has he or she mainly engaged?",
-						"code": "P13b",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Worked in economic activity, but received no payment",
-								"02": "Did not work, but had job to go back to",
-								"03": "Worked before, seeking work and available for work",
-								"04": "Seeking work for the first time and available for work",
-								"05": "Did not work and not seeking work"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "3",
-								"next": "P14"
-							},
-							{
-								"answer": "4",
-								"next": "P18a"
-							},
-							{
-								"answer": "5",
-								"next": "P13e"
-							}
-						]
-					},
-					{
-						"label": "Which type of work has he or she been mainly engaged in?",
-						"code": "P13c",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Wage/Salary/Profit work",
-								"02": "Paid apprentice work",
-								"03": "Unpaid apprentice work",
-								"04": "Contributing family work",
-								"05": "Voluntary work without pay",
-								"06": "Non-voluntary work without pay",
-								"07": "Own-use production work",
-								"08": "Own-use service work"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "1",
-								"next": "P14"
-							},
-							{
-								"answer": "4",
-								"next": "P14"
-							},
-							{
-								"answer": "5",
-								"next": "P14"
-							},
-							{
-								"answer": "6",
-								"next": "P14"
-							}
-						]
-					},
-					{
-						"label": "Are the products obtained from his or her activity intended for sale or barter or for family use?",
-						"code": "P13d",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Only for sale/barter",
-								"02": "Mainly for sale/barter but some for family use",
-								"03": "Mainly for own/family use but some for sale/barter",
-								"04": "Only for own/family use"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "0",
-								"next": "P14"
-							}
-						]
-					},
-					{
-						"label": "Why did he or she not work and not seeking work?",
-						"code": "P13e",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Did home duties (household chores/ full time homemaker)",
-								"02": "In full time education/student",
-								"03": "Pensioner/Retired",
-								"04": "Disabled",
-								"05": "Too sick to work",
-								"06": "Too old",
-								"07": "Yoo young",
-								"08": "Other"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "0",
-								"next": "P18a"
-							}
-						]
-					},
-					{
-						"label": "What kind of work did he or she do in his or her main job/business? Detailed Description of occupation",
-						"code": "P14a",
-						"type": "text"
-					},
-					{
-						"label": "What kind of work did he or she do in his or her main job/business? occupational code",
-						"code": "P14B",
-						"type": "text"
-					},
-					{
-						"label": "What is the name of the establishment/business where he or she currently works/previously worked?",
-						"code": "P15",
-						"type": "text"
-					},
-					{
-						"label": "What is the main economic activity (product or service) of the establisment where he or she works/worked? Description",
-						"code": "P15a",
-						"type": "text"
-					},
-					{
-						"label": "What is the main economic activity (product or service) of the establisment where he or she works/worked? Activity code",
-						"code": "P15a",
-						"type": "text"
-					},
-					{
-						"label": "What was his or her employment status in that establishement/business/industry?",
-						"code": "P16",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Employee",
-								"02": "Self-employed without employees",
-								"03": "Self-employed with employees",
-								"04": "Casual worker",
-								"05": "Contributing family worker",
-								"06": "Paid apprentice",
-								"07": "Unpaid apprentice",
-								"08": "Domestic employee (househelp,garden boy, etc.)",
-								"09": "Other"
-							}
-						]
-					},
-					{
-						"label": "In what sector was he or she mainly working? was his or her employment status in that establishement/business/industry?",
-						"code": "P17",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Public (Governement)",
-								"02": "Semi-Public/Parastatal",
-								"03": "Private Formal",
-								"04": "Private Informal",
-								"05": "NGO/CSO (Local)",
-								"06": "NGO/CSO (International)",
-								"07": "International Organisation"
-							}
-						]
-					},
-					{
-						"label": "Does he or she have difficulty in seeing even if wearing glasses? Will you say that he or she has no difficulty, some diffuculty, a lot of dificulty or cannot see at all?",
-						"code": "P18a",
-						"type": "radio",
-						"options": [
-							{
-								"01": "No Difficulty",
-								"02": "Yes, some difficulty",
-								"03": "Yes, a lot of difficulty",
-								"04": "Cannot do at all"
-							}
-						]
-					},
-					{
-						"label": "Does he or she have difficulty hearing even if using a hearing aid? Will you say that he or she has no difficulty, some difficulty, a lot of difficulty or cannot hear at all?",
-						"code": "P18b",
-						"type": "radio",
-						"options": [
-							{
-								"01": "No Difficulty",
-								"02": "Yes, some difficulty",
-								"03": "Yes, a lot of difficulty",
-								"04": "Cannot do at all"
-							}
-						]
-					},
-					{
-						"label": "Does he or she have difficulty walking or climbing stairs? Will you say that he or she has no difficulty, some difficulty, a lot of difficulty or cannot do at all?",
-						"code": "P18c",
-						"type": "radio",
-						"options": [
-							{
-								"01": "No Difficulty",
-								"02": "Yes, some difficulty",
-								"03": "Yes, a lot of difficulty",
-								"04": "Cannot do at all"
-							}
-						]
-					},
-					{
-						"label": "Does he or she have difficulty remembering or concentrating? Will you say that he or she has no difficulty, some difficulty, a lot of difficulty or cannot remember or concentrate at all?",
-						"code": "P18d",
-						"type": "radio",
-						"options": [
-							{
-								"01": "No Difficulty",
-								"02": "Yes, some difficulty",
-								"03": "Yes, a lot of difficulty",
-								"04": "Cannot do at all"
-							}
-						]
-					},
-					{
-						"label": "Does he or she have difficulty with self-care such as washing all over the body or dressing? Will you say that he or she has no difficulty, some difficulty, a lot of difficulty or cannot do at all?",
-						"code": "P18e",
-						"type": "radio",
-						"options": [
-							{
-								"01": "No Difficulty",
-								"02": "Yes, some difficulty",
-								"03": "Yes, a lot of difficulty",
-								"04": "Cannot do at all"
-							}
-						]
-					},
-					{
-						"label": "Using his/her usual language, does he or she have difficulty communicating (e.g. understanding or being understood by others)? Will you say that he or she has no difficulty, some difficulty, a lot of difficulty or cannot communicate at all?",
-						"code": "P18f",
-						"type": "radio",
-						"options": [
-							{
-								"01": "No Difficulty",
-								"02": "Yes, some difficulty",
-								"03": "Yes, a lot of difficulty",
-								"04": "Cannot do at all"
-							}
-						]
-					},
-					{
-						"label": "Does he or she use Mobile Phone (smart)?",
-						"code": "P19ai",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she use Mobile Phone(Non-Smart)?",
-						"code": "P19aii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she use Cordless Cellular telephone?",
-						"code": "P19aiii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she use Fixed telephone line?",
-						"code": "P19aiv",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she use Tablet?",
-						"code": "P19av",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she use Laptop?",
-						"code": "P19avi",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she use Desktop Computer?",
-						"code": "P19avii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she use Television (Digital TV)?",
-						"code": "P19aviii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she use Television (Analogue)?",
-						"code": "P19aix",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she use Radio/FM?",
-						"code": "P19ax",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she own Mobile Phone (smart)?",
-						"code": "P19bi",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she own Mobile Phone(Non-Smart)?",
-						"code": "P19bii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she own Cordless Cellular telephone?",
-						"code": "P18biii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she own Fixed telephone line?",
-						"code": "P19biv",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she own Tablet?",
-						"code": "P19bv",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she own Laptop?",
-						"code": "P19bvi",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she own Desktop Computer?",
-						"code": "P19bvii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she own Television (Digital TV)?",
-						"code": "P19bviii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she own Television (Analogue)?",
-						"code": "P19bix",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Does he or she own Radio/FM?",
-						"code": "P19bx",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Did he or she use internet in the last 3 months, using mobile phone?",
-						"code": "P19ci",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Did he or she use internet in the last 3 months, using laptop?",
-						"code": "P19cii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Did he or she use internet in the last 3 months, using desktop?",
-						"code": "P19ciii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Did he or she use internet in the last 3 months, using tablet?",
-						"code": "P19civ",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Did he or she use internet in the last 3 months, using other devices?",
-						"code": "P19cv",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Did he or she use Mobile Broadband to access the internet?",
-						"code": "P19di",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Did he or she use Fixed/Fibre Broadband to access the internet?",
-						"code": "P19dii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Did he or she use Satellite Broadband to access the internet?",
-						"code": "P19diii",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "Did he or she use mobile phone for mobile money in the last 3 months?",
-						"code": "P19e",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						]
-					},
-					{
-						"label": "How many male children has he or she ever born alive?",
-						"code": "P20ai",
-						"type": "numeric"
-					},
-					{
-						"label": "How many female children has he or she ever born alive?",
-						"code": "P20aii",
-						"type": "numeric"
-					},
-					{
-						"label": "How many male children ever born alive to him/her are still surviving (living with you or elsewhere)?",
-						"code": "P20bi",
-						"type": "numeric"
-					},
-					{
-						"label": "How many female children ever born alive to him/her are still surviving (living with you or elsewhere)?",
-						"code": "P20bii",
-						"type": "numeric"
-					},
-					{
-						"label": "How many male children has he or she born alive in the past 12 months?",
-						"code": "P20ci",
-						"type": "numeric"
-					},
-					{
-						"label": "How many female children has he or she born alive in the past 12 months?",
-						"code": "P20cii",
-						"type": "numeric"
-					},
-					{
-						"label": "Has any member of this household died in the past 12 months?",
-						"code": "M01",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "2",
-								"next": "H01"
-							}
-						]
-					},
-					{
-						"label": "What was the name of the deceased?",
-						"code": "M02A",
-						"type": "text"
-					},
-					{
-						"label": "What was the sex of the deceased?",
-						"code": "M02B",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Male",
-								"02": "Female"
-							}
-						]
-					},
-					{
-						"label": "How old was the deceased at death? Age in completed years",
-						"code": "M02BC",
-						"type": "text"
-					},
-					{
-						"label": "Was the death due to accident, violence, homicide or suicide?",
-						"code": "M02BD",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes, accident",
-								"02": "Yes, violence",
-								"03": "Yes, homicide",
-								"04": "Yes, suicide",
-								"05": "No"
-							}
-						]
-					}
-				]
-			},
-			{
-				"label": "Housing Condition (For Vacant Housing Unit Answer Only H01, H02 and H03)",
-				"fields": [
-					{
-						"label": "In what type of dwelling does the household live?",
-						"code": "H01",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Separate House",
-								"02": "Semi-detached house",
-								"03": "Flat/Apartment",
-								"04": "Compound House (rooms)",
-								"05": "Huts/Buildings (same compound)",
-								"06": "Huts/Buildings (different compound)",
-								"07": "Tent",
-								"08": "Container",
-								"09": "Wooden/Kiosk",
-								"10": "Living quaters attached to office/shop",
-								"11": "Uncompleted building",
-								"12": "Other"
-							}
-						]
-					},
-					{
-						"label": "What is the main construction material of the outer walls of this dwelling?",
-						"code": "H02",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Mud bricks/earth",
-								"02": "Wood",
-								"03": "Metal sheet/slate/asbestos",
-								"04": "Stone",
-								"05": "Burnt bricks",
-								"06": "Cement blocks/concrete",
-								"07": "Landcrete",
-								"08": "Bamboo",
-								"09": "Palm leaves/Thatch (grass)/Raffia",
-								"10": "Other"
-							}
-						]
-					},
-					{
-						"label": "Roof",
-						"code": "H03",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Mud bricks/earth",
-								"02": "Wood",
-								"03": "Metal sheet/slate/asbestos",
-								"04": "Stone",
-								"05": "Burnt bricks",
-								"06": "Cement blocks/concrete",
-								"07": "Landcrete",
-								"08": "Bamboo",
-								"09": "Thatch/Palm leaves or Raffia",
-								"10": "Other"
-							}
-						]
-					},
-					{
-						"label": "Floor: What is the main construction material of the floor of this dwelling?",
-						"code": "H04",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Earth/Mud",
-								"02": "Cement/Concrete",
-								"03": "Carpet",
-								"04": "Burnt bricks",
-								"05": "Wood",
-								"06": "Vinyl tiles",
-								"07": "Ceramic/Porcelain/Granite/Marbel tiles",
-								"08": "Tarrazzo/Terrazzo tiles",
-								"09": "Other"
-							}
-						]
-					},
-					{
-						"label": "Tenure/Holding arrangement: What is the present holding/tenancy arrangement of this dwelling?",
-						"code": "H05a",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Owner occupied (>> H05b)",
-								"02": "Renting",
-								"03": "Rent-free",
-								"04": "Perching",
-								"05": "Squatting",
-								"06": "Caretaker",
-								"07": "Other"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "2",
-								"next": "H06"
-							},
-							{
-								"answer": "3",
-								"next": "H06"
-							},
-							{
-								"answer": "4",
-								"next": "H06"
-							},
-							{
-								"answer": "5",
-								"next": "H06"
-							},
-							{
-								"answer": "6",
-								"next": "H06"
-							},
-							{
-								"answer": "7",
-								"next": "H06"
-							}
-						]
-					},
-					{
-						"label": "How did you acquire this building",
-						"code": "H05b",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Built by myself/household member",
-								"02": "Bought from an individual",
-								"03": "Bought from an estate developer",
-								"04": "Inherited",
-								"05": "Family property",
-								"06": "Mortgaged",
-								"07": "Gift",
-								"08": "Other"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "0",
-								"next": "H07"
-							}
-						]
-					},
-					{
-						"label": "Who owns the dwelling?",
-						"code": "H06",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Estate developer",
-								"02": "Relative not household member",
-								"03": "Other private individual",
-								"04": "Private employer",
-								"05": "Other private agency",
-								"06": "Public/Governemtn ownership",
-								"07": "Other"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "0",
-								"next": "H07"
-							}
-						]
-					},
-					{
-						"label": "Rooms:  Does the household share this sleeping room withh other households?",
-						"code": "H07c",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes",
-								"02": "No"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "2",
-								"next": "H08"
-							}
-						]
-					},
-					{
-						"label": "How many households, including your household, share this sleeping room?",
-						"code": "H07d",
-						"type": "numeric"
-					},
-					{
-						"label": "What is the main source of lightining for your dwelling?",
-						"code": "H08a",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Electricity (mains)",
-								"02": "Electricity (local mini Grid)",
-								"03": "Electricity (private generator)",
-								"04": "Electricity (solar panel/inventor)",
-								"05": "Electricity (wind energy)",
-								"06": "Kerosene lamp",
-								"07": "Gas lamp",
-								"08": "Solar energy",
-								"09": "Candle",
-								"10": "Flashlight/Torch",
-								"11": "Other"
-							}
-						]
-					},
-					{
-						"label": "What is the secondary source of lightining for your dwelling?",
-						"code": "H08b",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Electricity (mains)",
-								"02": "Electricity (local mini Grid)",
-								"03": "Electricity (private generator)",
-								"04": "Electricity (solar panel/inventor)",
-								"05": "Electricity (wind energy)",
-								"06": "Kerosene lamp",
-								"07": "Gas lamp",
-								"08": "Solar energy",
-								"09": "Candle",
-								"10": "Flashlight/Torch",
-								"11": "Other"
-							}
-						]
-					},
-					{
-						"label": "Room: How many rooms does this household occupy?",
-						"code": "H07a",
-						"type": "numeric"
-					},
-					{
-						"label": "Room: How many of the rooms are used for sleeping?",
-						"code": "H07b",
-						"type": "numeric"
-					}
-				]
-			},
-			{
-				"label": "Water Supply",
-				"fields": [
-					{
-						"label": "What is the main source of drinking water for the household?",
-						"code": "H09a",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Pipe-borne inside dwelling",
-								"02": "Pipe-borne outside dwelling but on compound",
-								"03": "Pipe-borne outside dwelling but from neighbour's house",
-								"04": "Public tap/Standpipe",
-								"05": "Borehole/Pump/Tube well",
-								"06": "Protected well",
-								"07": "Rain water",
-								"08": "Protected spring",
-								"09": "Bottled water",
-								"10": "Sachet water",
-								"11": "Tanker supply/Vendor provided",
-								"12": "Unprotedted spring",
-								"13": "River/Stream",
-								"14": "Dugout/Pond/lake/Dam/ Canal",
-								"15": "Other"
-							}
-						]
-					},
-					{
-						"label": "What is the main source of water used by your household for other domestic purposes such as cooking and washing?",
-						"code": "H09c",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Pipe-borne inside dwelling",
-								"02": "Pipe-borne outside dwelling but on compound",
-								"03": "Pipe-borne outside dwelling but from neighbour's house",
-								"04": "Public tap/Standpipe",
-								"05": "Borehole/Pump/Tube well",
-								"06": "Protected well",
-								"07": "Rain water",
-								"08": "Protected spring",
-								"09": "Bottled water",
-								"10": "Sachet water",
-								"11": "Tanker supply/Vendor provided",
-								"12": "Unprotedted spring",
-								"13": "River/Stream",
-								"14": "Dugout/Pond/lake/Dam/ Canal",
-								"15": "Other"
-							}
-						]
-					},
-					{
-						"label": "How long does it take to go to the water source, get water and come back?",
-						"code": "H09b",
-						"type": "time"
-					},
-					{
-						"label": "What type of cooking space does this household use?",
-						"code": "H11",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Separate room for exclusive use of household",
-								"02": "Separate room shared with other household",
-								"03": "Enclosure without roof",
-								"04": "Structure with roof but without walls",
-								"05": "Bedroom/Hall/Living Room",
-								"06": "Veranda",
-								"07": "Open Space in compound",
-								"08": "Other"
-							}
-						]
-					}
-				]
-			},
-			{
-				"label": "Cooking Fuel",
-				"fields": [
-					{
-						"label": "What is the main source of cooking fuel for this household?",
-						"code": "H10a",
-						"type": "radio",
-						"options": [
-							{
-								"01": "None (No Cooking)  room for exclusive use of household",
-								"02": "Wood",
-								"03": "LPG",
-								"04": "Bio Gas",
-								"05": "Electricity",
-								"06": "Kerosene",
-								"07": "Charcoal",
-								"08": "Crop Residue",
-								"09": "Saw Dust",
-								"10": "Animal waste",
-								"11": "Cooking gel",
-								"12": "Other"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "1",
-								"next": "H12"
-							}
-						]
-					},
-					{
-						"label": "What is the secondary source of cooking fuel for this household?",
-						"code": "H10b",
-						"type": "radio",
-						"options": [
-							{
-								"01": "None (No Cooking)  room for exclusive use of household",
-								"02": "Wood",
-								"03": "LPG",
-								"04": "Bio Gas",
-								"05": "Electricity",
-								"06": "Kerosene",
-								"07": "Charcoal",
-								"08": "Crop Residue",
-								"09": "Saw Dust",
-								"10": "Animal waste",
-								"11": "Cooking gel",
-								"12": "Other"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "1",
-								"next": "H12"
-							}
-						]
-					},
-					{
-						"label": "What type of bathing facility is used by this household?",
-						"code": "H10b",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Own bathroom for exclusive use",
-								"02": "Shared separate bathroom in same house",
-								"03": "Private open cubicle",
-								"04": "Shared open cubicle",
-								"05": "Public bath house",
-								"06": "Bathroom in another house",
-								"07": "Open space around house",
-								"08": "In a river, pond, lake or dam",
-								"09": "Other"
-							}
-						]
-					}
-				]
-			},
-			{
-				"label": "Sanitation",
-				"fields": [
-					{
-						"label": "Solid Waste Disposal: What type of refuse receptacle (bin, sac, polythene, etc) is mainly used by your household?",
-						"code": "S01",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Standard waste bin",
-								"02": "Covered container",
-								"03": "Uncovered container",
-								"04": "Covered/Uncovered basket",
-								"05": "Sack",
-								"06": "Polythene bag",
-								"07": "Other"
-							}
-						]
-					},
-					{
-						"label": "Solid Waste Disposal: How does the household dispose of rubbish(reuse)?",
-						"code": "S02",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Compaction truck",
-								"02": "Door-to-door truck",
-								"03": "Motorized tricycle operators",
-								"04": "Central container",
-								"05": "Bury in the ground",
-								"06": "Burn",
-								"07": "Public dump/open space",
-								"08": "Unauthorized attendants (junkies)",
-								"09": "Dumped indiscriminately",
-								"10": "Other"
-							}
-						]
-					}
-				]
-			},
-			{
-				"label": "Toilet Facility",
-				"fields": [
-					{
-						"label": "What type of toilet facility is mainly used by the household? Kindly observe",
-						"code": "S03",
-						"type": "radio",
-						"options": [
-							{
-								"01": "No toilet facility",
-								"02": "Septic tank (manhole)",
-								"03": "KVIP/VIP",
-								"04": "Pit latrine",
-								"05": "Enviro Loo",
-								"06": "Bio-digester (e.g. bio fill)",
-								"07": "Bio gas",
-								"08": "Bucket/Pan",
-								"09": "Portable toilet (e.g. Water potti)",
-								"10": "Sewer",
-								"11": "Public Toilet",
-								"12": "Other"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "1",
-								"next": "S09"
-							},
-							{
-								"answer": "11",
-								"next": "S10"
-							}
-						]
-					},
-					{
-						"label": "What type of drop hole/seat is mainly used by the household?",
-						"code": "S04",
-						"type": "radio",
-						"options": [
-							{
-								"01": "WC Seat",
-								"02": "WC squat-hole",
-								"03": "Pour flush bowl",
-								"04": "Urine-diverting dry toilet (UDDT)",
-								"05": "Concrete pedestal/slab",
-								"06": "Wooden pedestal/slab",
-								"07": "Satopan",
-								"08": "Micro flush",
-								"09": "Other"
-							}
-						]
-					},
-					{
-						"label": "How many usable toilet rooms (cubicles) are available to the household?",
-						"code": "S05",
-						"type": "numeric"
-					},
-					{
-						"label": "Do you share this toilet facility with other households?",
-						"code": "S06",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes, with other household(s) in this house",
-								"02": "Yes, with other household(s) from another house",
-								"03": "Yes, with other household(s), but located in another house",
-								"04": "No"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "3",
-								"next": "S08"
-							},
-							{
-								"answer": "4",
-								"next": "S08"
-							}
-						]
-					},
-					{
-						"label": "How many households including your household use this toilet?",
-						"code": "S07",
-						"type": "numeric"
-					},
-					{
-						"label": "How are anal cleasing materials mainly disposed in this household?",
-						"code": "S08",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Burn",
-								"02": "Flush/drop",
-								"03": "Anal wash",
-								"04": "Waste receptacle (bin, sac, polythene, etc)",
-								"05": "Bury in the ground",
-								"06": "Dumped indiscriminately",
-								"07": "Other"
-							}
-						],
-						"gotoIf": [
-							{
-								"answer": "7",
-								"next": "S10"
-							}
-						]
-					},
-					{
-						"label": "Defaecation point for households without toilet facility in dwelling: Where do the household members mainly defaecate?",
-						"code": "S09",
-						"type": "radio",
-						"options": [
-							{
-								"01": "In a chamber pot",
-								"02": "In a polythene bag",
-								"03": "Open defaecation (bush/beach/field)"
-							}
-						]
-					}
-				]
-			},
-			{
-				"label": "Hygiene Practice",
-				"fields": [
-					{
-						"label": "Where do members of this household most often wash their hands after defaecation?",
-						"code": "S10",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Fixed facility in dwelling",
-								"02": "Fixed facility in yard/plot",
-								"03": "Mobile object (bucket/jug/kettle)",
-								"04": "No handwashing place in dwelling/yard/plot"
-							}
-						]
-					},
-					{
-						"label": "Is the handwashing after defaecation done under running water with soap and detergent?",
-						"code": "S11",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Yes, always",
-								"02": "Yes, sometimes",
-								"03": "No"
-							}
-						]
-					},
-					{
-						"label": "How does your household mainly dispose of waste water (from bathroom, kitchen, laundry)?",
-						"code": "S12",
-						"type": "radio",
-						"options": [
-							{
-								"01": "Through the sewerage system",
-								"02": "Through drains/gutter",
-								"03": "Through drainage into pit (soak away)",
-								"04": "Thrown onto the ground/street/outside",
-								"05": "Other"
-							}
-						]
-					}
-				]
-			}
-		]
-	}
+				{
+					"label":"Next",
+					"code":"A05",
+					"type":"button"
+				}
+			]
+		},
+		{
+			"fields":[
+				{
+					"label":"Enumeration Area Code",
+					"code":"A04",
+					"type":"textarea"
+				},
+				{
+					"label":"Structure number of house/compound",
+					"code":"A05",
+					"type":"text"
+				},
+				{
+					"label":"Serial Number of household within house/compound",
+					"code":"A06",
+					"type":"text"
+				},
+
+				{
+					"label":"Type of recidence",
+					"code":"A07b",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Occupied housing unit",
+							"02":"Vacant housing Unit"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"02",
+							"next":"H01"
+						}
+					]
+				}
+			]
+		},
+		{
+			"fields":[
+				{
+					"label":"Date Started",
+					"code":"A08",
+					"type":"date"
+				},
+				{
+					"label":"Date Completed",
+					"code":"A09",
+					"type":"date"
+				},
+				{
+					"label":"Total Number of Visists",
+					"code":"A10a",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				}
+			]
+		},
+		{
+			"fields":[
+				{
+					"label":"Usual Members Presentp - Male",
+					"code":"A12i",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"Usual Members Present - Female",
+					"code":"A12ii",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"Visitors Present - Male",
+					"code":"A13i",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"Visitors Present - Female",
+					"code":"A13ii",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"Usual Members Absent - Male",
+					"code":"A14i",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"Usual Members Absent - Female",
+					"code":"A14ii",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"Totals of A12a and A13a",
+					"code":"A15i",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"Totals of A12b and A13b",
+					"code":"A15ii",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				}
+			]
+		},
+		{
+			"repeat":"5",
+			"label":"Usual member or visitor present on census night(A12 or B12)",
+			"fields":[
+				{
+					"label":"Name ",
+					"code":"A11a",
+					"type":"text"
+				},
+				{
+					"label":"Relationship to head",
+					"code":"A11a",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Head",
+							"02":"Spouse(Wife/Husband)",
+							"03":"Child(Son/Daughter)",
+							"04":"Parent/Parent in-law",
+							"05":"Son in-law/Daughter in-law",
+							"06":"Grandchild",
+							"07":"Brother/Sister",
+							"08":"Step Child",
+							"09":"Foster Child"
+						}
+					]
+				},
+				{
+					"label":"Sex",
+					"code":"A11a",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Male",
+							"02":"Female"
+						}
+					]
+				},
+				{
+					"label":"Status",
+					"code":"A11a",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Usual Member(A)",
+							"02":"Visitor(B)"
+						}
+					]
+				}
+			]
+		},
+		{
+			"repeat":"5",
+			"label":"Usual members absent on census night(status c)",
+			"fields":[
+				{
+					"label":"Name ",
+					"code":"A13Bi",
+					"type":"text"
+				},
+				{
+					"label":"Relationship to head",
+					"code":"A13Bii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Head",
+							"02":"Spouse(Wife/Husband)",
+							"03":"Child(Son/Daughter)",
+							"04":"Parent/Parent in-law",
+							"05":"Son in-law/Daughter in-law",
+							"06":"Grandchild",
+							"07":"Brother/Sister",
+							"08":"Step Child",
+							"09":"Foster Child"
+						}
+					]
+				},
+				{
+					"label":"Age ",
+					"code":"A13Biii",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"Destination (Village/Town/Country) ",
+					"code":"A13Biv",
+					"type":"text"
+				},
+				{
+					"label":"District/Country Code",
+					"code":"A13Bv",
+					"type":"text"
+				},
+				{
+					"label":"Months Absent",
+					"code":"A13Bvi",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				}
+			]
+		},
+		{
+			"fields":[
+				{
+					"label":"Has any former member of this household been living or intend to live continuously for 6 months or more outside Ghana? ",
+					"code":"E01",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"2",
+							"next":"P00"
+						}
+					]
+				}
+			]
+		},
+		{
+			"repeat":"5",
+			"fields":[
+				{
+					"label":"Full Name ",
+					"code":"E02i",
+					"type":"text"
+				},
+				{
+					"label":"Relationship to head",
+					"code":"E02ii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Head",
+							"02":"Spouse(Wife/Husband)",
+							"03":"Child(Son/Daughter)",
+							"04":"Parent/Parent in-law",
+							"05":"Son in-law/Daughter in-law",
+							"06":"Grandchild",
+							"07":"Brother/Sister",
+							"08":"Step Child",
+							"09":"Foster Child"
+						}
+					]
+				},
+				{
+					"label":"Sex",
+					"code":"E02ii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Male",
+							"02":"Female"
+						}
+					]
+				},
+				{
+					"label":"Destination Country Name",
+					"code":"E02iv",
+					"type":"text"
+				},
+				{
+					"label":"Destination Country Code",
+					"code":"E02v",
+					"type":"text"
+				},
+				{
+					"label":"Year of Departure",
+					"code":"E02vi",
+					"type":"date"
+				},
+				{
+					"label":"Main reason for travelling",
+					"code":"E02vii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Medical Reson",
+							"02":"Another reason"
+						}
+					]
+				},
+				{
+					"label":"Main reason for travelling",
+					"code":"E02viii",
+					"type":"text",
+					"showIf":[
+						{
+							"answer":"2"
+						}
+					]
+				}
+			]
+		},
+		{
+			"fields":[
+				{
+					"label":"Destination Country Code",
+					"code":"E02v",
+					"type":"text"
+				},
+				{
+					"label":"Year of Departure",
+					"code":"E02vi",
+					"type":"date"
+				},
+				{
+					"label":"Main reason for travelling",
+					"code":"E02vii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Medical Reson",
+							"02":"Another reason"
+						}
+					]
+				},
+				{
+					"label":"Main reason for travelling",
+					"code":"E02viii",
+					"type":"text",
+					"showIf":[
+						{
+							"answer":"2"
+						}
+					]
+				}
+			]
+		},
+		{
+			"label":"Social Demographic Characteristics",
+			"repeat":"5",
+			"fields":[
+				{
+					"label":"Full Name  ",
+					"code":"P00",
+					"type":"text"
+				},
+				{
+					"label":"Date of Birth",
+					"code":"P01",
+					"type":"date"
+				},
+				{
+					"label":"Age (How old is [Name], in completed years?)",
+					"code":"P02",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"What is [Name]'s Nationality",
+					"code":"P03a",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Ghanaian by Birth",
+							"02":"Ghanaian by Naturalization",
+							"03":"Dual Nationality",
+							"04":"Non-Ghanaian"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"1",
+							"next":"P04"
+						},
+						{
+							"answer":"2",
+							"next":"P05"
+						}
+					]
+				},
+				{
+					"label":"Name of which ethnic group does he/she belong?",
+					"code":"P04i",
+					"type":"text"
+				},
+				{
+					"label":"Code of which ethnic group does he/she belong?",
+					"code":"P04ii",
+					"type":"text"
+				},
+				{
+					"label":"Was he/she born in this village/town?",
+					"code":"P05",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"1",
+							"next":"P07"
+						}
+					]
+				},
+				{
+					"label":"What is the NAME of District or country was born?",
+					"code":"P06i",
+					"type":"text"
+				},
+				{
+					"label":"What is the Code of District or country was born?",
+					"code":"P06ii",
+					"type":"text",
+					"gotoIf":[
+						{
+							"answer":"0",
+							"next":"P08a"
+						}
+					]
+				},
+				{
+					"label":"Has he/she been living in this village or town since birth?",
+					"code":"P07",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"1",
+							"next":"P09"
+						}
+					]
+				},
+				{
+					"label":"For how long has he/she been living continuously in this village or town?(Years)",
+					"code":"P08a",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"What was his/her main reason for moving to this village/town",
+					"code":"P08b",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Employment",
+							"02":"Settlement",
+							"03":"Marriage/Family reunification",
+							"04":"Education/Training",
+							"05":"Asylum/refugee",
+							"06":"Conflict (war,ethnic, political)",
+							"07":"Disaster (flood, drought, fire, etc)",
+							"08":"Other"
+						}
+					]
+				},
+				{
+					"label":"In what district or country was he/she usual place of residence?",
+					"code":"P08c",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"What is his/her religious affiliation?",
+					"code":"P09",
+					"type":"radio",
+					"options":[
+						{
+							"01":"No Religion",
+							"02":"Catholic",
+							"03":"Protestant(Anglican, Lutheran, Presbyterian, Methodist, etc)",
+							"04":"Pentecoastal/Charismatic",
+							"05":"Other Christian",
+							"06":"Islam",
+							"07":"Ahmadi",
+							"08":"Traditionalist",
+							"09":"Other"
+						}
+					]
+				},
+				{
+					"label":"What is his/her current marital status",
+					"code":"P10",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Never married",
+							"02":"Informal/consenual union/Living together",
+							"03":"Married",
+							"04":"Separated",
+							"05":"Divorced",
+							"06":"Widowed"
+						}
+					]
+				},
+				{
+					"label":"Can he/she read and write in any language?",
+					"code":"P11a",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes, read only",
+							"02":"Yes, read and write",
+							"03":"No"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"3",
+							"next":"P12a"
+						}
+					]
+				},
+				{
+					"label":"If Yes, read only in p11a; In what language can he/she read",
+					"code":"P11b",
+					"type":"radio",
+					"options":[
+						{
+							"01":"English Only",
+							"02":"Ghanaian language only",
+							"03":"French only",
+							"04":"English and Ghanaian language",
+							"05":"English and French",
+							"06":"French and Ghanaian language",
+							"07":"English, French and Ghanaian language",
+							"08":"Other, Specify"
+						}
+					]
+				},
+				{
+					"label":"Has he/she ever attended school or is he or she attending school now?",
+					"code":"P12a",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Never",
+							"02":"Now",
+							"03":"past"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"1",
+							"next":"P13a"
+						}
+					]
+				},
+				{
+					"label":"What is the highest level of schooling he/she is attending now/attended in the past",
+					"code":"P12b",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Nursery",
+							"02":"Kindergarten",
+							"03":"Primary",
+							"04":"JSS/JHS",
+							"05":"Middle",
+							"06":"SSS/SHS",
+							"07":"Secondary",
+							"08":"Voc/technical/commercial",
+							"09":"Post middle/secondary certificate (teacher training/college of education, agric, nursing, etc)",
+							"10":"Post-secondary Diploma/(Universtiy diploma, HND, teacher training/college of education diploma, etc)",
+							"11":"Bachelor Degree)",
+							"12":"Masters",
+							"12":"PhD",
+							"13":"Other"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"12",
+							"next":"P13a"
+						},
+						{
+							"answer":"13",
+							"next":"P13a"
+						}
+					]
+				},
+				{
+					"label":"What is the highest grade (form/class/level, etc) he or she has completed at that level of schooling?",
+					"code":"P12c",
+					"type":"text"
+				},
+				{
+					"label":"During the 7 days before census night, did he or she work in any activity for pay (cash or kind) or profit for at least one hour?",
+					"code":"P13a",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"1",
+							"next":"P14"
+						}
+					]
+				},
+				{
+					"label":"During the 7 days, how has he or she mainly engaged?",
+					"code":"P13b",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Worked in economic activity, but received no payment",
+							"02":"Did not work, but had job to go back to",
+							"03":"Worked before, seeking work and available for work",
+							"04":"Seeking work for the first time and available for work",
+							"05":"Did not work and not seeking work"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"3",
+							"next":"P14"
+						},
+						{
+							"answer":"4",
+							"next":"P18a"
+						},
+						{
+							"answer":"5",
+							"next":"P13e"
+						}
+					]
+				},
+				{
+					"label":"Which type of work has he or she been mainly engaged in?",
+					"code":"P13c",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Wage/Salary/Profit work",
+							"02":"Paid apprentice work",
+							"03":"Unpaid apprentice work",
+							"04":"Contributing family work",
+							"05":"Voluntary work without pay",
+							"06":"Non-voluntary work without pay",
+							"07":"Own-use production work",
+							"08":"Own-use service work"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"1",
+							"next":"P14"
+						},
+						{
+							"answer":"4",
+							"next":"P14"
+						},
+						{
+							"answer":"5",
+							"next":"P14"
+						},
+						{
+							"answer":"6",
+							"next":"P14"
+						}
+					]
+				},
+				{
+					"label":"Are the products obtained from his or her activity intended for sale or barter or for family use?",
+					"code":"P13d",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Only for sale/barter",
+							"02":"Mainly for sale/barter but some for family use",
+							"03":"Mainly for own/family use but some for sale/barter",
+							"04":"Only for own/family use"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"0",
+							"next":"P14"
+						}
+					]
+				},
+				{
+					"label":"Why did he or she not work and not seeking work?",
+					"code":"P13e",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Did home duties (household chores/ full time homemaker)",
+							"02":"In full time education/student",
+							"03":"Pensioner/Retired",
+							"04":"Disabled",
+							"05":"Too sick to work",
+							"06":"Too old",
+							"07":"Yoo young",
+							"08":"Other"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"0",
+							"next":"P18a"
+						}
+					]
+				},
+				{
+					"label":"What kind of work did he or she do in his or her main job/business? Detailed Description of occupation",
+					"code":"P14a",
+					"type":"text"
+				},
+				{
+					"label":"What kind of work did he or she do in his or her main job/business? occupational code",
+					"code":"P14B",
+					"type":"text"
+				},
+				{
+					"label":"What is the name of the establishment/business where he or she currently works/previously worked?",
+					"code":"P15",
+					"type":"text"
+				},
+				{
+					"label":"What is the main economic activity (product or service) of the establisment where he or she works/worked? Description",
+					"code":"P15a",
+					"type":"text"
+				},
+				{
+					"label":"What is the main economic activity (product or service) of the establisment where he or she works/worked? Activity code",
+					"code":"P15a",
+					"type":"text"
+				},
+				{
+					"label":"What was his or her employment status in that establishement/business/industry?",
+					"code":"P16",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Employee",
+							"02":"Self-employed without employees",
+							"03":"Self-employed with employees",
+							"04":"Casual worker",
+							"05":"Contributing family worker",
+							"06":"Paid apprentice",
+							"07":"Unpaid apprentice",
+							"08":"Domestic employee (househelp,garden boy, etc.)",
+							"09":"Other"
+						}
+					]
+				},
+				{
+					"label":"In what sector was he or she mainly working? was his or her employment status in that establishement/business/industry?",
+					"code":"P17",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Public (Governement)",
+							"02":"Semi-Public/Parastatal",
+							"03":"Private Formal",
+							"04":"Private Informal",
+							"05":"NGO/CSO (Local)",
+							"06":"NGO/CSO (International)",
+							"07":"International Organisation"
+						}
+					]
+				},
+				{
+					"label":"Does he or she have difficulty in seeing even if wearing glasses? Will you say that he or she has no difficulty, some diffuculty, a lot of dificulty or cannot see at all?",
+					"code":"P18a",
+					"type":"radio",
+					"options":[
+						{
+							"01":"No Difficulty",
+							"02":"Yes, some difficulty",
+							"03":"Yes, a lot of difficulty",
+							"04":"Cannot do at all"
+						}
+					]
+				},
+				{
+					"label":"Does he or she have difficulty hearing even if using a hearing aid? Will you say that he or she has no difficulty, some difficulty, a lot of difficulty or cannot hear at all?",
+					"code":"P18b",
+					"type":"radio",
+					"options":[
+						{
+							"01":"No Difficulty",
+							"02":"Yes, some difficulty",
+							"03":"Yes, a lot of difficulty",
+							"04":"Cannot do at all"
+						}
+					]
+				},
+				{
+					"label":"Does he or she have difficulty walking or climbing stairs? Will you say that he or she has no difficulty, some difficulty, a lot of difficulty or cannot do at all?",
+					"code":"P18c",
+					"type":"radio",
+					"options":[
+						{
+							"01":"No Difficulty",
+							"02":"Yes, some difficulty",
+							"03":"Yes, a lot of difficulty",
+							"04":"Cannot do at all"
+						}
+					]
+				},
+				{
+					"label":"Does he or she have difficulty remembering or concentrating? Will you say that he or she has no difficulty, some difficulty, a lot of difficulty or cannot remember or concentrate at all?",
+					"code":"P18d",
+					"type":"radio",
+					"options":[
+						{
+							"01":"No Difficulty",
+							"02":"Yes, some difficulty",
+							"03":"Yes, a lot of difficulty",
+							"04":"Cannot do at all"
+						}
+					]
+				},
+				{
+					"label":"Does he or she have difficulty with self-care such as washing all over the body or dressing? Will you say that he or she has no difficulty, some difficulty, a lot of difficulty or cannot do at all?",
+					"code":"P18e",
+					"type":"radio",
+					"options":[
+						{
+							"01":"No Difficulty",
+							"02":"Yes, some difficulty",
+							"03":"Yes, a lot of difficulty",
+							"04":"Cannot do at all"
+						}
+					]
+				},
+				{
+					"label":"Using his/her usual language, does he or she have difficulty communicating (e.g. understanding or being understood by others)? Will you say that he or she has no difficulty, some difficulty, a lot of difficulty or cannot communicate at all?",
+					"code":"P18f",
+					"type":"radio",
+					"options":[
+						{
+							"01":"No Difficulty",
+							"02":"Yes, some difficulty",
+							"03":"Yes, a lot of difficulty",
+							"04":"Cannot do at all"
+						}
+					]
+				},
+				{
+					"label":"Does he or she use Mobile Phone (smart)?",
+					"code":"P19ai",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she use Mobile Phone(Non-Smart)?",
+					"code":"P19aii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she use Cordless Cellular telephone?",
+					"code":"P19aiii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she use Fixed telephone line?",
+					"code":"P19aiv",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she use Tablet?",
+					"code":"P19av",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she use Laptop?",
+					"code":"P19avi",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she use Desktop Computer?",
+					"code":"P19avii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she use Television (Digital TV)?",
+					"code":"P19aviii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she use Television (Analogue)?",
+					"code":"P19aix",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she use Radio/FM?",
+					"code":"P19ax",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she own Mobile Phone (smart)?",
+					"code":"P19bi",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she own Mobile Phone(Non-Smart)?",
+					"code":"P19bii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she own Cordless Cellular telephone?",
+					"code":"P18biii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she own Fixed telephone line?",
+					"code":"P19biv",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she own Tablet?",
+					"code":"P19bv",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she own Laptop?",
+					"code":"P19bvi",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she own Desktop Computer?",
+					"code":"P19bvii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she own Television (Digital TV)?",
+					"code":"P19bviii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she own Television (Analogue)?",
+					"code":"P19bix",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Does he or she own Radio/FM?",
+					"code":"P19bx",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Did he or she use internet in the last 3 months, using mobile phone?",
+					"code":"P19ci",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Did he or she use internet in the last 3 months, using laptop?",
+					"code":"P19cii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Did he or she use internet in the last 3 months, using desktop?",
+					"code":"P19ciii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Did he or she use internet in the last 3 months, using tablet?",
+					"code":"P19civ",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Did he or she use internet in the last 3 months, using other devices?",
+					"code":"P19cv",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Did he or she use Mobile Broadband to access the internet?",
+					"code":"P19di",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Did he or she use Fixed/Fibre Broadband to access the internet?",
+					"code":"P19dii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Did he or she use Satellite Broadband to access the internet?",
+					"code":"P19diii",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"Did he or she use mobile phone for mobile money in the last 3 months?",
+					"code":"P19e",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					]
+				},
+				{
+					"label":"How many male children has he or she ever born alive?",
+					"code":"P20ai",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"How many female children has he or she ever born alive?",
+					"code":"P20aii",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"How many male children ever born alive to him/her are still surviving (living with you or elsewhere)?",
+					"code":"P20bi",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"How many female children ever born alive to him/her are still surviving (living with you or elsewhere)?",
+					"code":"P20bii",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"How many male children has he or she born alive in the past 12 months?",
+					"code":"P20ci",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"How many female children has he or she born alive in the past 12 months?",
+					"code":"P20cii",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"Has any member of this household died in the past 12 months?",
+					"code":"M01",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"2",
+							"next":"H01"
+						}
+					]
+				},
+				{
+					"label":"What was the name of the deceased?",
+					"code":"M02A",
+					"type":"text"
+				},
+				{
+					"label":"What was the sex of the deceased?",
+					"code":"M02B",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Male",
+							"02":"Female"
+						}
+					]
+				},
+				{
+					"label":"How old was the deceased at death? Age in completed years",
+					"code":"M02BC",
+					"type":"text"
+				},
+				{
+					"label":"Was the death due to accident, violence, homicide or suicide?",
+					"code":"M02BD",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes, accident",
+							"02":"Yes, violence",
+							"03":"Yes, homicide",
+							"04":"Yes, suicide",
+							"05":"No"
+						}
+					]
+				}
+			]
+		},
+		{
+			"label":"Housing Condition (For Vacant Housing Unit Answer Only H01, H02 and H03)",
+			"fields":[
+				{
+					"label":"In what type of dwelling does the household live?",
+					"code":"H01",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Separate House",
+							"02":"Semi-detached house",
+							"03":"Flat/Apartment",
+							"04":"Compound House (rooms)",
+							"05":"Huts/Buildings (same compound)",
+							"06":"Huts/Buildings (different compound)",
+							"07":"Tent",
+							"08":"Container",
+							"09":"Wooden/Kiosk",
+							"10":"Living quaters attached to office/shop",
+							"11":"Uncompleted building",
+							"12":"Other"
+						}
+					]
+				},
+				{
+					"label":"What is the main construction material of the outer walls of this dwelling?",
+					"code":"H02",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Mud bricks/earth",
+							"02":"Wood",
+							"03":"Metal sheet/slate/asbestos",
+							"04":"Stone",
+							"05":"Burnt bricks",
+							"06":"Cement blocks/concrete",
+							"07":"Landcrete",
+							"08":"Bamboo",
+							"09":"Palm leaves/Thatch (grass)/Raffia",
+							"10":"Other"
+						}
+					]
+				},
+				{
+					"label":"Roof",
+					"code":"H03",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Mud bricks/earth",
+							"02":"Wood",
+							"03":"Metal sheet/slate/asbestos",
+							"04":"Stone",
+							"05":"Burnt bricks",
+							"06":"Cement blocks/concrete",
+							"07":"Landcrete",
+							"08":"Bamboo",
+							"09":"Thatch/Palm leaves or Raffia",
+							"10":"Other"
+						}
+					]
+				},
+				{
+					"label":"Floor: What is the main construction material of the floor of this dwelling?",
+					"code":"H04",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Earth/Mud",
+							"02":"Cement/Concrete",
+							"03":"Carpet",
+							"04":"Burnt bricks",
+							"05":"Wood",
+							"06":"Vinyl tiles",
+							"07":"Ceramic/Porcelain/Granite/Marbel tiles",
+							"08":"Tarrazzo/Terrazzo tiles",
+							"09":"Other"
+						}
+					]
+				},
+				{
+					"label":"Tenure/Holding arrangement: What is the present holding/tenancy arrangement of this dwelling?",
+					"code":"H05a",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Owner occupied (>> H05b)",
+							"02":"Renting",
+							"03":"Rent-free",
+							"04":"Perching",
+							"05":"Squatting",
+							"06":"Caretaker",
+							"07":"Other"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"2",
+							"next":"H06"
+						},
+						{
+							"answer":"3",
+							"next":"H06"
+						},
+						{
+							"answer":"4",
+							"next":"H06"
+						},
+						{
+							"answer":"5",
+							"next":"H06"
+						},
+						{
+							"answer":"6",
+							"next":"H06"
+						},
+						{
+							"answer":"7",
+							"next":"H06"
+						}
+					]
+				},
+				{
+					"label":"How did you acquire this building",
+					"code":"H05b",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Built by myself/household member",
+							"02":"Bought from an individual",
+							"03":"Bought from an estate developer",
+							"04":"Inherited",
+							"05":"Family property",
+							"06":"Mortgaged",
+							"07":"Gift",
+							"08":"Other"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"0",
+							"next":"H07"
+						}
+					]
+				},
+				{
+					"label":"Who owns the dwelling?",
+					"code":"H06",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Estate developer",
+							"02":"Relative not household member",
+							"03":"Other private individual",
+							"04":"Private employer",
+							"05":"Other private agency",
+							"06":"Public/Governemtn ownership",
+							"07":"Other"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"0",
+							"next":"H07"
+						}
+					]
+				},
+				{
+					"label":"Rooms:  Does the household share this sleeping room withh other households?",
+					"code":"H07c",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes",
+							"02":"No"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"2",
+							"next":"H08"
+						}
+					]
+				},
+				{
+					"label":"How many households, including your household, share this sleeping room?",
+					"code":"H07d",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"What is the main source of lightining for your dwelling?",
+					"code":"H08a",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Electricity (mains)",
+							"02":"Electricity (local mini Grid)",
+							"03":"Electricity (private generator)",
+							"04":"Electricity (solar panel/inventor)",
+							"05":"Electricity (wind energy)",
+							"06":"Kerosene lamp",
+							"07":"Gas lamp",
+							"08":"Solar energy",
+							"09":"Candle",
+							"10":"Flashlight/Torch",
+							"11":"Other"
+						}
+					]
+				},
+				{
+					"label":"What is the secondary source of lightining for your dwelling?",
+					"code":"H08b",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Electricity (mains)",
+							"02":"Electricity (local mini Grid)",
+							"03":"Electricity (private generator)",
+							"04":"Electricity (solar panel/inventor)",
+							"05":"Electricity (wind energy)",
+							"06":"Kerosene lamp",
+							"07":"Gas lamp",
+							"08":"Solar energy",
+							"09":"Candle",
+							"10":"Flashlight/Torch",
+							"11":"Other"
+						}
+					]
+				},
+				{
+					"label":"Room: How many rooms does this household occupy?",
+					"code":"H07a",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"Room: How many of the rooms are used for sleeping?",
+					"code":"H07b",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				}
+			]
+		},
+		{
+			"label":"Water Supply",
+			"fields":[
+				{
+					"label":"What is the main source of drinking water for the household?",
+					"code":"H09a",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Pipe-borne inside dwelling",
+							"02":"Pipe-borne outside dwelling but on compound",
+							"03":"Pipe-borne outside dwelling but from neighbour's house",
+							"04":"Public tap/Standpipe",
+							"05":"Borehole/Pump/Tube well",
+							"06":"Protected well",
+							"07":"Rain water",
+							"08":"Protected spring",
+							"09":"Bottled water",
+							"10":"Sachet water",
+							"11":"Tanker supply/Vendor provided",
+							"12":"Unprotedted spring",
+							"13":"River/Stream",
+							"14":"Dugout/Pond/lake/Dam/ Canal",
+							"15":"Other"
+						}
+					]
+				},
+				{
+					"label":"What is the main source of water used by your household for other domestic purposes such as cooking and washing?",
+					"code":"H09c",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Pipe-borne inside dwelling",
+							"02":"Pipe-borne outside dwelling but on compound",
+							"03":"Pipe-borne outside dwelling but from neighbour's house",
+							"04":"Public tap/Standpipe",
+							"05":"Borehole/Pump/Tube well",
+							"06":"Protected well",
+							"07":"Rain water",
+							"08":"Protected spring",
+							"09":"Bottled water",
+							"10":"Sachet water",
+							"11":"Tanker supply/Vendor provided",
+							"12":"Unprotedted spring",
+							"13":"River/Stream",
+							"14":"Dugout/Pond/lake/Dam/ Canal",
+							"15":"Other"
+						}
+					]
+				},
+				{
+					"label":"How long does it take to go to the water source, get water and come back?",
+					"code":"H09b",
+					"type":"time"
+				},
+				{
+					"label":"What type of cooking space does this household use?",
+					"code":"H11",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Separate room for exclusive use of household",
+							"02":"Separate room shared with other household",
+							"03":"Enclosure without roof",
+							"04":"Structure with roof but without walls",
+							"05":"Bedroom/Hall/Living Room",
+							"06":"Veranda",
+							"07":"Open Space in compound",
+							"08":"Other"
+						}
+					]
+				}
+			]
+		},
+		{
+			"label":"Cooking Fuel",
+			"fields":[
+				{
+					"label":"What is the main source of cooking fuel for this household?",
+					"code":"H10a",
+					"type":"radio",
+					"options":[
+						{
+							"01":"None (No Cooking)  room for exclusive use of household",
+							"02":"Wood",
+							"03":"LPG",
+							"04":"Bio Gas",
+							"05":"Electricity",
+							"06":"Kerosene",
+							"07":"Charcoal",
+							"08":"Crop Residue",
+							"09":"Saw Dust",
+							"10":"Animal waste",
+							"11":"Cooking gel",
+							"12":"Other"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"1",
+							"next":"H12"
+						}
+					]
+				},
+				{
+					"label":"What is the secondary source of cooking fuel for this household?",
+					"code":"H10b",
+					"type":"radio",
+					"options":[
+						{
+							"01":"None (No Cooking)  room for exclusive use of household",
+							"02":"Wood",
+							"03":"LPG",
+							"04":"Bio Gas",
+							"05":"Electricity",
+							"06":"Kerosene",
+							"07":"Charcoal",
+							"08":"Crop Residue",
+							"09":"Saw Dust",
+							"10":"Animal waste",
+							"11":"Cooking gel",
+							"12":"Other"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"1",
+							"next":"H12"
+						}
+					]
+				},
+				{
+					"label":"What type of bathing facility is used by this household?",
+					"code":"H10b",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Own bathroom for exclusive use",
+							"02":"Shared separate bathroom in same house",
+							"03":"Private open cubicle",
+							"04":"Shared open cubicle",
+							"05":"Public bath house",
+							"06":"Bathroom in another house",
+							"07":"Open space around house",
+							"08":"In a river, pond, lake or dam",
+							"09":"Other"
+						}
+					]
+				}
+			]
+		},
+		{
+			"label":"Sanitation",
+			"fields":[
+				{
+					"label":"Solid Waste Disposal: What type of refuse receptacle (bin, sac, polythene, etc) is mainly used by your household?",
+					"code":"S01",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Standard waste bin",
+							"02":"Covered container",
+							"03":"Uncovered container",
+							"04":"Covered/Uncovered basket",
+							"05":"Sack",
+							"06":"Polythene bag",
+							"07":"Other"
+						}
+					]
+				},
+				{
+					"label":"Solid Waste Disposal: How does the household dispose of rubbish(reuse)?",
+					"code":"S02",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Compaction truck",
+							"02":"Door-to-door truck",
+							"03":"Motorized tricycle operators",
+							"04":"Central container",
+							"05":"Bury in the ground",
+							"06":"Burn",
+							"07":"Public dump/open space",
+							"08":"Unauthorized attendants (junkies)",
+							"09":"Dumped indiscriminately",
+							"10":"Other"
+						}
+					]
+				}
+			]
+		},
+		{
+			"label":"Toilet Facility",
+			"fields":[
+				{
+					"label":"What type of toilet facility is mainly used by the household? Kindly observe",
+					"code":"S03",
+					"type":"radio",
+					"options":[
+						{
+							"01":"No toilet facility",
+							"02":"Septic tank (manhole)",
+							"03":"KVIP/VIP",
+							"04":"Pit latrine",
+							"05":"Enviro Loo",
+							"06":"Bio-digester (e.g. bio fill)",
+							"07":"Bio gas",
+							"08":"Bucket/Pan",
+							"09":"Portable toilet (e.g. Water potti)",
+							"10":"Sewer",
+							"11":"Public Toilet",
+							"12":"Other"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"1",
+							"next":"S09"
+						},
+						{
+							"answer":"11",
+							"next":"S10"
+						}
+					]
+				},
+				{
+					"label":"What type of drop hole/seat is mainly used by the household?",
+					"code":"S04",
+					"type":"radio",
+					"options":[
+						{
+							"01":"WC Seat",
+							"02":"WC squat-hole",
+							"03":"Pour flush bowl",
+							"04":"Urine-diverting dry toilet (UDDT)",
+							"05":"Concrete pedestal/slab",
+							"06":"Wooden pedestal/slab",
+							"07":"Satopan",
+							"08":"Micro flush",
+							"09":"Other"
+						}
+					]
+				},
+				{
+					"label":"How many usable toilet rooms (cubicles) are available to the household?",
+					"code":"S05",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"Do you share this toilet facility with other households?",
+					"code":"S06",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes, with other household(s) in this house",
+							"02":"Yes, with other household(s) from another house",
+							"03":"Yes, with other household(s), but located in another house",
+							"04":"No"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"3",
+							"next":"S08"
+						},
+						{
+							"answer":"4",
+							"next":"S08"
+						}
+					]
+				},
+				{
+					"label":"How many households including your household use this toilet?",
+					"code":"S07",
+					"type":"text",
+					"required":"false",
+					"inputType":"1"
+				},
+				{
+					"label":"How are anal cleasing materials mainly disposed in this household?",
+					"code":"S08",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Burn",
+							"02":"Flush/drop",
+							"03":"Anal wash",
+							"04":"Waste receptacle (bin, sac, polythene, etc)",
+							"05":"Bury in the ground",
+							"06":"Dumped indiscriminately",
+							"07":"Other"
+						}
+					],
+					"gotoIf":[
+						{
+							"answer":"7",
+							"next":"S10"
+						}
+					]
+				},
+				{
+					"label":"Defaecation point for households without toilet facility in dwelling: Where do the household members mainly defaecate?",
+					"code":"S09",
+					"type":"radio",
+					"options":[
+						{
+							"01":"In a chamber pot",
+							"02":"In a polythene bag",
+							"03":"Open defaecation (bush/beach/field)"
+						}
+					]
+				}
+			]
+		},
+		{
+			"label":"Hygiene Practice",
+			"fields":[
+				{
+					"label":"Where do members of this household most often wash their hands after defaecation?",
+					"code":"S10",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Fixed facility in dwelling",
+							"02":"Fixed facility in yard/plot",
+							"03":"Mobile object (bucket/jug/kettle)",
+							"04":"No handwashing place in dwelling/yard/plot"
+						}
+					]
+				},
+				{
+					"label":"Is the handwashing after defaecation done under running water with soap and detergent?",
+					"code":"S11",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Yes, always",
+							"02":"Yes, sometimes",
+							"03":"No"
+						}
+					]
+				},
+				{
+					"label":"How does your household mainly dispose of waste water (from bathroom, kitchen, laundry)?",
+					"code":"S12",
+					"type":"radio",
+					"options":[
+						{
+							"01":"Through the sewerage system",
+							"02":"Through drains/gutter",
+							"03":"Through drainage into pit (soak away)",
+							"04":"Thrown onto the ground/street/outside",
+							"05":"Other"
+						}
+					]
+				}
+			]
+		}
+	]
+}

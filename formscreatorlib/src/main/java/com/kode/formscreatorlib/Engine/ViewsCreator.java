@@ -2,6 +2,7 @@ package com.kode.formscreatorlib.Engine;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
@@ -29,9 +30,11 @@ import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+
 import com.jamper.searchingspinner.UI.SearchingSpinner;
 import com.kode.formscreatorlib.Callbacks.CallBack;
 import com.kode.formscreatorlib.Callbacks.OnItemSelected;
+import com.kode.formscreatorlib.Model.OptionsForms;
 import com.kode.formscreatorlib.R;
 import com.kode.formscreatorlib.Utils.DatePickerClass;
 import com.kode.formscreatorlib.Utils.FormsUtils;
@@ -158,14 +161,14 @@ public class ViewsCreator {
     }
 
 
-    public Button button(String text) {
+    public Button button(String tag, String text) {
         Button button = new Button(mContext);
         button.setText(text);
+        button.setTextColor(Color.WHITE);
         button.setLayoutParams(params);
         button.setTextSize(16);
         button.setBackgroundColor(mContext.getResources().getColor(R.color.black));
-        // button.setFocusBackgroundColor(mContext.getResources().getColor(R.color.blue));
-        //button.setRadius(30);
+        button.setTag(tag);
         viewList.add(button);
         return button;
     }
@@ -324,37 +327,99 @@ public class ViewsCreator {
         return radioGroup;
     }
 
-    public RadioGroup radioGroup(ArrayList<String> list, String tag) {
+    public LinearLayout radioGroup(String header,String tag, ArrayList<OptionsForms> list) {
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        p.gravity = Gravity.CENTER_HORIZONTAL;
+
+        final LinearLayout linearLayout = new LinearLayout(mContext);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setLayoutParams(p);
+        linearLayout.setTag(tag);
+
+        linearLayout.addView(textView(header, true));
+
         final RadioGroup radioGroup = new RadioGroup(mContext);
-        radioGroup.setLayoutParams(params);
+        radioGroup.setLayoutParams(p);
         radioGroup.setTag(tag);
-        radioGroup.setOrientation(LinearLayout.HORIZONTAL);
+        radioGroup.setOrientation(LinearLayout.VERTICAL);
 
         if (list != null && list.size() != 0) {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
-            params.gravity = Gravity.CENTER_HORIZONTAL;
-            //  params.setMargins(16, 16, 16, 16);
 
-            for (String str : list) {
-                final RadioButton radioButton = new RadioButton(mContext);
-                radioButton.setText(String.format("%s     ", str));
-                radioButton.setLayoutParams(params);
-                radioButton.setOnClickListener(new View.OnClickListener() {
+            final OptionsForms option = list.get(0);
+
+            if (option.getId01() != null)
+                radioGroup.addView(radioButton("01", option.getId01(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        radioGroup.setTag(radioButton.getText().toString());
-                        //  Fso.getTransaction().setGender(radioButton.getText().toString());
+                        radioGroup.setTag(option.getId01());
                     }
-                });
-                radioGroup.addView(radioButton);
-            }
+                }));
+
+            if (option.getId02() != null)
+                radioGroup.addView(radioButton("02", option.getId02(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        radioGroup.setTag(option.getId02());
+                    }
+                }));
+
+            if (option.getId03() != null)
+                radioGroup.addView(radioButton("03", option.getId03(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        radioGroup.setTag(option.getId03());
+                    }
+                }));
+
+            if (option.getId04() != null)
+                radioGroup.addView(radioButton("04", option.getId04(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        radioGroup.setTag(option.getId04());
+                    }
+                }));
+
+            if (option.getId05() != null)
+                radioGroup.addView(radioButton("05", option.getId05(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        radioGroup.setTag(option.getId05());
+                    }
+                }));
+
+            if (option.getId06() != null)
+                radioGroup.addView(radioButton("06", option.getId06(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        radioGroup.setTag(option.getId06());
+                    }
+                }));
+
+
         }
 
         viewList.add(radioGroup);
-        return radioGroup;
+        linearLayout.addView(radioGroup);
+        return linearLayout;
     }
 
-    public LinearLayout datePicker(final FragmentManager fragmentManager, String tag, final CallBack callBack) {
+
+    private RadioButton radioButton(String tag, String text, View.OnClickListener onclick) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+
+        final RadioButton radioButton = new RadioButton(mContext);
+        radioButton.setText(String.format("%s     ", text));
+        radioButton.setTag(tag);
+        radioButton.setLayoutParams(params);
+        radioButton.setOnClickListener(onclick);
+        radioButton.setLayoutParams(params);
+
+        return radioButton;
+    }
+
+
+    public LinearLayout datePicker( String tag, String text,final android.support.v4.app.FragmentManager fragmentManager) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER_HORIZONTAL;
         params.setMargins(16, 16, 16, 16);
@@ -366,15 +431,10 @@ public class ViewsCreator {
 
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
         p.gravity = Gravity.CENTER_HORIZONTAL;
-        //  p.setMargins(16, 16, 16, 16);
-
-        //  LinearLayout.LayoutParams p1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 7f);
-        // p1.gravity = Gravity.CENTER_HORIZONTAL;
-        // p1.setMargins(16, 16, 16, 16);
 
         final EditText editText = new EditText(mContext);
         editText.setEnabled(false);
-        editText.setHint("dd/MM/yyyy");
+        editText.setHint("dd/MM/yyyy (" + text+ ")");
         editText.setTextSize(14f);
         editText.setTag(tag);
         editText.setHintTextColor(mContext.getResources().getColor(R.color.transparent_black_hex_5));
@@ -385,11 +445,11 @@ public class ViewsCreator {
 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ImageView imageView = (ImageView) inflater.inflate(R.layout.theme_pimageview, null);
-        imageView.setPadding(2, 2, 2, 2);
+       // imageView.setPadding(2, 2, 2, 2);
 
         LinearLayout.LayoutParams pImage = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.FILL_PARENT);
-        pImage.weight = 1f;
+        pImage.weight = .3f;
         pImage.gravity = Gravity.END;
 
 
@@ -406,19 +466,19 @@ public class ViewsCreator {
                     public void onItemSelected(String item) {
                         editText.setText(item);
                         linearLayout.setTag(item);
-                        if (callBack != null)
-                            callBack.execute(item);
+                       /* if (callBack != null)
+                            callBack.execute(item);*/
                     }
                 });
             }
         });
 
-       /* Glide.with(mContext)
+      /*  Glide.with(mContext)
                 .load("")
                 .placeholder(R.drawable.calendar_32)
                 .into(imageView);*/
 
-        new FormsUtils(mContext).setImageResource(R.drawable.calendar_icon, imageView);
+        new FormsUtils(mContext).setImageResource(R.drawable.calendar_32, imageView);
 
         linearLayout.addView(editText);
         linearLayout.addView(imageView);

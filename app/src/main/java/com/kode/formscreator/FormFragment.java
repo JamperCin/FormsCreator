@@ -22,7 +22,6 @@ public class FormFragment extends Fragment implements View.OnClickListener {
     Context context;
     Activity mContext;
     View parentView;
-    String productTypeName,productTypeCode;
     TextView tvPageHeader;
     CustomViewPager viewPager;
 
@@ -44,29 +43,17 @@ public class FormFragment extends Fragment implements View.OnClickListener {
         parentView = view;
 
         viewPager = view.findViewById(R.id.viewPager);
+        tvPageHeader = view.findViewById(R.id.tv_page_header);
+
         viewPager.setPagingEnabled(true);
 
-       /* *//** Get bundle data **//*
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            productTypeName = bundle.getString("product_name","Product Type");
-            productTypeCode = bundle.getString("code","Product Code");
-        }
-*/
-        /** intiialize views **/
-       // initViews(view);
 
         /** set view pager **/
-        new EngineBean(getActivity()).Builder("forms.json", viewPager);
+        new EngineBean(getActivity(), getFragmentManager()).setHeaderView(tvPageHeader).Builder("forms.json", viewPager);
 
     }
 
 
-    private void initViews(View view) {
-        tvPageHeader = (TextView) view.findViewById(R.id.tv_page_header);
-        tvPageHeader.setText(productTypeName);
-
-    }
 
 
     @Override

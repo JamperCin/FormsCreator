@@ -3,11 +3,12 @@ package com.kode.formscreatorlib.Engine;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -25,6 +26,8 @@ public class EngineBean {
     private int pageSize;
     private MainPagerAdapter pagerAdapter;
     private ViewPager viewPager;
+    private FragmentManager fragmentManager;
+    private TextView textView;
 
 
     /**
@@ -34,7 +37,23 @@ public class EngineBean {
      **/
     public EngineBean(Activity mContext) {
         this.mContext = mContext;
+    }
 
+
+    /**
+     * Create constructor which takes the Activity context as its param
+     *
+     * @param mContext the Activity or calling fragment
+     **/
+    public EngineBean(Activity mContext, FragmentManager fragmentManager) {
+        this.mContext = mContext;
+        this.fragmentManager = fragmentManager;
+    }
+    
+    
+    public EngineBean setHeaderView(TextView textView){
+        this.textView = textView;
+        return this;
     }
 
 
@@ -112,8 +131,12 @@ public class EngineBean {
 
 
     private void convertJsonToObj() {
-        gson = new GsonBuilder().create();
-        formFormat = gson.fromJson(json, MainForms.class);
+       // try {
+            gson = new GsonBuilder().create();
+            formFormat = gson.fromJson(json, MainForms.class);
+       // }catch (JsonSyntaxException e){
+        //    e.printStackTrace();
+       // }
     }
 
 
@@ -123,6 +146,12 @@ public class EngineBean {
      **/
     private void generateViews() {
         //Generate the number
+        if (formFormat == null || formFormat.getPages() == null)
+            return;
+
+        if (textView != null)
+            textView.setText(String.format("%s\n%s", formFormat.getTitle(), formFormat.getSection()));
+
         pageSize = formFormat.getPages().size();
 
         // Create an initial view to display; must be a subclass of FrameLayout.
@@ -135,8 +164,9 @@ public class EngineBean {
             svFormPage = (ScrollView) inflater.inflate(R.layout.form_controls_fragment, null);
 
             /** use the controls creator to create form controls **/
-            controlsCreator = new ControlsCreator(mContext, svFormPage, formFormat.getPages().get(i));
+            controlsCreator = new ControlsCreator(mContext,fragmentManager, svFormPage);
             svFormPage = controlsCreator.generate(formFormat.getPages().get(i));
+
 
             pagerAdapter.addView(svFormPage, i);
             pagerAdapter.notifyDataSetChanged();
