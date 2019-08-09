@@ -13,9 +13,10 @@ This project is to easily use json to create forms for quick onboarding  used by
   
   **Step 2: Add the dependency to your dependencies in the build.gradle (Module:App level)**
 
-         	dependencies {
-	        implementation 'com.github.JamperCin:formscreator:1.0.4'
+         		dependencies {
+	        implementation 'com.github.JamperCin:formscreator:1.0.5'
 	}
+
 
   
   **Step 3: Just call it from your activity or fragment like this:**
