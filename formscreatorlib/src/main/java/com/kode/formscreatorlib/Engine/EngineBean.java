@@ -94,7 +94,7 @@ public class EngineBean {
     private void setViewPager() {
         try {
             pagerAdapter = new MainPagerAdapter();
-            viewPager.setPagingEnabled(true); //TODO
+            viewPager.setPagingEnabled(false); //TODO set this to false to stop swiping pages
             viewPager.setAdapter(pagerAdapter);
         } catch (NullPointerException e) {
             e.printStackTrace();
