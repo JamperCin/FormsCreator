@@ -6,6 +6,7 @@ public class PageForms {
     private String repeat;
     private boolean isRepeat;
     private String label;
+    private String fieldCode;
     private ArrayList<FieldsForms> fields = new ArrayList<>();
 
 
@@ -25,6 +26,10 @@ public class PageForms {
         return fields;
     }
 
+
+    public String getFieldCode() {
+        return fieldCode;
+    }
 
     public void setRepeat(String repeat) {
         this.repeat = repeat;

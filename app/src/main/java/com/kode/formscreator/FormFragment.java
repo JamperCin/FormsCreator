@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.kode.formscreatorlib.Callbacks.OnSubmitOnClick;
 import com.kode.formscreatorlib.Engine.EngineBean;
+import com.kode.formscreatorlib.Utils.CustomViewPager;
 
 
 /**
@@ -49,7 +52,15 @@ public class FormFragment extends Fragment implements View.OnClickListener {
 
 
         /** set view pager **/
-        new EngineBean(getActivity(), getFragmentManager()).setHeaderView(tvPageHeader).Builder("forms.json", viewPager);
+        new EngineBean(getActivity(), getFragmentManager())
+                .setHeaderView(tvPageHeader)
+                .setOnSubmitClickListener(new OnSubmitOnClick() {
+                    @Override
+                    public void submit() {
+                        Toast.makeText(context, "Make a call to Http API to submit all data or save data", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .Builder("forms.json", viewPager);
 
     }
 

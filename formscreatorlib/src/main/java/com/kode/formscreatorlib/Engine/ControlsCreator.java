@@ -3,14 +3,15 @@ package com.kode.formscreatorlib.Engine;
 import android.app.Activity;
 import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.kode.formscreatorlib.Callbacks.OnSubmitOnClick;
 import com.kode.formscreatorlib.Model.FieldsForms;
 import com.kode.formscreatorlib.Model.PageForms;
 
@@ -22,6 +23,9 @@ public class ControlsCreator {
     private PageForms pageForms;
     private ScrollView svFormPage;
     private FragmentManager fragmentManager;
+    private ViewPager viewPager;
+    private MainPagerAdapter mAdapter;
+    private OnSubmitOnClick callBack;
 
     public ControlsCreator(Activity mContext, FragmentManager fragmentManager, ScrollView scrollView) {
         this.mContext = mContext;
@@ -36,6 +40,10 @@ public class ControlsCreator {
         int dpAsPixels = (int) (1 * scale + 0.5f);
         svFormPage.setFillViewport(true);
         svFormPage.setPadding(dpAsPixels, 0, dpAsPixels, 0);
+
+        /**Attach a field code or set a tag to each page created**/
+        if (pageBean.getFieldCode() != null)
+            svFormPage.setTag(pageBean.getFieldCode());
 
         /** Place Linearlayout in scrollview **/
         LinearLayout llFormPage = new LinearLayout(mContext);
@@ -53,6 +61,18 @@ public class ControlsCreator {
     }
 
 
+    public ControlsCreator setViewPager(ViewPager viewPager, MainPagerAdapter adapter) {
+        this.viewPager = viewPager;
+        this.mAdapter = adapter;
+        return this;
+    }
+
+    public ControlsCreator setOnSubmitClickListener(OnSubmitOnClick callBack){
+        this.callBack = callBack;
+        return this;
+    }
+
+
     private LinearLayout setControls(List<FieldsForms> fieldsBean, LinearLayout llFormPage) {
         String type;
         ViewsCreator viewsCreator = new ViewsCreator(mContext);
@@ -66,30 +86,43 @@ public class ControlsCreator {
                     llFormPage.addView(space);
                     break;
                 case "text":
-                    EditText editText = viewsCreator.editText(field.getLabel(), field.getInputType(), field.getCode());
+                    EditText editText = viewsCreator.editText(field);
                     llFormPage.addView(editText);
                     break;
                 case "textView":
-                    TextView textView = viewsCreator.textView(field.getLabel(),false);
+                    TextView textView = viewsCreator.textView(field.getLabel(), false);
                     llFormPage.addView(textView);
                     break;
                 case "textViewBold":
-                    TextView textViewBold = viewsCreator.textView(field.getLabel(),true);
+                    TextView textViewBold = viewsCreator.textView(field.getLabel(), true);
                     llFormPage.addView(textViewBold);
                     break;
+
                 case "textarea":
-                    EditText textarea = viewsCreator.textArea(field.getLabel(), field.getCode());
+                    EditText textarea = viewsCreator.textArea(field);
                     llFormPage.addView(textarea);
                     break;
 
                 case "radio":
-                    LinearLayout radioGroup = viewsCreator.radioGroup(field.getLabel(),field.getCode(), field.getOptions());
+                    LinearLayout radioGroup = viewsCreator.radioGroup(field);
                     llFormPage.addView(radioGroup);
                     break;
 
                 case "button":
-                    Button button = viewsCreator.button(field.getCode(), field.getLabel());
+                    Button button = viewsCreator.button(field, viewPager, mAdapter, fieldsBean);
                     llFormPage.addView(button);
+
+                    break;
+
+                case "buttonControls":
+                    LinearLayout buttonControls = viewsCreator.previousNextButton(field, viewPager, mAdapter, fieldsBean);
+                    llFormPage.addView(buttonControls);
+
+                    break;
+
+                case "submitButton" :
+                    Button submitBtn = viewsCreator.submitButton(field, callBack);
+                    llFormPage.addView(submitBtn);
                     break;
 
                 case "date":

@@ -1,4 +1,4 @@
-package com.kode.formscreator;
+package com.kode.formscreatorlib.Utils;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

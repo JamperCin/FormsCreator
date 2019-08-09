@@ -12,8 +12,11 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.kode.formscreatorlib.Callbacks.OnSubmitOnClick;
 import com.kode.formscreatorlib.Model.MainForms;
 import com.kode.formscreatorlib.R;
+import com.kode.formscreatorlib.Utils.CustomViewPager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,9 +28,10 @@ public class EngineBean {
     private String json;
     private int pageSize;
     private MainPagerAdapter pagerAdapter;
-    private ViewPager viewPager;
+    private CustomViewPager viewPager;
     private FragmentManager fragmentManager;
     private TextView textView;
+    private OnSubmitOnClick callBack;
 
 
     /**
@@ -57,13 +61,19 @@ public class EngineBean {
     }
 
 
+    public EngineBean setOnSubmitClickListener(OnSubmitOnClick callBack){
+        this.callBack = callBack;
+        return this;
+    }
+
+
     /**
      * This is the builder class that gets the json file from the assets and convert it to a Gson file.
      * This is later converted and mapped to the MainForms Object which is later used in creating the views
      *
      * @param jsonFileName This is the json file name saved in the asset
      **/
-    public EngineBean Builder(String jsonFileName, ViewPager viewPager) {
+    public EngineBean Builder(String jsonFileName, CustomViewPager viewPager) {
         this.viewPager = viewPager;
 
         this.readJsonFile(jsonFileName);
@@ -84,6 +94,7 @@ public class EngineBean {
     private void setViewPager() {
         try {
             pagerAdapter = new MainPagerAdapter();
+            viewPager.setPagingEnabled(true); //TODO
             viewPager.setAdapter(pagerAdapter);
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -131,12 +142,12 @@ public class EngineBean {
 
 
     private void convertJsonToObj() {
-       // try {
+        try {
             gson = new GsonBuilder().create();
             formFormat = gson.fromJson(json, MainForms.class);
-       // }catch (JsonSyntaxException e){
-        //    e.printStackTrace();
-       // }
+        }catch (JsonSyntaxException e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -164,27 +175,18 @@ public class EngineBean {
             svFormPage = (ScrollView) inflater.inflate(R.layout.form_controls_fragment, null);
 
             /** use the controls creator to create form controls **/
-            controlsCreator = new ControlsCreator(mContext,fragmentManager, svFormPage);
-            svFormPage = controlsCreator.generate(formFormat.getPages().get(i));
+            controlsCreator = new ControlsCreator(mContext,fragmentManager, svFormPage)
+                    .setViewPager(viewPager, pagerAdapter)
+                    .setOnSubmitClickListener(callBack);
 
+            svFormPage = controlsCreator.generate(formFormat.getPages().get(i));
 
             pagerAdapter.addView(svFormPage, i);
             pagerAdapter.notifyDataSetChanged();
         }
 
-       /* // Set page indicator
-        pagerSlider = (PodSlider) view.findViewById(R.id.pager_slider);
-        pagerSlider.usePageTitles(false);
-        pagerSlider.setUpWithViewPager(vpPager);
-
-        pagerSlider.setVisibility(View.GONE);
-
-        // Build the components in the fragment
-
-        *//**Disable the swiping of the viewpager by hand horizontally**//*
-        vpPager.setPagingEnabled(false);*/
-
     }
+
 
 
 }

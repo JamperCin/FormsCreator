@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -34,10 +35,14 @@ import android.widget.TextView;
 import com.jamper.searchingspinner.UI.SearchingSpinner;
 import com.kode.formscreatorlib.Callbacks.CallBack;
 import com.kode.formscreatorlib.Callbacks.OnItemSelected;
+import com.kode.formscreatorlib.Callbacks.OnSubmitOnClick;
+import com.kode.formscreatorlib.Model.FieldsForms;
+import com.kode.formscreatorlib.Model.GotoIfForms;
 import com.kode.formscreatorlib.Model.OptionsForms;
 import com.kode.formscreatorlib.R;
 import com.kode.formscreatorlib.Utils.DatePickerClass;
 import com.kode.formscreatorlib.Utils.FormsUtils;
+import com.kode.formscreatorlib.Utils.ValidationClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +61,7 @@ public class ViewsCreator {
 
     private ArrayList<View> viewList;
     private ArrayList<View> innerViewsList;
-    private Button button;
+    private FormsUtils utils;
 
 
     public ViewsCreator(Activity context) {
@@ -67,6 +72,7 @@ public class ViewsCreator {
         spinnerItem = "233";
         viewList = new ArrayList<>();
         innerViewsList = new ArrayList<>();
+        utils = new FormsUtils(mContext);
     }
 
 
@@ -103,7 +109,35 @@ public class ViewsCreator {
     }
 
 
-    public EditText editText(String hint, String type, String tag) {
+    private void saveData(View v, final String tag) {
+        if (v instanceof EditText) {
+            final EditText editText = (EditText) v;
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                    utils.cacheStringData(editable.toString(), tag);
+                }
+            });
+        }
+    }
+
+
+    public EditText editText(FieldsForms forms) {
+        String type = forms.getInputType();
+        String hint = forms.getLabel();
+        String tag = forms.getCode();
+
         EditText editText = new EditText(mContext);
         editText.setLayoutParams(params);
         editText.setInputType(getType(type));
@@ -117,12 +151,21 @@ public class ViewsCreator {
         editText.setTextColor(mContext.getResources().getColor(R.color.black_eel));
         editText.setSingleLine(true);
         editText.setSingleLine();
-        viewList.add(editText);
+
+        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True"))
+            viewList.add(editText);
+
+        saveData(editText, tag);
+
         return editText;
     }
 
 
-    public EditText textArea(String hint, String tag) {
+    public EditText textArea(FieldsForms forms) {
+        // String type = forms.getInputType();
+        String hint = forms.getLabel();
+        String tag = forms.getCode();
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 150);
         params.setMargins(16, 16, 16, 16);
 
@@ -139,50 +182,128 @@ public class ViewsCreator {
         editText.setHintTextColor(mContext.getResources().getColor(R.color.transparent_black_hex_5));
         editText.setTextColor(mContext.getResources().getColor(R.color.black_eel));
 
-        viewList.add(editText);
+        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True"))
+            viewList.add(editText);
+
+        saveData(editText, tag);
+
         return editText;
     }
 
 
-    public EditText editText(String hint, int type, boolean enable) {
-        EditText editText = new EditText(mContext);
-        editText.setLayoutParams(params);
-        editText.setInputType(getType(type));
-        editText.setHint(hint);
-        editText.setTag(hint);
-        editText.setEnabled(enable);
-        editText.setTextSize(14f);
-        editText.setHintTextColor(mContext.getResources().getColor(R.color.transparent_black_hex_5));
-        editText.setTextColor(mContext.getResources().getColor(R.color.black_eel));
-        editText.setSingleLine(true);
-        editText.setSingleLine();
-        viewList.add(editText);
-        return editText;
-    }
+    public Button submitButton(final FieldsForms forms, final OnSubmitOnClick callBack) {
+        String text = forms.getLabel();
+        final String tag = forms.getCode();
 
-
-    public Button button(String tag, String text) {
-        Button button = new Button(mContext);
+        final Button button = new Button(mContext);
         button.setText(text);
         button.setTextColor(Color.WHITE);
         button.setLayoutParams(params);
         button.setTextSize(16);
-        button.setBackgroundColor(mContext.getResources().getColor(R.color.black));
+        button.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryDark));
         button.setTag(tag);
+        button.setAllCaps(false);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (new ValidationClass(mContext).Validator(viewList)) {
+                    if (callBack != null)
+                        callBack.submit();
+
+                    LOG("success");
+                }else
+                    LOG("failed");
+
+            }
+        });
         viewList.add(button);
         return button;
     }
 
-    public Button button(String text, int color) {
-        Button button = new Button(mContext);
+
+
+    public Button button(final FieldsForms forms, final ViewPager viewPager, final MainPagerAdapter adapter, final List<FieldsForms> formsList) {
+        String text = forms.getLabel();
+        final String tag = forms.getCode();
+
+        final Button button = new Button(mContext);
         button.setText(text);
+        button.setTextColor(Color.WHITE);
         button.setLayoutParams(params);
         button.setTextSize(16);
-        button.setBackgroundColor(color);
-        // button.setFocusBackgroundColor(mContext.getResources().getColor(R.color.blue));
-        // button.setRadius(30);
+        button.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryDark));
+        button.setTag(tag);
+        button.setAllCaps(false);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (new ValidationClass(mContext).Validator(viewList))
+                    new GotoIfEngine(mContext).Builder(formsList, viewPager, adapter);
+
+                LOG("Size " + viewList.size());
+            }
+        });
         viewList.add(button);
         return button;
+    }
+
+
+    public Button prevButton(final FieldsForms forms, final ViewPager viewPager, final MainPagerAdapter adapter) {
+
+        String text = "Previous";
+        final String tag = forms.getCode();
+
+        final Button button = new Button(mContext);
+        button.setText(text);
+        button.setTextColor(Color.WHITE);
+        button.setLayoutParams(params);
+        button.setTextSize(16);
+        button.setAllCaps(false);
+        button.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryDark));
+        button.setTag(tag);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int currentPage = viewPager.getCurrentItem();
+
+                if (currentPage != 0)
+                    viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+            }
+        });
+
+        viewList.add(button);
+        return button;
+    }
+
+
+    public LinearLayout previousNextButton(final FieldsForms forms, final ViewPager viewPager, final MainPagerAdapter adapter, List<FieldsForms> fieldsFormsList) {
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        params.setMargins(16, 16, 16, 16);
+
+        final LinearLayout linearLayout = new LinearLayout(mContext);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        linearLayout.setLayoutParams(params);
+
+
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        p.gravity = Gravity.CENTER_HORIZONTAL;
+        p.weight = 1f;
+        p.setMargins(16, 16, 16, 16);
+
+        final Button previousBtn = prevButton(forms, viewPager, adapter);
+        final Button nextBtn = button(forms, viewPager, adapter, fieldsFormsList);
+
+
+        previousBtn.setLayoutParams(p);
+        nextBtn.setLayoutParams(p);
+
+        linearLayout.addView(previousBtn);
+        linearLayout.addView(nextBtn);
+
+        return linearLayout;
+
     }
 
 
@@ -256,6 +377,7 @@ public class ViewsCreator {
         return spinner;
     }
 
+
     public TextView textView(String text, boolean bolded) {
         TextView textView = new TextView(mContext);
         textView.setLayoutParams(params);
@@ -327,7 +449,11 @@ public class ViewsCreator {
         return radioGroup;
     }
 
-    public LinearLayout radioGroup(String header,String tag, ArrayList<OptionsForms> list) {
+
+    public LinearLayout radioGroup(FieldsForms forms) {
+        String header = forms.getLabel();
+        final String tag = forms.getCode();
+
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         p.gravity = Gravity.CENTER_HORIZONTAL;
 
@@ -343,15 +469,15 @@ public class ViewsCreator {
         radioGroup.setTag(tag);
         radioGroup.setOrientation(LinearLayout.VERTICAL);
 
-        if (list != null && list.size() != 0) {
+        if (forms.getOptions() != null && forms.getOptions().size() != 0) {
 
-            final OptionsForms option = list.get(0);
+            final OptionsForms option = forms.getOptions().get(0);
 
             if (option.getId01() != null)
                 radioGroup.addView(radioButton("01", option.getId01(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        radioGroup.setTag(option.getId01());
+                        utils.cacheStringData(option.getId01(), tag);
                     }
                 }));
 
@@ -359,7 +485,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("02", option.getId02(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        radioGroup.setTag(option.getId02());
+                        utils.cacheStringData(option.getId02(), tag);
                     }
                 }));
 
@@ -367,7 +493,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("03", option.getId03(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        radioGroup.setTag(option.getId03());
+                        utils.cacheStringData(option.getId03(), tag);
                     }
                 }));
 
@@ -375,7 +501,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("04", option.getId04(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        radioGroup.setTag(option.getId04());
+                        utils.cacheStringData(option.getId04(), tag);
                     }
                 }));
 
@@ -383,7 +509,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("05", option.getId05(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        radioGroup.setTag(option.getId05());
+                        utils.cacheStringData(option.getId05(), tag);
                     }
                 }));
 
@@ -391,12 +517,89 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("06", option.getId06(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        radioGroup.setTag(option.getId06());
+                        utils.cacheStringData(option.getId06(), tag);
+                    }
+                }));
+
+            if (option.getId07() != null)
+                radioGroup.addView(radioButton("07", option.getId07(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        utils.cacheStringData(option.getId07(), tag);
+                    }
+                }));
+
+            if (option.getId08() != null)
+                radioGroup.addView(radioButton("08", option.getId08(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        utils.cacheStringData(option.getId08(), tag);
+                    }
+                }));
+
+            if (option.getId09() != null)
+                radioGroup.addView(radioButton("09", option.getId09(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        utils.cacheStringData(option.getId09(), tag);
+                    }
+                }));
+
+            if (option.getId10() != null)
+                radioGroup.addView(radioButton("10", option.getId10(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        utils.cacheStringData(option.getId10(), tag);
+                    }
+                }));
+
+            if (option.getId11() != null)
+                radioGroup.addView(radioButton("11", option.getId11(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        utils.cacheStringData(option.getId11(), tag);
+                    }
+                }));
+
+            if (option.getId12() != null)
+                radioGroup.addView(radioButton("12", option.getId12(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        utils.cacheStringData(option.getId12(), tag);
+                    }
+                }));
+            if (option.getId13() != null)
+                radioGroup.addView(radioButton("13", option.getId13(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        utils.cacheStringData(option.getId13(), tag);
+                    }
+                }));
+            if (option.getId14() != null)
+                radioGroup.addView(radioButton("14", option.getId14(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        utils.cacheStringData(option.getId14(), tag);
+                    }
+                }));
+            if (option.getId15() != null)
+                radioGroup.addView(radioButton("15", option.getId15(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        utils.cacheStringData(option.getId15(), tag);
+                    }
+                }));
+            if (option.getId16() != null)
+                radioGroup.addView(radioButton("16", option.getId16(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        utils.cacheStringData(option.getId16(), tag);
                     }
                 }));
 
 
         }
+
 
         viewList.add(radioGroup);
         linearLayout.addView(radioGroup);
@@ -419,7 +622,7 @@ public class ViewsCreator {
     }
 
 
-    public LinearLayout datePicker( String tag, String text,final android.support.v4.app.FragmentManager fragmentManager) {
+    public LinearLayout datePicker(final String tag, String text, final android.support.v4.app.FragmentManager fragmentManager) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER_HORIZONTAL;
         params.setMargins(16, 16, 16, 16);
@@ -434,7 +637,7 @@ public class ViewsCreator {
 
         final EditText editText = new EditText(mContext);
         editText.setEnabled(false);
-        editText.setHint("dd/MM/yyyy (" + text+ ")");
+        editText.setHint("dd/MM/yyyy (" + text + ")");
         editText.setTextSize(14f);
         editText.setTag(tag);
         editText.setHintTextColor(mContext.getResources().getColor(R.color.transparent_black_hex_5));
@@ -445,7 +648,7 @@ public class ViewsCreator {
 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ImageView imageView = (ImageView) inflater.inflate(R.layout.theme_pimageview, null);
-       // imageView.setPadding(2, 2, 2, 2);
+        // imageView.setPadding(2, 2, 2, 2);
 
         LinearLayout.LayoutParams pImage = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.FILL_PARENT);
@@ -466,17 +669,12 @@ public class ViewsCreator {
                     public void onItemSelected(String item) {
                         editText.setText(item);
                         linearLayout.setTag(item);
-                       /* if (callBack != null)
-                            callBack.execute(item);*/
+
+                        utils.cacheStringData(item, tag);
                     }
                 });
             }
         });
-
-      /*  Glide.with(mContext)
-                .load("")
-                .placeholder(R.drawable.calendar_32)
-                .into(imageView);*/
 
         new FormsUtils(mContext).setImageResource(R.drawable.calendar_32, imageView);
 
@@ -485,54 +683,6 @@ public class ViewsCreator {
 
         innerViewsList.add(editText);
         viewList.add(linearLayout);
-        return linearLayout;
-    }
-
-
-    public LinearLayout phoneNumberPicker(String hint) {
-
-        TableRow.LayoutParams p = new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                TableRow.LayoutParams.WRAP_CONTENT, 1f);
-        p.gravity = Gravity.CENTER_VERTICAL;
-
-        TableRow.LayoutParams param = new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                TableRow.LayoutParams.WRAP_CONTENT, 4f);
-        param.gravity = Gravity.CENTER_HORIZONTAL;
-
-
-        final LinearLayout linearLayout = new LinearLayout(mContext);
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        linearLayout.setLayoutParams(params);
-        linearLayout.setTag(hint);
-
-        EditText editText = new EditText(mContext);
-        editText.setHint(hint);
-        editText.setTag(hint);
-        editText.setTextSize((float) 14);
-        editText.setHintTextColor(mContext.getResources().getColor(R.color.transparent_black_hex_5));
-        editText.setTextColor(mContext.getResources().getColor(R.color.black));
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-        editText.setLayoutParams(p);
-
-        ArrayList<String> list = new ArrayList<>();
-        list.add("233");
-
-        SearchingSpinner spinner = new SearchingSpinner(mContext);
-        spinner.addEntries(list);
-        spinner.setTitle("Search here");
-        spinner.setLayoutParams(param);
-        spinner.setAcceptLocalEntries(true);
-        spinner.setLocalEntriesAddable(true);
-        spinner.setItemOnClickDismissDialog(true);
-
-        setListener(editText, linearLayout);
-        getSpinnerItem(spinner);
-
-        linearLayout.addView(spinner);
-        linearLayout.addView(editText);
-
-        viewList.add(linearLayout);
-        innerViewsList.add(editText);
         return linearLayout;
     }
 
@@ -578,166 +728,6 @@ public class ViewsCreator {
     }
 
 
-   /* public ImageView signature(final String tag) {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER_HORIZONTAL;
-        params.setMargins(16, 16, 16, 16);
-
-        final ImageView imageView = new ImageView(mContext);
-        imageView.setLayoutParams(params);
-        imageView.getLayoutParams().width = 180;
-        imageView.getLayoutParams().height = 180;
-        imageView.setTag("TAG#" + tag);
-        new FormsUtils(mContext).setImageResource(R.drawable.calendar_icon, imageView);
-        new GeneralFunctions(mContext).setImageResource(R.drawable.signature, imageView);
-
-        new ImageHandler(mContext); //Clean any residue, Refresh class
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new SignatureDialog(mContext).setSignatureName(tag).setImageView(imageView);
-            }
-        });
-
-        viewList.add(imageView);
-        return imageView;
-    }
-*/
-
-    private void getSpinnerItem(final SearchingSpinner spinner) {
-        spinner.setOnItemSelectedListener(new com.jamper.searchingspinner.Logic.OnItemSelected() {
-            @Override
-            public void onItemSelected(String s, int i) {
-                spinnerItem = s;
-            }
-
-            @Override
-            public void onNothingSelected(String s) {
-                spinnerItem = s;
-            }
-        });
-    }
-
-    private void setListener(final EditText editText, final LinearLayout linearLayout) {
-        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    String customPhone = getPhoneNumber(editText.getText().toString());
-                    if (linearLayout != null)
-                        linearLayout.setTag(customPhone);
-                    // if (editText != null)
-                    //     editText.setTag(customPhone);
-                }
-            }
-        });
-
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String customPhone = getPhoneNumber(editText.getText().toString());
-                if (linearLayout != null)
-                    linearLayout.setTag(customPhone);
-                // if (editText != null)
-                //      editText.setTag(customPhone);
-            }
-        });
-    }
-
-    /**
-     * Return the Formatted Phone Number beginning with the country code
-     **/
-    private String getPhoneNumber(String phone) {
-        if (phone != null)
-            if (!TextUtils.isEmpty(phone)) {
-                if (phone.startsWith("0") && phone.length() == 10) {
-                    return spinnerItem + phone.substring(phone.length() - 9);
-                } else if (!phone.startsWith("0") && phone.length() <= 9) {
-                    return spinnerItem + phone;
-                } else if (phone.startsWith(spinnerItem) && phone.length() == 12) {
-                    return phone;
-                }
-
-            }
-        return phone;
-    }
-
-
-    public CheckBox checkBox(String text, final CallBack callBack) {
-        CheckBox checkBox = new CheckBox(mContext);
-
-        if (!TextUtils.isEmpty(text)) {
-            checkBox.setLayoutParams(params);
-            checkBox.setText(text);
-            checkBox.setTag(text);
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (b) {
-                        if (callBack != null)
-                            callBack.execute("true");
-                    } else {
-                        if (callBack != null)
-                            callBack.execute("false");
-                    }
-                }
-            });
-        }
-
-        viewList.add(checkBox);
-        return checkBox;
-    }
-
-
-    public LinearLayout checkBox(ArrayList<String> list, final CallBack callBack) {
-        LinearLayout linearLayout = new LinearLayout(mContext);
-        linearLayout.setLayoutParams(params);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-        if (list == null)
-            return linearLayout;
-
-        if (list.size() > 0) {
-            CheckBox checkBox;
-
-            for (String str : list) {
-                checkBox = new CheckBox(mContext);
-                checkBox.setLayoutParams(params);
-                checkBox.setText(str);
-                checkBox.setTag(str);
-                final CheckBox finalCheckBox = checkBox;
-                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        if (b) {
-                            if (callBack != null)
-                                callBack.execute(finalCheckBox.getText().toString() + "#" + b);
-                        } else {
-                            if (callBack != null)
-                                callBack.execute(finalCheckBox.getText().toString() + "#" + b);
-                        }
-                    }
-                });
-                innerViewsList.add(checkBox);
-                linearLayout.addView(checkBox);
-            }
-        }
-
-        viewList.add(linearLayout);
-        return linearLayout;
-    }
-
-
     public ArrayList<View> getViewList() {
         return viewList;
     }
@@ -745,28 +735,6 @@ public class ViewsCreator {
     public ArrayList<View> getInnerViewsList() {
         return innerViewsList;
     }
-
-   /* public View cardMenu(String mainHead, String subHead, int resource, String tag) {
-        LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = layoutInflater.inflate(R.layout.cardview_layout, null, false);
-        try {
-            TextView mainHeading = (TextView) v.findViewById(R.id.mainHead);
-            TextView subHeading = (TextView) v.findViewById(R.id.subHeading);
-            ImageView image = (ImageView) v.findViewById(R.id.image);
-
-            mainHeading.setText(mainHead);
-            subHeading.setText(subHead);
-
-            image.setImageBitmap(CompressImage.decodeSampledBitmapFromResource(mContext.getResources(), resource, 100, 100));
-
-            v.setTag(tag);
-            v.setLayoutParams(params);
-        } catch (Exception e) {
-        }
-
-        viewList.add(v);
-        return v;
-    }*/
 
 
 }
