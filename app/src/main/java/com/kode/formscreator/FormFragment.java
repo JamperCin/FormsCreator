@@ -13,8 +13,14 @@ import android.widget.Toast;
 
 import com.kode.formscreatorlib.Callbacks.OnSubmitOnClick;
 import com.kode.formscreatorlib.Engine.EngineBean;
+import com.kode.formscreatorlib.Model.Forms;
 import com.kode.formscreatorlib.Utils.CustomViewPager;
 import com.kode.formscreatorlib.Utils.FormsUtils;
+
+import java.util.ArrayList;
+
+import static com.kode.formscreatorlib.Utils.FormsUtils.LOG;
+import static com.kode.formscreatorlib.Utils.FormsUtils.convertArrayObject;
 
 
 /**
@@ -60,8 +66,9 @@ public class FormFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void submit() {
 
-                        Toast.makeText(context, "Make a call to submit all data or save data "
-                                + new  FormsUtils(getActivity()).getSavedAnswer("A03a").getAnswer(), Toast.LENGTH_SHORT).show();
+                        ArrayList<Forms> forms = new FormsUtils(getActivity()).getSavedAnswer();
+
+                       LOG("Forms here " + convertArrayObject(forms));
                     }
                 })
                 .Builder("forms.json", viewPager);

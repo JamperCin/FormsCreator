@@ -21,6 +21,8 @@ import com.kode.formscreatorlib.Utils.CustomViewPager;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static com.kode.formscreatorlib.Utils.FormsUtils.TAG_LIST;
+
 public class EngineBean {
     private Activity mContext;
     private Gson gson;
@@ -42,6 +44,7 @@ public class EngineBean {
      **/
     public EngineBean(Activity mContext) {
         this.mContext = mContext;
+        TAG_LIST.clear();
     }
 
 
@@ -53,6 +56,7 @@ public class EngineBean {
     public EngineBean(Activity mContext, FragmentManager fragmentManager) {
         this.mContext = mContext;
         this.fragmentManager = fragmentManager;
+        TAG_LIST.clear();
     }
     
     

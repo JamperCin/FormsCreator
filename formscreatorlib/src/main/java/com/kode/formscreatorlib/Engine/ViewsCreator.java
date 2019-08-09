@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.kode.formscreatorlib.Utils.FormsUtils.LOG;
+import static com.kode.formscreatorlib.Utils.FormsUtils.TAG_LIST;
 import static com.kode.formscreatorlib.Utils.FormsUtils.convertModel;
 
 /**
@@ -141,6 +142,26 @@ public class ViewsCreator {
     }
 
 
+    private void addTags(String tag){
+        try {
+            int index = TAG_LIST.indexOf(tag);
+
+            if (index == -1)
+                TAG_LIST.add(tag);
+
+
+        }catch (ArrayIndexOutOfBoundsException e){
+            e.printStackTrace();
+        }catch (IndexOutOfBoundsException e){
+            e.printStackTrace();
+        }catch (IllegalStateException e){
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
     public EditText editText(FieldsForms forms) {
         String type = forms.getInputType();
         String hint = forms.getLabel();
@@ -165,8 +186,11 @@ public class ViewsCreator {
             viewList.add(viewError);
         }
 
-
         saveData(editText, forms);
+
+        addTags(forms.getCode());
+        editText.setText("");
+
 
         return editText;
     }
@@ -199,6 +223,9 @@ public class ViewsCreator {
         }
 
         saveData(editText, forms);
+
+        addTags(forms.getCode());
+        editText.setText("");
 
         return editText;
     }
@@ -625,6 +652,9 @@ public class ViewsCreator {
             viewList.add(viewError);
         }
 
+        saveData("", forms); //Save empty data first
+        addTags(forms.getCode());
+
         linearLayout.addView(radioGroup);
         return linearLayout;
     }
@@ -703,6 +733,8 @@ public class ViewsCreator {
         new FormsUtils(mContext).setImageResource(R.drawable.calendar_32, imageView);
 
         saveData(editText, forms);
+        addTags(forms.getCode());
+        editText.setText("");
 
         linearLayout.addView(editText);
         linearLayout.addView(imageView);

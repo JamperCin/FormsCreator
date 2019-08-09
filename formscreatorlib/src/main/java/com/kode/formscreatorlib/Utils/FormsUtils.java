@@ -26,16 +26,16 @@ import java.util.ArrayList;
 
 public class FormsUtils {
     private Activity mContext;
-
+    public static ArrayList<String> TAG_LIST = new ArrayList<>();
 
     public FormsUtils(Activity mContext) {
         this.mContext = mContext;
     }
 
 
-    public static void LOG(String mess){
-        if (BuildConfig.DEBUG){
-            Log.d("HTTP" , mess);
+    public static void LOG(String mess) {
+        if (BuildConfig.DEBUG) {
+            Log.d("HTTP", mess);
         }
     }
 
@@ -79,8 +79,6 @@ public class FormsUtils {
     }
 
 
-
-
     public Bitmap getBitmapFromVectorDrawable(int drawableId) {
         Drawable drawable = ContextCompat.getDrawable(mContext, drawableId);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -97,18 +95,23 @@ public class FormsUtils {
     }
 
 
-
     public void cacheStringData(final String data, final String FILENAME) {
+
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 try {
+                    if (data == null)
+                        return;
+
                     FileOutputStream fos = mContext.openFileOutput(FILENAME, Context.MODE_PRIVATE);
                     fos.write(data.getBytes());
                     fos.close();
                     LOG("Writing >>" + data);
-                } catch (IOException e) {
-                    LOG("Error Caching Data >> " + e.getMessage());
+                } catch (NullPointerException e) {
+                   e.printStackTrace();
+                }catch (IOException e){
+                    e.printStackTrace();
                 }
             }
         });
@@ -143,6 +146,18 @@ public class FormsUtils {
     }
 
 
+    public ArrayList<Forms> getSavedAnswer() {
+
+        ArrayList<Forms> formsList = new ArrayList<>();
+
+        for (String tag : TAG_LIST) {
+            formsList.add(getSavedAnswer(tag));
+        }
+
+        return formsList;
+    }
+
+
     public String getAnswer(String FILENAME) {
         StringBuffer fileContent = null;
         try {
@@ -174,7 +189,9 @@ public class FormsUtils {
         try {
             File dir = context.getCacheDir();
             deleteDir(dir);
-        } catch (Exception e) { e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -188,7 +205,7 @@ public class FormsUtils {
                 }
             }
             return dir.delete();
-        } else if(dir!= null && dir.isFile()) {
+        } else if (dir != null && dir.isFile()) {
             return dir.delete();
         } else {
             return false;
