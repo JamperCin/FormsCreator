@@ -5,12 +5,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.view.Gravity;
@@ -20,24 +18,19 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TableRow;
 import android.widget.TextView;
-
 
 import com.jamper.searchingspinner.UI.SearchingSpinner;
 import com.kode.formscreatorlib.Callbacks.CallBack;
 import com.kode.formscreatorlib.Callbacks.OnItemSelected;
 import com.kode.formscreatorlib.Callbacks.OnSubmitOnClick;
 import com.kode.formscreatorlib.Model.FieldsForms;
-import com.kode.formscreatorlib.Model.GotoIfForms;
 import com.kode.formscreatorlib.Model.OptionsForms;
 import com.kode.formscreatorlib.R;
 import com.kode.formscreatorlib.Utils.DatePickerClass;
@@ -264,10 +257,7 @@ public class ViewsCreator {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int currentPage = viewPager.getCurrentItem();
-
-                if (currentPage != 0)
-                    viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+               new GotoIfEngine(mContext).handleGotoSource(forms, viewPager,adapter);
             }
         });
 
@@ -622,7 +612,10 @@ public class ViewsCreator {
     }
 
 
-    public LinearLayout datePicker(final String tag, String text, final android.support.v4.app.FragmentManager fragmentManager) {
+    public LinearLayout datePicker(FieldsForms forms, final android.support.v4.app.FragmentManager fragmentManager) {
+        String text = forms.getLabel();
+        final String tag = forms.getCode();
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER_HORIZONTAL;
         params.setMargins(16, 16, 16, 16);
@@ -682,7 +675,11 @@ public class ViewsCreator {
         linearLayout.addView(imageView);
 
         innerViewsList.add(editText);
-        viewList.add(linearLayout);
+
+        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True"))
+            viewList.add(editText);
+
+
         return linearLayout;
     }
 

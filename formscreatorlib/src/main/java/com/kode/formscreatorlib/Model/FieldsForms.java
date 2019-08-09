@@ -9,12 +9,17 @@ public class FieldsForms {
     private String type;
     private String required;
     private String inputType;
+    private boolean isGotoSource;
     private ArrayList<OptionsForms> options = new ArrayList<>();
     private ArrayList<GotoIfForms> gotoIf = new ArrayList<>();
 
 
     public String getInputType() {
         return inputType;
+    }
+
+    public boolean isGotoSource() {
+        return isGotoSource;
     }
 
     public String getLabel() {

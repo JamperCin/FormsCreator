@@ -4,6 +4,7 @@ public class GotoIfForms {
     private String answer;
     private String next;
     private String QuestionCode;
+    private String gotoSource;
 
 
     public String getAnswer() {
@@ -31,4 +32,10 @@ public class GotoIfForms {
     public void setQuestionCode(String questionCode) {
         QuestionCode = questionCode;
     }
+
+    public String getGotoSource() {
+        return gotoSource;
+    }
+
+
 }

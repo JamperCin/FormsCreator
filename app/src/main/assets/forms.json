@@ -93,6 +93,7 @@
 					],
 					"gotoIf":[
 						{
+							"gotoSource" : "A_02",
 							"QuestionCode" : "A07b",
 							"answer":"Vacant housing Unit",
 							"next":"A_11"
@@ -107,7 +108,7 @@
 				{
 					"label":"Next",
 					"code":"A07d",
-					"type":"buttonControls"
+					"type":"pagingButtons"
 				}
 			]
 		},
@@ -141,7 +142,7 @@
 				{
 					"label":"Next",
 					"code":"A11b",
-					"type":"buttonControls"
+					"type":"pagingButtons"
 				}
 			]
 		},
@@ -213,7 +214,7 @@
 				{
 					"label":"Next",
 					"code":"A11b",
-					"type":"buttonControls"
+					"type":"pagingButtons"
 				}
 			]
 		},
@@ -280,7 +281,7 @@
 				{
 					"label":"Next",
 					"code":"A11b",
-					"type":"buttonControls"
+					"type":"pagingButtons"
 				}
 			]
 		},
@@ -349,7 +350,7 @@
 				{
 					"label":"Next",
 					"code":"A11b",
-					"type":"buttonControls"
+					"type":"pagingButtons"
 				}
 			]
 		},
@@ -384,7 +385,7 @@
 				{
 					"label":"Next",
 					"code":"A11b",
-					"type":"buttonControls"
+					"type":"pagingButtons"
 				}
 			]
 		},
@@ -479,7 +480,7 @@
 				{
 					"label":"Next",
 					"code":"A11b",
-					"type":"buttonControls"
+					"type":"pagingButtons"
 				}
 			]
 		},
@@ -530,7 +531,7 @@
 				{
 					"label":"Next",
 					"code":"A11b",
-					"type":"buttonControls"
+					"type":"pagingButtons"
 				}
 			]
 		},
@@ -1544,13 +1545,13 @@
 				{
 					"label":"Next",
 					"code":"A11b",
-					"type":"buttonControls"
+					"type":"pagingButtons"
 				}
 			]
 		},
 		{
 			"fieldCode" : "A_11",
-			"label":"Housing Condition (For Vacant Housing Unit Answer Only H01, H02 and H03)",
+			"label":"Housing Condition (For Vacant Housing Unit Answer Only A07b, H02 and H03)",
 			"fields":[
 				{
 					"label":"In what type of dwelling does the household live?",
@@ -1811,9 +1812,9 @@
 				},
 
 				{
-					"label":"Next",
-					"code":"A11b",
-					"type":"buttonControls"
+					"label": "Next",
+					"isGotoSource" : true,
+					"type":"pagingButtons"
 				}
 			]
 		},
@@ -1904,7 +1905,7 @@
 				{
 					"label":"Next",
 					"code":"A11b",
-					"type":"buttonControls"
+					"type":"pagingButtons"
 				}
 			]
 		},
@@ -1995,7 +1996,7 @@
 				{
 					"label":"Next",
 					"code":"A11b",
-					"type":"buttonControls"
+					"type":"pagingButtons"
 				}
 			]
 		},
@@ -2048,7 +2049,7 @@
 				{
 					"label":"Next",
 					"code":"A11b",
-					"type":"buttonControls"
+					"type":"pagingButtons"
 				}
 			]
 		},
@@ -2190,7 +2191,7 @@
 				{
 					"label":"Next",
 					"code":"A11b",
-					"type":"buttonControls"
+					"type":"pagingButtons"
 				}
 			]
 		},

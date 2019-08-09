@@ -39,6 +39,7 @@ public class FormFragment extends Fragment implements View.OnClickListener {
         // Defines the xml file for the fragment
         return inflater.inflate(R.layout.frag_form, parent, false);
     }
+    
 
     // This event is triggered soon after onCreateView().
     // Any view setup should occur here.  E.g., view lookups and attaching view listeners.

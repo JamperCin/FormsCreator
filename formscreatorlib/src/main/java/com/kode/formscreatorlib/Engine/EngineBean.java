@@ -32,6 +32,7 @@ public class EngineBean {
     private FragmentManager fragmentManager;
     private TextView textView;
     private OnSubmitOnClick callBack;
+    private boolean isPagingEnabled;
 
 
     /**
@@ -66,6 +67,11 @@ public class EngineBean {
         return this;
     }
 
+    public EngineBean enablePaging(boolean isPagingEnabled){
+        this.isPagingEnabled = isPagingEnabled;
+        return this;
+    }
+
 
     /**
      * This is the builder class that gets the json file from the assets and convert it to a Gson file.
@@ -94,7 +100,7 @@ public class EngineBean {
     private void setViewPager() {
         try {
             pagerAdapter = new MainPagerAdapter();
-            viewPager.setPagingEnabled(false); //TODO set this to false to stop swiping pages
+            viewPager.setPagingEnabled(isPagingEnabled); //TODO set this to false to stop swiping pages
             viewPager.setAdapter(pagerAdapter);
         } catch (NullPointerException e) {
             e.printStackTrace();

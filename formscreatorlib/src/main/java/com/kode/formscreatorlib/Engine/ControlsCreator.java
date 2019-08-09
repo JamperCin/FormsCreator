@@ -114,7 +114,7 @@ public class ControlsCreator {
 
                     break;
 
-                case "buttonControls":
+                case "pagingButtons":
                     LinearLayout buttonControls = viewsCreator.previousNextButton(field, viewPager, mAdapter, fieldsBean);
                     llFormPage.addView(buttonControls);
 
@@ -127,7 +127,7 @@ public class ControlsCreator {
 
                 case "date":
                     if (fragmentManager != null) {
-                        LinearLayout datePicker = viewsCreator.datePicker(field.getCode(), field.getLabel(), fragmentManager);
+                        LinearLayout datePicker = viewsCreator.datePicker(field, fragmentManager);
                         llFormPage.addView(datePicker);
                     }
 

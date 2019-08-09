@@ -2,6 +2,7 @@ package com.kode.formscreatorlib.Engine;
 
 import android.app.Activity;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 
 import com.kode.formscreatorlib.Model.FieldsForms;
 import com.kode.formscreatorlib.Model.GotoIfForms;
@@ -19,6 +20,7 @@ public class GotoIfEngine {
     private List<FieldsForms> fieldsForms;
     private FormsUtils utils;
     private Activity mContext;
+    private static final String GO_TO_SOURCE_TAG = "SOURCE_FILE_NAME_";
 
     private int viewPagerPosition = -1;
 
@@ -59,8 +61,10 @@ public class GotoIfEngine {
 
             if (viewPagerPosition != -1)
                 viewPager.setCurrentItem(viewPagerPosition);
-            else
+            else {
+                utils.cacheStringData("", GO_TO_SOURCE_TAG);  //Clear the source of the page where we were before moving to the gotoif position
                 viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+            }
 
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -78,12 +82,40 @@ public class GotoIfEngine {
             String savedAnswer = utils.getAnswer(go.getQuestionCode() == null ? "" : go.getQuestionCode());
 
             LOG("ANS " + savedAnswer + "  >>>  " + go.getAnswer());
-            if (savedAnswer.equalsIgnoreCase(go.getAnswer()))
+            if (savedAnswer.equalsIgnoreCase(go.getAnswer())) {
+                utils.cacheStringData(go.getGotoSource(), GO_TO_SOURCE_TAG); //Save the source of the page where we were before moving to the gotoif position
                 return go.getNext();
+            }
         }
 
         return "";
     }
 
+
+    public void handleGotoSource(FieldsForms forms, final ViewPager viewPager, final MainPagerAdapter mAdapter) {
+        try {
+            if (forms != null && forms.isGotoSource()) {
+                String savedAnswer = utils.getAnswer(GO_TO_SOURCE_TAG);
+
+                if (savedAnswer != null && !TextUtils.isEmpty(savedAnswer))
+                    viewPagerPosition = mAdapter.getViewPosition(savedAnswer);
+            }
+
+            if (viewPagerPosition != -1) {
+                viewPager.setCurrentItem(viewPagerPosition);
+                utils.cacheStringData("", GO_TO_SOURCE_TAG);  //Clear the source of the page where we were before moving to the gotoif position
+
+            } else {
+                viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+            }
+
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

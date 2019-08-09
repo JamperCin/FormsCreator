@@ -23,6 +23,7 @@ public class ValidationClass {
         this.mContext = mContext;
     }
 
+
     public ValidationClass setParentView(Button button) {
         this.button = button;
         return this;
@@ -41,8 +42,9 @@ public class ValidationClass {
                         edt.setFocusable(true);
                         valid = false;
                         break;
-                    }
+                    }else  edt.setError(null);
                 }
+
 
                 if (v instanceof Spinner) {
                     Spinner spinner = (Spinner) v;
