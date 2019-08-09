@@ -160,6 +160,8 @@ This project is to easily use json to create forms for quick onboarding  used by
 					"type":"buttonControls"
 				}
 			]
-		},
+		}
+           ]
+}
 
 ```
