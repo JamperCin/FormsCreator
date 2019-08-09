@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.kode.formscreatorlib.Callbacks.OnSubmitOnClick;
 import com.kode.formscreatorlib.Engine.EngineBean;
 import com.kode.formscreatorlib.Utils.CustomViewPager;
+import com.kode.formscreatorlib.Utils.FormsUtils;
 
 
 /**
@@ -57,7 +58,8 @@ public class FormFragment extends Fragment implements View.OnClickListener {
                 .setOnSubmitClickListener(new OnSubmitOnClick() {
                     @Override
                     public void submit() {
-                        Toast.makeText(context, "Make a call to Http API to submit all data or save data", Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(context, "Make a call to submit all data or save data " + new  FormsUtils(getActivity()).getAnswer("A01"), Toast.LENGTH_SHORT).show();
                     }
                 })
                 .Builder("forms.json", viewPager);
