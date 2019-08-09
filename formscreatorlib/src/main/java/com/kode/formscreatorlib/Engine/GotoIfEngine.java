@@ -60,7 +60,7 @@ public class GotoIfEngine {
             if (viewPagerPosition != -1)
                 viewPager.setCurrentItem(viewPagerPosition);
             else {
-               // utils.cacheStringData("", GO_TO_SOURCE_TAG);  //Clear the source of the page where we were before moving to the gotoif position
+                // utils.cacheStringData("", GO_TO_SOURCE_TAG);  //Clear the source of the page where we were before moving to the gotoif position
                 viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
             }
 
@@ -75,18 +75,30 @@ public class GotoIfEngine {
 
 
     private String returnPagesCodes(GotoIfForms go) {
+        if (go == null)
+            return "";
 
-        if (go != null && go.getAnswer() != null) {
-            String savedAnswer = utils.getSavedAnswer(go.getQuestionCode() == null ? "" : go.getQuestionCode()).getAnswer();
+        if (go.getAnswer() == null || TextUtils.isEmpty(go.getAnswer()))
+            return "";
 
-            LOG("ANS is " + savedAnswer + "  >>>  " + go.getAnswer());
-            if (savedAnswer != null && savedAnswer.equalsIgnoreCase(go.getAnswer())) {
-                utils.cacheStringData(go.getGotoSource(), GO_TO_SOURCE_TAG); //Save the source of the page where we were before moving to the gotoif position
+        //When the answer for the gotoIf is zero, it means whichever answer chosen send him to the next value
+        if (go.getAnswer().equalsIgnoreCase("0"))
+            return go.getNext();
 
-                LOG("ANS is " + savedAnswer + "  >>>  " + go.getAnswer());
-                return go.getNext();
-            }
+
+        Forms f = utils.getSavedAnswer(go.getQuestionCode() == null ? "" : go.getQuestionCode());
+
+        if (f == null)
+            return "";
+
+        String savedAnswer = f.getAnswer();
+        LOG("ANS is " + savedAnswer + "  >>>  " + go.getAnswer());
+
+        if (savedAnswer != null && savedAnswer.equalsIgnoreCase(go.getAnswer())) {
+            utils.cacheStringData(go.getGotoSource(), GO_TO_SOURCE_TAG); //Save the source of the page where we were before moving to the gotoif position
+            return go.getNext();
         }
+
 
         return "";
     }
@@ -97,7 +109,7 @@ public class GotoIfEngine {
             if (forms != null && forms.isGotoSource()) {
                 String savedAnswer = utils.getAnswer(GO_TO_SOURCE_TAG);
 
-                LOG("forms >> " + savedAnswer );
+                LOG("forms >> " + savedAnswer);
 
                 if (savedAnswer != null && !TextUtils.isEmpty(savedAnswer))
                     viewPagerPosition = mAdapter.getViewPosition(savedAnswer);
