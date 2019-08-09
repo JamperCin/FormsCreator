@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class FieldsForms {
 
+    private String pageCode;
     private String label;
     private String code;
     private String type;
@@ -20,6 +21,15 @@ public class FieldsForms {
 
     public boolean isGotoSource() {
         return isGotoSource;
+    }
+
+
+    public String getPageCode() {
+        return pageCode;
+    }
+
+    public void setPageCode(String pageCode) {
+        this.pageCode = pageCode;
     }
 
     public String getLabel() {

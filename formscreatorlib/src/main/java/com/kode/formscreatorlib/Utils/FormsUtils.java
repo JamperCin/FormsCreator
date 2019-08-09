@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kode.formscreatorlib.BuildConfig;
+import com.kode.formscreatorlib.Model.Forms;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,7 +35,7 @@ public class FormsUtils {
 
     public static void LOG(String mess){
         if (BuildConfig.DEBUG){
-            //Log.d("HTTP" , mess);
+            Log.d("HTTP" , mess);
         }
     }
 
@@ -115,6 +116,33 @@ public class FormsUtils {
     }
 
 
+    public Forms getSavedAnswer(String FILENAME) {
+        StringBuffer fileContent = null;
+        try {
+            FileInputStream fis = mContext.openFileInput(FILENAME);
+            if (fis != null) {
+                fileContent = new StringBuffer("");
+
+                byte[] buffer = new byte[1024];
+                int n;
+                while ((n = fis.read(buffer)) != -1) {
+                    fileContent.append(new String(buffer, 0, n));
+                    LOG("Reading" + fileContent);
+                }
+            }
+
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (fileContent == null)
+            return new Forms();
+
+        return fromJson(String.valueOf(fileContent), Forms.class);
+    }
+
+
     public String getAnswer(String FILENAME) {
         StringBuffer fileContent = null;
         try {
@@ -136,11 +164,10 @@ public class FormsUtils {
         }
 
         if (fileContent == null)
-            return null;
+            return "";
 
         return String.valueOf(fileContent);
     }
-
 
 
     public static void clearCache(Context context) {

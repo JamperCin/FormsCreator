@@ -31,7 +31,9 @@ import com.kode.formscreatorlib.Callbacks.CallBack;
 import com.kode.formscreatorlib.Callbacks.OnItemSelected;
 import com.kode.formscreatorlib.Callbacks.OnSubmitOnClick;
 import com.kode.formscreatorlib.Model.FieldsForms;
+import com.kode.formscreatorlib.Model.Forms;
 import com.kode.formscreatorlib.Model.OptionsForms;
+import com.kode.formscreatorlib.Model.ViewError;
 import com.kode.formscreatorlib.R;
 import com.kode.formscreatorlib.Utils.DatePickerClass;
 import com.kode.formscreatorlib.Utils.FormsUtils;
@@ -41,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.kode.formscreatorlib.Utils.FormsUtils.LOG;
+import static com.kode.formscreatorlib.Utils.FormsUtils.convertModel;
 
 /**
  * Created by jamper on 1/16/2018.
@@ -52,9 +55,10 @@ public class ViewsCreator {
     LinearLayout.LayoutParams params;
     private String spinnerItem = "";
 
-    private ArrayList<View> viewList;
+    private ArrayList<ViewError> viewList;
     private ArrayList<View> innerViewsList;
     private FormsUtils utils;
+    private ViewError viewError;
 
 
     public ViewsCreator(Activity context) {
@@ -102,7 +106,7 @@ public class ViewsCreator {
     }
 
 
-    private void saveData(View v, final String tag) {
+    private void saveData(View v, final FieldsForms field) {
         if (v instanceof EditText) {
             final EditText editText = (EditText) v;
             editText.addTextChangedListener(new TextWatcher() {
@@ -119,10 +123,21 @@ public class ViewsCreator {
                 @Override
                 public void afterTextChanged(Editable editable) {
 
-                    utils.cacheStringData(editable.toString(), tag);
+                    Forms forms = new Forms(editable.toString(), field.getLabel(), field.getCode(), field.getPageCode());
+                    String value = convertModel(forms);
+                    utils.cacheStringData(value, field.getCode());
+
                 }
             });
         }
+    }
+
+
+    private void saveData(String answer, final FieldsForms field) {
+        Forms forms = new Forms(answer, field.getLabel(), field.getCode(), field.getPageCode());
+        String value = convertModel(forms);
+
+        utils.cacheStringData(value, field.getCode());
     }
 
 
@@ -145,10 +160,13 @@ public class ViewsCreator {
         editText.setSingleLine(true);
         editText.setSingleLine();
 
-        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True"))
-            viewList.add(editText);
+        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True")){
+            viewError = new ViewError(editText, forms.getLabel());
+            viewList.add(viewError);
+        }
 
-        saveData(editText, tag);
+
+        saveData(editText, forms);
 
         return editText;
     }
@@ -175,10 +193,12 @@ public class ViewsCreator {
         editText.setHintTextColor(mContext.getResources().getColor(R.color.transparent_black_hex_5));
         editText.setTextColor(mContext.getResources().getColor(R.color.black_eel));
 
-        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True"))
-            viewList.add(editText);
+        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True")){
+            viewError = new ViewError(editText, forms.getLabel());
+            viewList.add(viewError);
+        }
 
-        saveData(editText, tag);
+        saveData(editText, forms);
 
         return editText;
     }
@@ -209,7 +229,10 @@ public class ViewsCreator {
 
             }
         });
-        viewList.add(button);
+
+        viewError = new ViewError(button, forms.getLabel());
+        viewList.add(viewError);
+
         return button;
     }
 
@@ -236,7 +259,9 @@ public class ViewsCreator {
                 LOG("Size " + viewList.size());
             }
         });
-        viewList.add(button);
+        viewError = new ViewError(button, forms.getLabel());
+        viewList.add(viewError);
+
         return button;
     }
 
@@ -261,7 +286,8 @@ public class ViewsCreator {
             }
         });
 
-        viewList.add(button);
+        viewError = new ViewError(button, forms.getLabel());
+        viewList.add(viewError);
         return button;
     }
 
@@ -340,7 +366,8 @@ public class ViewsCreator {
             }
         });
 
-        viewList.add(spinner);
+//        viewError = new ViewError(spinner, forms.getLabel());
+//        viewList.add(viewError);
         return spinner;
     }
 
@@ -363,7 +390,8 @@ public class ViewsCreator {
             }
         });
         spinner.setTag(spinner.getSelectedItem());
-        viewList.add(spinner);
+
+       // viewList.add(spinner);
         return spinner;
     }
 
@@ -376,7 +404,7 @@ public class ViewsCreator {
         if (bolded)
             textView.setTypeface(Typeface.DEFAULT_BOLD);
         textView.setTextColor(mContext.getResources().getColor(R.color.black));
-        viewList.add(textView);
+       // viewList.add(textView);
         return textView;
     }
 
@@ -391,7 +419,7 @@ public class ViewsCreator {
         if (bolded)
             textView.setTypeface(Typeface.DEFAULT_BOLD);
         textView.setTextColor(mContext.getResources().getColor(R.color.black));
-        viewList.add(textView);
+      //  viewList.add(textView);
         return textView;
     }
 
@@ -401,7 +429,7 @@ public class ViewsCreator {
         textView.setText("");
         textView.setTextSize(14);
         textView.setTextColor(mContext.getResources().getColor(R.color.black));
-        viewList.add(textView);
+       // viewList.add(textView);
         return textView;
     }
 
@@ -435,12 +463,12 @@ public class ViewsCreator {
             }
         }
 
-        viewList.add(radioGroup);
+       // viewList.add(radioGroup);
         return radioGroup;
     }
 
 
-    public LinearLayout radioGroup(FieldsForms forms) {
+    public LinearLayout radioGroup(final FieldsForms forms) {
         String header = forms.getLabel();
         final String tag = forms.getCode();
 
@@ -467,7 +495,8 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("01", option.getId01(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId01(), tag);
+                       saveData(option.getId01(), forms);
+
                     }
                 }));
 
@@ -475,7 +504,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("02", option.getId02(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId02(), tag);
+                       saveData(option.getId02(), forms);
                     }
                 }));
 
@@ -483,7 +512,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("03", option.getId03(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId03(), tag);
+                       saveData(option.getId03(), forms);
                     }
                 }));
 
@@ -491,7 +520,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("04", option.getId04(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId04(), tag);
+                       saveData(option.getId04(), forms);
                     }
                 }));
 
@@ -499,7 +528,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("05", option.getId05(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId05(), tag);
+                       saveData(option.getId05(), forms);
                     }
                 }));
 
@@ -507,7 +536,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("06", option.getId06(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId06(), tag);
+                       saveData(option.getId06(), forms);
                     }
                 }));
 
@@ -515,7 +544,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("07", option.getId07(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId07(), tag);
+                       saveData(option.getId07(), forms);
                     }
                 }));
 
@@ -523,7 +552,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("08", option.getId08(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId08(), tag);
+                       saveData(option.getId08(), forms);
                     }
                 }));
 
@@ -531,7 +560,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("09", option.getId09(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId09(), tag);
+                       saveData(option.getId09(), forms);
                     }
                 }));
 
@@ -539,7 +568,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("10", option.getId10(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId10(), tag);
+                       saveData(option.getId10(), forms);
                     }
                 }));
 
@@ -547,7 +576,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("11", option.getId11(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId11(), tag);
+                       saveData(option.getId11(), forms);
                     }
                 }));
 
@@ -555,35 +584,35 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("12", option.getId12(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId12(), tag);
+                       saveData(option.getId12(), forms);
                     }
                 }));
             if (option.getId13() != null)
                 radioGroup.addView(radioButton("13", option.getId13(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId13(), tag);
+                       saveData(option.getId13(), forms);
                     }
                 }));
             if (option.getId14() != null)
                 radioGroup.addView(radioButton("14", option.getId14(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId14(), tag);
+                       saveData(option.getId14(), forms);
                     }
                 }));
             if (option.getId15() != null)
                 radioGroup.addView(radioButton("15", option.getId15(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId15(), tag);
+                       saveData(option.getId15(), forms);
                     }
                 }));
             if (option.getId16() != null)
                 radioGroup.addView(radioButton("16", option.getId16(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        utils.cacheStringData(option.getId16(), tag);
+                       saveData(option.getId16(), forms);
                     }
                 }));
 
@@ -591,7 +620,11 @@ public class ViewsCreator {
         }
 
 
-        viewList.add(radioGroup);
+        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True")){
+            viewError = new ViewError(radioGroup, forms.getLabel());
+            viewList.add(viewError);
+        }
+
         linearLayout.addView(radioGroup);
         return linearLayout;
     }
@@ -661,9 +694,7 @@ public class ViewsCreator {
                     @Override
                     public void onItemSelected(String item) {
                         editText.setText(item);
-                        linearLayout.setTag(item);
 
-                        utils.cacheStringData(item, tag);
                     }
                 });
             }
@@ -671,61 +702,25 @@ public class ViewsCreator {
 
         new FormsUtils(mContext).setImageResource(R.drawable.calendar_32, imageView);
 
+        saveData(editText, forms);
+
         linearLayout.addView(editText);
         linearLayout.addView(imageView);
 
         innerViewsList.add(editText);
 
-        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True"))
-            viewList.add(editText);
+        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True")){
+            viewError = new ViewError(editText, forms.getLabel());
+            viewList.add(viewError);
+        }
 
 
         return linearLayout;
     }
 
 
-    public ImageView imageView(int resource, final String tag, final CallBack callBack) {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER_HORIZONTAL;
-        params.setMargins(16, 16, 16, 16);
 
-        final ImageView imageView = new ImageView(mContext);
-        imageView.setLayoutParams(params);
-        imageView.getLayoutParams().width = 180;
-        imageView.getLayoutParams().height = 180;
-        imageView.setTag(tag);
-        new FormsUtils(mContext).setImageResource(resource, imageView);
-
-       /* new ImageHandler(mContext); //Clean any residue, Refresh class
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Fso.getImageHandler(mContext)
-                            .setImageName(tag)
-                            .setImageView(imageView)
-                            .setRequest(0)
-                            .onImageSaved(new OnImageSelectedSaved() {
-                                @Override
-                                public void getData(String data) {
-                                    imageView.setTag(data);
-                                    LOG("Data >> " + data);
-                                    if (callBack != null)
-                                        callBack.execute(data);
-                                }
-                            });
-                } catch (Exception e) {
-                    LOG("Error opening camera");
-                }
-            }
-        });*/
-
-        viewList.add(imageView);
-        return imageView;
-    }
-
-
-    public ArrayList<View> getViewList() {
+    public ArrayList<ViewError> getViewList() {
         return viewList;
     }
 

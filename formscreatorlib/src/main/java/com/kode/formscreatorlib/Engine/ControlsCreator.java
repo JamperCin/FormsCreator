@@ -41,9 +41,6 @@ public class ControlsCreator {
         svFormPage.setFillViewport(true);
         svFormPage.setPadding(dpAsPixels, 0, dpAsPixels, 0);
 
-        /**Attach a field code or set a tag to each page created**/
-        if (pageBean.getFieldCode() != null)
-            svFormPage.setTag(pageBean.getFieldCode());
 
         /** Place Linearlayout in scrollview **/
         LinearLayout llFormPage = new LinearLayout(mContext);
@@ -51,6 +48,12 @@ public class ControlsCreator {
         llFormPage.setBackgroundColor(Color.WHITE);
         dpAsPixels = (int) (8 * scale + 0.5f);
         llFormPage.setPadding(dpAsPixels, dpAsPixels, dpAsPixels, dpAsPixels);
+
+        /**Attach a field code or set a tag to each page created**/
+        if (pageBean.getFieldCode() != null) {
+            svFormPage.setTag(pageBean.getFieldCode());
+            llFormPage.setTag(pageBean.getFieldCode()); //Redundantly set the page code to this linearLayout
+        }
 
         /** set controls on linearlayout **/
         setControls(pageBean.getFields(), llFormPage);
@@ -79,6 +82,8 @@ public class ControlsCreator {
 
         for (FieldsForms field : fieldsBean) {
             type = field.getType();
+
+            field.setPageCode(llFormPage.getTag().toString());
 
             switch (type) {
                 case "space":

@@ -60,7 +60,8 @@ public class FormFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void submit() {
 
-                        Toast.makeText(context, "Make a call to submit all data or save data " + new  FormsUtils(getActivity()).getAnswer("A01"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Make a call to submit all data or save data "
+                                + new  FormsUtils(getActivity()).getSavedAnswer("A03a").getAnswer(), Toast.LENGTH_SHORT).show();
                     }
                 })
                 .Builder("forms.json", viewPager);

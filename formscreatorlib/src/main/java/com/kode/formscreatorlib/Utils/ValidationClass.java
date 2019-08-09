@@ -11,6 +11,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.kode.formscreatorlib.Model.ViewError;
+
 import java.util.ArrayList;
 
 import static com.kode.formscreatorlib.Utils.FormsUtils.LOG;
@@ -30,10 +32,12 @@ public class ValidationClass {
     }
 
 
-    public boolean Validator(ArrayList<View> viewArrayList) {
+    public boolean Validator(ArrayList<ViewError> viewArrayList) {
         boolean valid = true;
         try {
-            for (View v : viewArrayList) {
+            for (ViewError viewError : viewArrayList) {
+                View v = viewError.getView();
+
                 if (v instanceof EditText) {
                     EditText edt = (EditText) v;
                     if (TextUtils.isEmpty(edt.getText().toString())) {
@@ -50,7 +54,7 @@ public class ValidationClass {
                     Spinner spinner = (Spinner) v;
                     if (spinner.getSelectedItem() == null || TextUtils.isEmpty(spinner.getSelectedItem().toString())) {
                         valid = false;
-                        Toast.makeText(mContext, spinner.getTag().toString() + " required", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, viewError.getErrorMessage()  + " required", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
@@ -60,25 +64,14 @@ public class ValidationClass {
                     RadioGroup radioGroup = (RadioGroup) v;
                     if (radioGroup.getCheckedRadioButtonId() == -1) {
                         valid = false;
-                        Toast.makeText(mContext, "Please select an option.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, viewError.getErrorMessage()  + " required", Toast.LENGTH_SHORT).show();
                     }
 
                     break;
                 }
 
 
-                if (v instanceof LinearLayout) {
-                    LinearLayout linearLayout = (LinearLayout) v;
-                    String tag = linearLayout.getTag().toString();
-                    if (tag.equalsIgnoreCase("Dob")) {
-                        valid = false;
-                        Toast.makeText(mContext, "Date of Birth required", Toast.LENGTH_SHORT).show();
-                    } else if (tag.equalsIgnoreCase("Mobile number")) {
-                        valid = false;
-                        Toast.makeText(mContext, tag + " required", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                }
+
 
                 if (v instanceof ImageView) {
                     ImageView linearLayout = (ImageView) v;

@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 
 import com.kode.formscreatorlib.Model.FieldsForms;
+import com.kode.formscreatorlib.Model.Forms;
 import com.kode.formscreatorlib.Model.GotoIfForms;
 import com.kode.formscreatorlib.Utils.FormsUtils;
 
@@ -35,8 +36,6 @@ public class GotoIfEngine {
         this.mAdapter = adapter;
         this.fieldsForms = forms;
 
-        LOG("CONV >> " + convertModel(fieldsForms));
-
         handleGotoIfLogic();
 
         return this;
@@ -50,7 +49,7 @@ public class GotoIfEngine {
 
                 for (FieldsForms forms : fieldsForms) {
                     if (forms.getGotoIf() != null && forms.getGotoIf().size() > 0) {
-                        LOG("Gotoif size" + forms.getGotoIf().size());
+
                         for (GotoIfForms go : forms.getGotoIf()) {
                             viewPagerPosition = mAdapter.getViewPosition(returnPagesCodes(go));
                         }
@@ -58,11 +57,10 @@ public class GotoIfEngine {
                 }
             }
 
-
             if (viewPagerPosition != -1)
                 viewPager.setCurrentItem(viewPagerPosition);
             else {
-                utils.cacheStringData("", GO_TO_SOURCE_TAG);  //Clear the source of the page where we were before moving to the gotoif position
+               // utils.cacheStringData("", GO_TO_SOURCE_TAG);  //Clear the source of the page where we were before moving to the gotoif position
                 viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
             }
 
@@ -78,12 +76,14 @@ public class GotoIfEngine {
 
     private String returnPagesCodes(GotoIfForms go) {
 
-        if (go.getAnswer() != null) {
-            String savedAnswer = utils.getAnswer(go.getQuestionCode() == null ? "" : go.getQuestionCode());
+        if (go != null && go.getAnswer() != null) {
+            String savedAnswer = utils.getSavedAnswer(go.getQuestionCode() == null ? "" : go.getQuestionCode()).getAnswer();
 
-            LOG("ANS " + savedAnswer + "  >>>  " + go.getAnswer());
-            if (savedAnswer.equalsIgnoreCase(go.getAnswer())) {
+            LOG("ANS is " + savedAnswer + "  >>>  " + go.getAnswer());
+            if (savedAnswer != null && savedAnswer.equalsIgnoreCase(go.getAnswer())) {
                 utils.cacheStringData(go.getGotoSource(), GO_TO_SOURCE_TAG); //Save the source of the page where we were before moving to the gotoif position
+
+                LOG("ANS is " + savedAnswer + "  >>>  " + go.getAnswer());
                 return go.getNext();
             }
         }
@@ -96,6 +96,8 @@ public class GotoIfEngine {
         try {
             if (forms != null && forms.isGotoSource()) {
                 String savedAnswer = utils.getAnswer(GO_TO_SOURCE_TAG);
+
+                LOG("forms >> " + savedAnswer );
 
                 if (savedAnswer != null && !TextUtils.isEmpty(savedAnswer))
                     viewPagerPosition = mAdapter.getViewPosition(savedAnswer);
