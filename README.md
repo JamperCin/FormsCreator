@@ -14,41 +14,105 @@ This project is to easily use json to create forms for quick onboarding  used by
   **Step 2: Add the dependency to your dependencies in the build.gradle (Module:App level)**
 
         dependencies {
-	        implementation 'com.github.JamperCin:formscreator:1.0.8'
+	        implementation 'com.github.JamperCin:formscreator:1.0.9'
 	}
 
 
+**Step 3:Add the custom viewpager to your xml layout:**
+```
+ <com.kode.formscreatorlib.Utils.CustomViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tv_page_header"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"/>
+
+```
 
   
-  **Step 3: Just call it from your activity or fragment like this:**
+  **Step 3: Initialiase your viewPager and create the Forms by instantiating the EngineBean() class just like below:**
   ```
-  new EngineBean(getActivity(), getFragmentManager())
-                .setOnSubmitClickListener(new OnSubmitOnClick() {
-                    @Override
-                    public void submit() {
+ CustomViewPager viewPager = view.findViewById(R.id.viewPager)
 
-                        Toast.makeText(context, "Make a call to submit all data or save data " + new FormsUtils(getActivity()).getAnswer("A01"), Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .Builder("forms.json", viewPager);
+ new EngineBean(getActivity(), getFragmentManager()).Builder("forms.json", viewPager);
 ```
 
  **: If you have a textView which will display a text as a header, you can pass the textView before calling your Builder():**
+ In this case, in the json, define a **title** in the form header section 
   ```
-  new EngineBean(getActivity(), getFragmentManager())
+   CustomViewPager viewPager = view.findViewById(R.id.viewPager)
+   new EngineBean(getActivity(), getFragmentManager())
+                .setHeaderView(tvPageHeader)
+                .Builder("forms.json", viewPager);
+
+```
+**:Register an onClicklistener to the submit Button:**
+ In this case, in the json, define a view type called **submitButton** at the part of the page where you want to submit your values or save data. 
+Sample json definition of submit button : 
+```
+{
+ "label":"Save",
+ "code":"A11b",
+ "type":"submitButton"
+}
+
+```
+
+Register the onclicklister before calling Builder() method
+```
+
+   CustomViewPager viewPager = view.findViewById(R.id.viewPager)
+   new EngineBean(getActivity(), getFragmentManager())
                 .setHeaderView(tvPageHeader)
                 .setOnSubmitClickListener(new OnSubmitOnClick() {
                     @Override
                     public void submit() {
-
-                        Toast.makeText(context, "Make a call to submit all data or save data " + new  FormsUtils(getActivity()).getAnswer("A01"), Toast.LENGTH_SHORT).show();
+                       
                     }
                 })
                 .Builder("forms.json", viewPager);
 
 ```
 
+**: You can obtain the value/answer saved  for each field by doing the following **
+
+Pass the unique code of a field to get the answer/value saved for particular code
+Smaple value for getting data saved for field 'A01'
+```
+ Forms f  = new FormsUtils(getActivity()).getSavedAnswer("A01");
+ 
+  String questionCode = f.getQuestionCode();
+  String question = f.getQuestion();
+  String answer = f.getAnswer();
+  String pageCode = f.getPageCode();
+  String formCode = f.getFormCode();
+```
+
 **: Sample forms should follow this format in order to be renderred :**
+Note : Every field should have a unique code and every page should have a unique code as well
+
+The various supported views for now that can be rendered include:
+
+**: 1. textViewBold -> :** For rendering a textview with bolded style
+**: 2. textView -> :** For rendering a textview with normal style
+**: 3. text -> :** For rendering an EditText for entry
+**: 4. textarea -> :** For rendering a textArea field for entry
+**: 5. radio -> :** For rendering a radioGroup with radio buttons specifically for a purpose where data is object and follows specifi naming patterns. (Not recommended if you dont understand)
+**: 6. radioGroup -> :** For rendering a radioGroup with a list of radio buttons 
+**: 7. button -> :** For rendering a button, specifically for the first Visible button to move viewpager to next screen
+**: 8. pagingButtons -> :** For rendering a PREVIOUS and NEXT button, specifically for the subsequent screens to move viewpager to next screen and previous screen
+**: 9. date -> :** For rendering an editext and an imagepicker to allow user to select date from a date picker
+**: 10. space -> :** For rendering empty space between views, especially between a view and a button
+
+Remember , for any EditText, the following inputTypes are supported: 
+```
+"inputType":"0", -> For normal alphabetical Text
+"inputType":"1", -> For Numeric keypad
+"inputType":"2", -> For Email keypad
+
+```
+
 ```
 {
 	"form":"PHC1A",
@@ -61,15 +125,7 @@ This project is to easily use json to create forms for quick onboarding  used by
 				{
 					"label":"Detailed Physical Address of House/Compound",
 					"code":"A00",
-					"type":"textViewBold",
-					"required" : "true"
-				},
-				{
-					"label":"",
-					"code":"A01",
-					"type":"textarea",
-					"inputType":"0",
-					"required" : "true"
+					"type":"textViewBold"
 				},
 				{
 					"label":"Ghana Post Digital Address",
@@ -85,13 +141,7 @@ This project is to easily use json to create forms for quick onboarding  used by
 					"inputType":"1",
 					"required" : "true"
 				},
-				{
-					"label":"HH Contact Phone Number 2",
-					"code":"A03b",
-					"type":"text",
-					"required":"false",
-					"inputType":"1"
-				},
+		
 				{
 					"code":"A03c",
 					"type":"space"
@@ -110,25 +160,12 @@ This project is to easily use json to create forms for quick onboarding  used by
 				{
 					"label":"Enumeration Area Code",
 					"code":"A00",
-					"type":"textViewBold",
-					"required" : "true"
+					"type":"textView"
 				},
 				{
 					"label":"Detail Address of Structure",
 					"code":"A04",
 					"type":"textarea",
-					"required" : "true"
-				},
-				{
-					"label":"Structure number of house/compound",
-					"code":"A05",
-					"type":"text",
-					"required" : "true"
-				},
-				{
-					"label":"Serial Number of household within house/compound",
-					"code":"A06",
-					"type":"text",
 					"required" : "true"
 				},
 
@@ -159,7 +196,7 @@ This project is to easily use json to create forms for quick onboarding  used by
 				{
 					"label":"Next",
 					"code":"A07d",
-					"type":"buttonControls"
+					"type":"pagingButtons"
 				}
 			]
 		}
