@@ -68,7 +68,12 @@ public class FormFragment extends Fragment implements View.OnClickListener {
 
                         ArrayList<Forms> forms = new FormsUtils(getActivity()).getSavedAnswer();
 
-                      //  Forms f  = new FormsUtils(getActivity()).getSavedAnswer("A01");
+                        Forms f  = new FormsUtils(getActivity()).getSavedAnswer("A01");
+                        String questionCode = f.getQuestionCode();
+                        String question = f.getQuestion();
+                        String answer = f.getAnswer();
+                        String pageCode = f.getPageCode();
+                        String formCode = f.getFormCode();
 
                        LOG("Forms here " + convertArrayObject(forms));
                     }
