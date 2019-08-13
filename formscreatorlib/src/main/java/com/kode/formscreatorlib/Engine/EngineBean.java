@@ -21,6 +21,7 @@ import com.kode.formscreatorlib.Utils.CustomViewPager;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static com.kode.formscreatorlib.Utils.FormsUtils.FORM_CODE;
 import static com.kode.formscreatorlib.Utils.FormsUtils.TAG_LIST;
 
 public class EngineBean {
@@ -45,6 +46,7 @@ public class EngineBean {
     public EngineBean(Activity mContext) {
         this.mContext = mContext;
         TAG_LIST.clear();
+        FORM_CODE = "";
     }
 
 
@@ -57,6 +59,7 @@ public class EngineBean {
         this.mContext = mContext;
         this.fragmentManager = fragmentManager;
         TAG_LIST.clear();
+        FORM_CODE = "";
     }
     
     
@@ -169,6 +172,8 @@ public class EngineBean {
         //Generate the number
         if (formFormat == null || formFormat.getPages() == null)
             return;
+
+        FORM_CODE = formFormat.getForm(); //Get the form code
 
         if (textView != null)
             textView.setText(String.format("%s\n%s", formFormat.getTitle(), formFormat.getSection()));

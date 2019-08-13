@@ -27,6 +27,7 @@ import java.util.ArrayList;
 public class FormsUtils {
     private Activity mContext;
     public static ArrayList<String> TAG_LIST = new ArrayList<>();
+    public static String FORM_CODE = "";
 
     public FormsUtils(Activity mContext) {
         this.mContext = mContext;
