@@ -78,7 +78,7 @@ Register the onclicklister before calling Builder() method
 **: You can obtain the value/answer saved  for each field by doing the following **
 
 Pass the unique code of a field to get the answer/value saved for particular code
-Smaple value for getting data saved for field 'A01'
+Sample value for getting data saved for field 'A01'
 ```
  Forms f  = new FormsUtils(getActivity()).getSavedAnswer("A01");
  
@@ -88,12 +88,25 @@ Smaple value for getting data saved for field 'A01'
   String pageCode = f.getPageCode();
   String formCode = f.getFormCode();
 ```
+You can get all the fields and their answers too by calling :
+```
+ ArrayList<Forms> forms = new FormsUtils(getActivity()).getSavedAnswer();
+
+for(Forms f : forms){
+String questionCode = f.getQuestionCode();
+  String question = f.getQuestion();
+  String answer = f.getAnswer();
+  String pageCode = f.getPageCode();
+  String formCode = f.getFormCode();
+}
+```
+
 
 **: Sample forms should follow this format in order to be renderred :**
 Note : Every field should have a unique code and every page should have a unique code as well
 
 The various supported views for now that can be rendered include:
-
+```
 **: 1. textViewBold -> :** For rendering a textview with bolded style
 **: 2. textView -> :** For rendering a textview with normal style
 **: 3. text -> :** For rendering an EditText for entry
@@ -104,6 +117,8 @@ The various supported views for now that can be rendered include:
 **: 8. pagingButtons -> :** For rendering a PREVIOUS and NEXT button, specifically for the subsequent screens to move viewpager to next screen and previous screen
 **: 9. date -> :** For rendering an editext and an imagepicker to allow user to select date from a date picker
 **: 10. space -> :** For rendering empty space between views, especially between a view and a button
+
+```
 
 Remember , for any EditText, the following inputTypes are supported: 
 ```
