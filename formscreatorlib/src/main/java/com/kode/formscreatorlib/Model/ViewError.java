@@ -7,6 +7,7 @@ public class ViewError {
     private String errorMessage;
 
 
+
     public ViewError(View view, String errorMessage) {
         this.view = view;
         this.errorMessage = errorMessage;

@@ -36,7 +36,7 @@ public class FormsUtils {
 
     public static void LOG(String mess) {
         if (BuildConfig.DEBUG) {
-            Log.d("HTTP", mess);
+           // Log.d("HTTP", mess);
         }
     }
 

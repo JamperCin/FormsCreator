@@ -36,6 +36,7 @@ public class EngineBean {
     private TextView textView;
     private OnSubmitOnClick callBack;
     private boolean isPagingEnabled;
+    private boolean isShowQuestionCodes;
 
 
     /**
@@ -69,6 +70,7 @@ public class EngineBean {
     }
 
 
+
     public EngineBean setOnSubmitClickListener(OnSubmitOnClick callBack){
         this.callBack = callBack;
         return this;
@@ -79,12 +81,17 @@ public class EngineBean {
         return this;
     }
 
+    public EngineBean isShowQuestionCode(boolean isShowQuestionCodes){
+        this.isShowQuestionCodes = isShowQuestionCodes;
+        return this;
+    }
 
     /**
      * This is the builder class that gets the json file from the assets and convert it to a Gson file.
      * This is later converted and mapped to the MainForms Object which is later used in creating the views
      *
      * @param jsonFileName This is the json file name saved in the asset
+     * @param viewPager The viewpager to draw all the views
      **/
     public EngineBean Builder(String jsonFileName, CustomViewPager viewPager) {
         this.viewPager = viewPager;
@@ -117,11 +124,11 @@ public class EngineBean {
 
 
     /**
-     * Read the json file file from the assets when interfacing with this library
+     * Read the json file from the assets when interfacing with this library
      *
      * @param fileName the file name of the json file saved in the assets
      **/
-    public EngineBean readJsonFile(String fileName) {
+    private EngineBean readJsonFile(String fileName) {
 
         if (mContext == null || fileName == null || TextUtils.isEmpty(fileName))
             return this;
@@ -147,11 +154,6 @@ public class EngineBean {
         return this;
     }
 
-
-    private String readJsonFile() {
-        this.readJsonFile("forms.json");
-        return json;
-    }
 
 
     private void convertJsonToObj() {
@@ -192,7 +194,9 @@ public class EngineBean {
             /** use the controls creator to create form controls **/
             controlsCreator = new ControlsCreator(mContext,fragmentManager, svFormPage)
                     .setViewPager(viewPager, pagerAdapter)
+                    .isShowQuestionCode(isShowQuestionCodes)
                     .setOnSubmitClickListener(callBack);
+
 
             svFormPage = controlsCreator.generate(formFormat.getPages().get(i));
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -30,6 +31,7 @@ import com.jamper.searchingspinner.UI.SearchingSpinner;
 import com.kode.formscreatorlib.Callbacks.CallBack;
 import com.kode.formscreatorlib.Callbacks.OnItemSelected;
 import com.kode.formscreatorlib.Callbacks.OnSubmitOnClick;
+import com.kode.formscreatorlib.Model.DisabledViews;
 import com.kode.formscreatorlib.Model.FieldsForms;
 import com.kode.formscreatorlib.Model.Forms;
 import com.kode.formscreatorlib.Model.OptionsForms;
@@ -42,6 +44,7 @@ import com.kode.formscreatorlib.Utils.ValidationClass;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.kode.formscreatorlib.Utils.FormsUtils.FORM_CODE;
 import static com.kode.formscreatorlib.Utils.FormsUtils.LOG;
 import static com.kode.formscreatorlib.Utils.FormsUtils.TAG_LIST;
 import static com.kode.formscreatorlib.Utils.FormsUtils.convertModel;
@@ -60,10 +63,12 @@ public class ViewsCreator {
     private ArrayList<View> innerViewsList;
     private FormsUtils utils;
     private ViewError viewError;
+    private boolean isShowQuestionCodes;
 
 
     public ViewsCreator(Activity context) {
         this.mContext = context;
+
         params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER_VERTICAL;
         params.setMargins(16, 16, 16, 16);
@@ -71,6 +76,12 @@ public class ViewsCreator {
         viewList = new ArrayList<>();
         innerViewsList = new ArrayList<>();
         utils = new FormsUtils(mContext);
+    }
+
+
+    public ViewsCreator isShowQuestionCode(boolean isShowQuestionCodes) {
+        this.isShowQuestionCodes = isShowQuestionCodes;
+        return this;
     }
 
 
@@ -124,10 +135,11 @@ public class ViewsCreator {
                 @Override
                 public void afterTextChanged(Editable editable) {
 
-                    Forms forms = new Forms(editable.toString(), field.getLabel(), field.getCode(), field.getPageCode());
-                    String value = convertModel(forms);
-                    utils.cacheStringData(value, field.getCode());
+//                    Forms forms = new Forms(editable.toString(), field.getLabel(), field.getCode(), field.getPageCode());
+//                    String value = convertModel(forms);
+//                    utils.cacheStringData(value, field.getCode());
 
+                    saveData(editable.toString(), field);
                 }
             });
         }
@@ -139,10 +151,12 @@ public class ViewsCreator {
         String value = convertModel(forms);
 
         utils.cacheStringData(value, field.getCode());
+
+        makeViewActive(answer, field);
     }
 
 
-    private void addTags(String tag){
+    private void addTags(String tag) {
         try {
             int index = TAG_LIST.indexOf(tag);
 
@@ -150,22 +164,28 @@ public class ViewsCreator {
                 TAG_LIST.add(tag);
 
 
-        }catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
-        }catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
-        }catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             e.printStackTrace();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    public EditText editText(FieldsForms forms) {
+    /**
+     * =========================== VARIOUS VIEWS CREATED OVER HERE ==============================
+     **/
+
+    public LinearLayout editText(FieldsForms forms) {
         String type = forms.getInputType();
         String hint = forms.getLabel();
         String tag = forms.getCode();
+
+        LinearLayout linearLayout = createTag(forms);
 
         EditText editText = new EditText(mContext);
         editText.setLayoutParams(params);
@@ -181,10 +201,14 @@ public class ViewsCreator {
         editText.setSingleLine(true);
         editText.setSingleLine();
 
-        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True")){
+
+        //Add View only and only if it is a required field with its associate error message
+        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True")) {
             viewError = new ViewError(editText, forms.getLabel());
             viewList.add(viewError);
         }
+
+        innerViewsList.add(editText); //Add View regardless of it being required
 
         saveData(editText, forms);
 
@@ -192,14 +216,17 @@ public class ViewsCreator {
         editText.setText("");
 
 
-        return editText;
+        linearLayout.addView(editText);
+        return linearLayout;
     }
 
 
-    public EditText textArea(FieldsForms forms) {
+    public LinearLayout textArea(FieldsForms forms) {
         // String type = forms.getInputType();
         String hint = forms.getLabel();
         String tag = forms.getCode();
+
+        LinearLayout linearLayout = createTag(forms);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 150);
         params.setMargins(16, 16, 16, 16);
@@ -217,17 +244,21 @@ public class ViewsCreator {
         editText.setHintTextColor(mContext.getResources().getColor(R.color.transparent_black_hex_5));
         editText.setTextColor(mContext.getResources().getColor(R.color.black_eel));
 
-        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True")){
+        //Add View only and only if it is a required field with its associate error message
+        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True")) {
             viewError = new ViewError(editText, forms.getLabel());
             viewList.add(viewError);
         }
+
+        innerViewsList.add(editText); //Add View regardless of it being required
 
         saveData(editText, forms);
 
         addTags(forms.getCode());
         editText.setText("");
 
-        return editText;
+        linearLayout.addView(editText);
+        return linearLayout;
     }
 
 
@@ -251,7 +282,7 @@ public class ViewsCreator {
                         callBack.submit();
 
                     LOG("success");
-                }else
+                } else
                     LOG("failed");
 
             }
@@ -262,7 +293,6 @@ public class ViewsCreator {
 
         return button;
     }
-
 
 
     public Button button(final FieldsForms forms, final ViewPager viewPager, final MainPagerAdapter adapter, final List<FieldsForms> formsList) {
@@ -309,7 +339,7 @@ public class ViewsCreator {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               new GotoIfEngine(mContext).handleGotoSource(forms, viewPager,adapter);
+                new GotoIfEngine(mContext).handleGotoSource(forms, viewPager, adapter);
             }
         });
 
@@ -418,7 +448,7 @@ public class ViewsCreator {
         });
         spinner.setTag(spinner.getSelectedItem());
 
-       // viewList.add(spinner);
+        // viewList.add(spinner);
         return spinner;
     }
 
@@ -431,7 +461,7 @@ public class ViewsCreator {
         if (bolded)
             textView.setTypeface(Typeface.DEFAULT_BOLD);
         textView.setTextColor(mContext.getResources().getColor(R.color.black));
-       // viewList.add(textView);
+        // viewList.add(textView);
         return textView;
     }
 
@@ -446,7 +476,7 @@ public class ViewsCreator {
         if (bolded)
             textView.setTypeface(Typeface.DEFAULT_BOLD);
         textView.setTextColor(mContext.getResources().getColor(R.color.black));
-      //  viewList.add(textView);
+        //  viewList.add(textView);
         return textView;
     }
 
@@ -456,7 +486,7 @@ public class ViewsCreator {
         textView.setText("");
         textView.setTextSize(14);
         textView.setTextColor(mContext.getResources().getColor(R.color.black));
-       // viewList.add(textView);
+        // viewList.add(textView);
         return textView;
     }
 
@@ -490,7 +520,7 @@ public class ViewsCreator {
             }
         }
 
-       // viewList.add(radioGroup);
+        // viewList.add(radioGroup);
         return radioGroup;
     }
 
@@ -498,6 +528,10 @@ public class ViewsCreator {
     public LinearLayout radioGroup(final FieldsForms forms) {
         String header = forms.getLabel();
         final String tag = forms.getCode();
+
+        String question = header;
+        if (this.isShowQuestionCodes)
+            question = tag + " : " + header;
 
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         p.gravity = Gravity.CENTER_HORIZONTAL;
@@ -507,8 +541,7 @@ public class ViewsCreator {
         linearLayout.setLayoutParams(p);
         linearLayout.setTag(tag);
 
-        linearLayout.addView(textView(header, true));
-
+        linearLayout.addView(textView(question, true)); //Add the Question Tag to each question
         final RadioGroup radioGroup = new RadioGroup(mContext);
         radioGroup.setLayoutParams(p);
         radioGroup.setTag(tag);
@@ -522,7 +555,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("01", option.getId01(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId01(), forms);
+                        saveData(option.getId01(), forms);
 
                     }
                 }));
@@ -531,7 +564,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("02", option.getId02(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId02(), forms);
+                        saveData(option.getId02(), forms);
                     }
                 }));
 
@@ -539,7 +572,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("03", option.getId03(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId03(), forms);
+                        saveData(option.getId03(), forms);
                     }
                 }));
 
@@ -547,7 +580,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("04", option.getId04(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId04(), forms);
+                        saveData(option.getId04(), forms);
                     }
                 }));
 
@@ -555,7 +588,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("05", option.getId05(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId05(), forms);
+                        saveData(option.getId05(), forms);
                     }
                 }));
 
@@ -563,7 +596,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("06", option.getId06(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId06(), forms);
+                        saveData(option.getId06(), forms);
                     }
                 }));
 
@@ -571,7 +604,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("07", option.getId07(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId07(), forms);
+                        saveData(option.getId07(), forms);
                     }
                 }));
 
@@ -579,7 +612,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("08", option.getId08(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId08(), forms);
+                        saveData(option.getId08(), forms);
                     }
                 }));
 
@@ -587,7 +620,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("09", option.getId09(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId09(), forms);
+                        saveData(option.getId09(), forms);
                     }
                 }));
 
@@ -595,7 +628,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("10", option.getId10(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId10(), forms);
+                        saveData(option.getId10(), forms);
                     }
                 }));
 
@@ -603,7 +636,7 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("11", option.getId11(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId11(), forms);
+                        saveData(option.getId11(), forms);
                     }
                 }));
 
@@ -611,46 +644,47 @@ public class ViewsCreator {
                 radioGroup.addView(radioButton("12", option.getId12(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId12(), forms);
+                        saveData(option.getId12(), forms);
                     }
                 }));
             if (option.getId13() != null)
                 radioGroup.addView(radioButton("13", option.getId13(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId13(), forms);
+                        saveData(option.getId13(), forms);
                     }
                 }));
             if (option.getId14() != null)
                 radioGroup.addView(radioButton("14", option.getId14(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId14(), forms);
+                        saveData(option.getId14(), forms);
                     }
                 }));
             if (option.getId15() != null)
                 radioGroup.addView(radioButton("15", option.getId15(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId15(), forms);
+                        saveData(option.getId15(), forms);
                     }
                 }));
             if (option.getId16() != null)
                 radioGroup.addView(radioButton("16", option.getId16(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       saveData(option.getId16(), forms);
+                        saveData(option.getId16(), forms);
                     }
                 }));
-
-
         }
 
 
-        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True")){
+        //Add View only and only if it is a required field with its associate error message
+        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True")) {
             viewError = new ViewError(radioGroup, forms.getLabel());
             viewList.add(viewError);
         }
+
+        innerViewsList.add(radioGroup); //Add View regardless of it being required
 
         saveData("", forms); //Save empty data first
         addTags(forms.getCode());
@@ -678,6 +712,8 @@ public class ViewsCreator {
     public LinearLayout datePicker(FieldsForms forms, final android.support.v4.app.FragmentManager fragmentManager) {
         String text = forms.getLabel();
         final String tag = forms.getCode();
+
+        LinearLayout lin = createTag(forms);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -712,7 +748,7 @@ public class ViewsCreator {
         pImage.gravity = Gravity.END;
 
 
-        // final ImageView imageView = new ImageView(mContext);
+        imageView.setTag(tag);
         imageView.setLayoutParams(pImage);
         //  imageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.calender));
         imageView.setColorFilter(ContextCompat.getColor(mContext, R.color.black));
@@ -739,17 +775,145 @@ public class ViewsCreator {
         linearLayout.addView(editText);
         linearLayout.addView(imageView);
 
-        innerViewsList.add(editText);
 
-        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True")){
+        //Add View only and only if it is a required field with its associate error message
+        if (forms.getRequired() != null && forms.getRequired().equalsIgnoreCase("True")) {
             viewError = new ViewError(editText, forms.getLabel());
             viewList.add(viewError);
         }
 
+        innerViewsList.add(linearLayout); //Add View regardless of it being required
+        innerViewsList.add(imageView); //Add ImageView to restrict the onclick
+
+        lin.addView(linearLayout);
+
+        return lin;
+    }
+
+
+    /**
+     * This function creates the Title to each question with a bolded Textview and
+     * shows or hide the Question code based on th boolean value passed
+     *
+     * @param forms This is the instance of the field to be created
+     **/
+    private LinearLayout createTag(FieldsForms forms) {
+        String header = forms.getLabel();
+        final String tag = forms.getCode();
+
+        String question = header;
+        if (this.isShowQuestionCodes)
+            question = tag + " : " + header;
+
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        p.gravity = Gravity.CENTER_HORIZONTAL;
+
+        final LinearLayout linearLayout = new LinearLayout(mContext);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setLayoutParams(p);
+        linearLayout.setTag(tag);
+
+        linearLayout.addView(textView(question, true)); //Add the Question Tag to each question
 
         return linearLayout;
     }
 
+
+    /**
+     * =========================== VARIOUS VIEWS CREATED OVER HERE ==============================
+     **/
+
+
+    private void makeViewActive(String answer, FieldsForms forms) {
+        if (forms.getDisabledCodes() != null && forms.getDisabledCodes().size() > 0 && answer != null && !answer.isEmpty()) {
+
+            for (View v : innerViewsList) {
+                v.setEnabled(true);
+                v.setClickable(true);
+                v.setBackgroundColor(Color.TRANSPARENT);
+
+                if (v instanceof EditText)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        v.setBackground(mContext.getDrawable(R.drawable.edit_text_holo_light));
+                    }
+
+                if (v instanceof RadioGroup) {
+                    RadioGroup radioGroup = (RadioGroup) v;
+                    for (int i = 0; i < radioGroup.getChildCount(); i++) {
+                        radioGroup.getChildAt(i).setEnabled(true);
+                    }
+                }
+
+            }
+
+
+            //Get the answer chosen by the user and use that to query for the disabled views by their TAG names
+            for (DisabledViews d : forms.getDisabledCodes()) {
+                if (d != null && d.getAnswer() != null && d.getAnswer().equalsIgnoreCase(answer)) {
+
+                    for (String code : d.getCodes()) {
+                        if (code != null && !code.isEmpty()) {
+                            for (View v : innerViewsList) {
+                                String tag = "";
+                                if (v.getTag() != null)
+                                    tag = v.getTag().toString();
+
+                                // LOG("TAGw >> " + tag);
+
+                                if (tag.equalsIgnoreCase(code)) {
+                                    v.setEnabled(false);
+                                    v.setClickable(false);
+
+
+                                    if (v instanceof RadioGroup) {
+                                        RadioGroup radioGroup = (RadioGroup) v;
+                                        radioGroup.clearCheck();
+                                        for (int i = 0; i < radioGroup.getChildCount(); i++) {
+                                            radioGroup.getChildAt(i).setEnabled(false);
+                                        }
+                                    }
+
+                                    if (v instanceof ImageView)
+                                        LOG("images clicked");
+                                    else
+                                        v.setBackgroundColor(mContext.getResources().getColor(R.color.transparent_black_hex_1));
+
+
+                                }
+                            }
+                        }
+
+                        saveEmptyForDisabledView(code); //Clear the previously saved answer for a disabled view
+                    }
+
+                    break;
+                }
+            }
+        }
+    }
+
+
+    private void saveEmptyForDisabledView(final String tag) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                Forms f = new FormsUtils(mContext).getSavedAnswer(tag);
+                String questionCode = f.getQuestionCode();
+                String question = f.getQuestion();
+                String answer = f.getAnswer();
+                String pageCode = f.getPageCode();
+                String formCode = f.getFormCode();
+
+                FORM_CODE = formCode;
+                Forms forms = new Forms("", question, questionCode, pageCode);
+                String value = convertModel(forms);
+
+                utils.cacheStringData(value, tag);
+            }
+        });
+
+
+    }
 
 
     public ArrayList<ViewError> getViewList() {

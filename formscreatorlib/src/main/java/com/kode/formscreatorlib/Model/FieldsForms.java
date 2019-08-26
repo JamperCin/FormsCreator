@@ -13,6 +13,7 @@ public class FieldsForms {
     private boolean isGotoSource;
     private ArrayList<OptionsForms> options = new ArrayList<>();
     private ArrayList<GotoIfForms> gotoIf = new ArrayList<>();
+    private ArrayList<DisabledViews> disabledCodes = new ArrayList<>();
 
 
     public String getInputType() {
@@ -56,28 +57,34 @@ public class FieldsForms {
         return gotoIf;
     }
 
-
-    public void setLabel(String label) {
-        this.label = label;
+    public ArrayList<DisabledViews> getDisabledCodes() {
+        return disabledCodes;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
 
-    public void setType(String type) {
-        this.type = type;
-    }
 
-    public void setRequired(String required) {
-        this.required = required;
-    }
 
-    public void setOptions(ArrayList<OptionsForms> options) {
-        this.options = options;
-    }
-
-    public void setGotoIf(ArrayList<GotoIfForms> gotoIf) {
-        this.gotoIf = gotoIf;
-    }
+    //    public void setLabel(String label) {
+//        this.label = label;
+//    }
+//
+//    public void setCode(String code) {
+//        this.code = code;
+//    }
+//
+//    public void setType(String type) {
+//        this.type = type;
+//    }
+//
+//    public void setRequired(String required) {
+//        this.required = required;
+//    }
+//
+//    public void setOptions(ArrayList<OptionsForms> options) {
+//        this.options = options;
+//    }
+//
+//    public void setGotoIf(ArrayList<GotoIfForms> gotoIf) {
+//        this.gotoIf = gotoIf;
+//    }
 }

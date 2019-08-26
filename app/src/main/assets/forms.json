@@ -6,24 +6,17 @@
 		{
 			"fieldCode" : "A_01",
 			"fields":[
-				{
-					"label":"Detailed Physical Address of House/Compound",
-					"code":"A00",
-					"type":"textViewBold",
-					"required" : "true"
-				},
+
 				{
 					"label":"Detailed Physical Address of House/Compound",
 					"code":"A01",
 					"type":"textarea",
-					"inputType":"0",
 					"required" : "true"
 				},
 				{
 					"label":"Ghana Post Digital Address",
 					"code":"A02",
 					"type":"text",
-					"inputType":"0",
 					"required" : "true"
 				},
 				{
@@ -58,8 +51,7 @@
 				{
 					"label":"Enumeration Area Code",
 					"code":"A00",
-					"type":"textViewBold",
-					"required" : "true"
+					"type":"textViewBold"
 				},
 				{
 					"label":"Detail Address of Structure",
@@ -372,7 +364,8 @@
 						{
 							"QuestionCode" : "E01",
 							"answer":"No",
-							"next":"P00"
+							"next":"A_10",
+							"gotoSource": "A_07"
 						}
 					]
 				},
@@ -538,7 +531,7 @@
 		{
 			"fieldCode" : "A_10",
 			"label":"Social Demographic Characteristics",
-			"repeat":"1",
+			"isRepeat":true,
 			"fields":[
 				{
 					"label":"Full Name  ",
@@ -574,12 +567,25 @@
 					],
 					"gotoIf":[
 						{
-							"answer":"1",
-							"next":"P04"
+							"answer":"Ghanaian by Birth",
+							"next":"P04",
+							"QuestionCode" : "P03a",
+							"gotoSource": "A_10"
+
 						},
 						{
 							"answer":"2",
 							"next":"P05"
+						}
+					],
+					"disabledCodes" : [
+						{
+							"answer":"Ghanaian by Birth",
+							"codes" : ["P04i","P04ii","P01","P05"]
+						},
+						{
+							"answer":"Ghanaian by Naturalization",
+							"codes" : ["P06ii","P09"]
 						}
 					]
 				},
@@ -1545,6 +1551,7 @@
 				{
 					"label":"Next",
 					"code":"A11b",
+					"isGotoSource" : true,
 					"type":"pagingButtons"
 				}
 			]
@@ -1724,6 +1731,23 @@
 						}
 					]
 				},
+
+				{
+					"code":"A11a",
+					"type":"space"
+				},
+
+				{
+					"label": "Next",
+					"isGotoSource" : true,
+					"type":"pagingButtons"
+				}
+			]
+		},
+		{
+			"fieldCode": "A_12",
+			"label": "Housing Condition (For Vacant Housing Unit Answer Only A07b, H02 and H03)",
+			"fields": [
 				{
 					"label":"Rooms:  Does the household share this sleeping room with other households?",
 					"code":"H07c",
@@ -1805,7 +1829,6 @@
 					"required":"false",
 					"inputType":"1"
 				},
-
 				{
 					"code":"A11a",
 					"type":"space"
@@ -1819,7 +1842,7 @@
 			]
 		},
 		{
-			"fieldCode" : "A_12",
+			"fieldCode" : "A_13",
 			"label":"Water Supply",
 			"fields":[
 				{
@@ -1910,7 +1933,7 @@
 			]
 		},
 		{
-			"fieldCode" : "A_13",
+			"fieldCode" : "A_14",
 			"label":"Cooking Fuel",
 			"fields":[
 				{
@@ -1992,7 +2015,6 @@
 					"code":"A11a",
 					"type":"space"
 				},
-
 				{
 					"label":"Next",
 					"code":"A11b",
@@ -2001,7 +2023,7 @@
 			]
 		},
 		{
-			"fieldCode" : "A_14",
+			"fieldCode" : "A_15",
 			"label":"Sanitation",
 			"fields":[
 				{
@@ -2054,7 +2076,7 @@
 			]
 		},
 		{
-			"fieldCode" : "A_15",
+			"fieldCode" : "A_16",
 			"label":"Toilet Facility",
 			"fields":[
 				{
@@ -2196,7 +2218,7 @@
 			]
 		},
 		{
-			"fieldCode" : "A_16",
+			"fieldCode" : "A_17",
 			"label":"Hygiene Practice",
 			"fields":[
 				{

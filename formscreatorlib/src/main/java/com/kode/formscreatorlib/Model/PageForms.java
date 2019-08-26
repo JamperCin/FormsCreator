@@ -3,16 +3,13 @@ package com.kode.formscreatorlib.Model;
 import java.util.ArrayList;
 
 public class PageForms {
-    private String repeat;
     private boolean isRepeat;
     private String label;
     private String fieldCode;
     private ArrayList<FieldsForms> fields = new ArrayList<>();
 
 
-    public String getRepeat() {
-        return repeat;
-    }
+
 
     public boolean isRepeat() {
         return isRepeat;
@@ -31,9 +28,7 @@ public class PageForms {
         return fieldCode;
     }
 
-    public void setRepeat(String repeat) {
-        this.repeat = repeat;
-    }
+
 
     public void setRepeat(boolean repeat) {
         isRepeat = repeat;

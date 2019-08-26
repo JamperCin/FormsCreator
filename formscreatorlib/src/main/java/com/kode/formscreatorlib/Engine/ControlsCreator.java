@@ -26,6 +26,7 @@ public class ControlsCreator {
     private ViewPager viewPager;
     private MainPagerAdapter mAdapter;
     private OnSubmitOnClick callBack;
+    private boolean isShowQuestionCodes;
 
     public ControlsCreator(Activity mContext, FragmentManager fragmentManager, ScrollView scrollView) {
         this.mContext = mContext;
@@ -55,6 +56,12 @@ public class ControlsCreator {
             llFormPage.setTag(pageBean.getFieldCode()); //Redundantly set the page code to this linearLayout
         }
 
+        //If a page has got label on top, then show the label first before any other view is added
+        if (pageBean.getLabel() != null && !pageBean.getLabel().isEmpty()){
+            ViewsCreator viewsCreator = new ViewsCreator(mContext);
+            llFormPage.addView(viewsCreator.textView(pageBean.getLabel(), true, true));
+        }
+
         /** set controls on linearlayout **/
         setControls(pageBean.getFields(), llFormPage);
 
@@ -76,13 +83,21 @@ public class ControlsCreator {
     }
 
 
+    public ControlsCreator isShowQuestionCode(boolean isShowQuestionCodes){
+        this.isShowQuestionCodes = isShowQuestionCodes;
+        return this;
+    }
+
+
     private LinearLayout setControls(List<FieldsForms> fieldsBean, LinearLayout llFormPage) {
         String type;
-        ViewsCreator viewsCreator = new ViewsCreator(mContext);
+        ViewsCreator viewsCreator = new ViewsCreator(mContext).isShowQuestionCode(isShowQuestionCodes);
 
         for (FieldsForms field : fieldsBean) {
             type = field.getType();
 
+
+            //Retrieve the redundant tag set to each LinearLayout created and use that as the page code
             field.setPageCode(llFormPage.getTag().toString());
 
             switch (type) {
@@ -91,7 +106,7 @@ public class ControlsCreator {
                     llFormPage.addView(space);
                     break;
                 case "text":
-                    EditText editText = viewsCreator.editText(field);
+                    LinearLayout editText = viewsCreator.editText(field);
                     llFormPage.addView(editText);
                     break;
                 case "textView":
@@ -104,7 +119,7 @@ public class ControlsCreator {
                     break;
 
                 case "textarea":
-                    EditText textarea = viewsCreator.textArea(field);
+                    LinearLayout textarea = viewsCreator.textArea(field);
                     llFormPage.addView(textarea);
                     break;
 

@@ -62,18 +62,20 @@ public class FormFragment extends Fragment implements View.OnClickListener {
         /** set view pager **/
         new EngineBean(getActivity(), getFragmentManager())
                 .setHeaderView(tvPageHeader)
+                .enablePaging(true)
+                .isShowQuestionCode(true)
                 .setOnSubmitClickListener(new OnSubmitOnClick() {
                     @Override
                     public void submit() {
 
                         ArrayList<Forms> forms = new FormsUtils(getActivity()).getSavedAnswer();
 
-                        Forms f  = new FormsUtils(getActivity()).getSavedAnswer("A01");
-                        String questionCode = f.getQuestionCode();
-                        String question = f.getQuestion();
-                        String answer = f.getAnswer();
-                        String pageCode = f.getPageCode();
-                        String formCode = f.getFormCode();
+//                        Forms f  = new FormsUtils(getActivity()).getSavedAnswer("A01");
+//                        String questionCode = f.getQuestionCode();
+//                        String question = f.getQuestion();
+//                        String answer = f.getAnswer();
+//                        String pageCode = f.getPageCode();
+//                        String formCode = f.getFormCode();
 
                        LOG("Forms here " + convertArrayObject(forms));
                     }
