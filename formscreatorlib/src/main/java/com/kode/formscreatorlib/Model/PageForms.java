@@ -11,6 +11,7 @@ public class PageForms {
 
 
 
+
     public boolean isRepeat() {
         return isRepeat;
     }
@@ -40,5 +41,9 @@ public class PageForms {
 
     public void setFields(ArrayList<FieldsForms> fields) {
         this.fields = fields;
+    }
+
+    public void setFieldCode(String fieldCode) {
+        this.fieldCode = fieldCode;
     }
 }

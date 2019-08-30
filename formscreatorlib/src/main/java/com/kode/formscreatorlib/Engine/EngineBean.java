@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.kode.formscreatorlib.Callbacks.OnSubmitOnClick;
 import com.kode.formscreatorlib.Model.MainForms;
+import com.kode.formscreatorlib.Model.PageForms;
 import com.kode.formscreatorlib.R;
 import com.kode.formscreatorlib.Utils.CustomViewPager;
 
@@ -22,6 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static com.kode.formscreatorlib.Utils.FormsUtils.FORM_CODE;
+import static com.kode.formscreatorlib.Utils.FormsUtils.LOG;
+import static com.kode.formscreatorlib.Utils.FormsUtils.REPEAT_FORMS;
 import static com.kode.formscreatorlib.Utils.FormsUtils.TAG_LIST;
 
 public class EngineBean {
@@ -37,6 +40,7 @@ public class EngineBean {
     private OnSubmitOnClick callBack;
     private boolean isPagingEnabled;
     private boolean isShowQuestionCodes;
+    private boolean isHideRepeatPages;
 
 
     /**
@@ -62,26 +66,39 @@ public class EngineBean {
         TAG_LIST.clear();
         FORM_CODE = "";
     }
-    
-    
-    public EngineBean setHeaderView(TextView textView){
+
+
+    public EngineBean(Activity mContext, FragmentManager fragmentManager, boolean isRepeat) {
+        this.mContext = mContext;
+        this.fragmentManager = fragmentManager;
+       // TAG_LIST.clear();
+        //FORM_CODE = "";
+    }
+
+
+
+    public EngineBean setHeaderView(TextView textView) {
         this.textView = textView;
         return this;
     }
 
 
-
-    public EngineBean setOnSubmitClickListener(OnSubmitOnClick callBack){
+    public EngineBean setOnSubmitClickListener(OnSubmitOnClick callBack) {
         this.callBack = callBack;
         return this;
     }
 
-    public EngineBean enablePaging(boolean isPagingEnabled){
+    public EngineBean enablePaging(boolean isPagingEnabled) {
         this.isPagingEnabled = isPagingEnabled;
         return this;
     }
 
-    public EngineBean isShowQuestionCode(boolean isShowQuestionCodes){
+    public EngineBean isHideRepeatPages(boolean isHideRepeatPages) {
+        this.isHideRepeatPages = isHideRepeatPages;
+        return this;
+    }
+
+    public EngineBean isShowQuestionCode(boolean isShowQuestionCodes) {
         this.isShowQuestionCodes = isShowQuestionCodes;
         return this;
     }
@@ -91,7 +108,7 @@ public class EngineBean {
      * This is later converted and mapped to the MainForms Object which is later used in creating the views
      *
      * @param jsonFileName This is the json file name saved in the asset
-     * @param viewPager The viewpager to draw all the views
+     * @param viewPager    The viewpager to draw all the views
      **/
     public EngineBean Builder(String jsonFileName, CustomViewPager viewPager) {
         this.viewPager = viewPager;
@@ -155,12 +172,11 @@ public class EngineBean {
     }
 
 
-
     private void convertJsonToObj() {
         try {
             gson = new GsonBuilder().create();
             formFormat = gson.fromJson(json, MainForms.class);
-        }catch (JsonSyntaxException e){
+        } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
     }
@@ -180,7 +196,21 @@ public class EngineBean {
         if (textView != null)
             textView.setText(String.format("%s\n%s", formFormat.getTitle(), formFormat.getSection()));
 
+
         pageSize = formFormat.getPages().size();
+
+
+       /* if (this.isHideRepeatPages){
+            pageSize = 0;
+
+            for (PageForms p : formFormat.getPages()){
+                if (!p.isRepeat())
+                    pageSize = pageSize + 1;
+            }
+        }*/
+
+
+        LOG("Page size is " + pageSize);
 
         // Create an initial view to display; must be a subclass of FrameLayout.
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -188,7 +218,11 @@ public class EngineBean {
 
         ControlsCreator controlsCreator;
 
+        int k = 0;
+
         for (int i = 0; i < pageSize; i++) {
+            PageForms page = formFormat.getPages().get(i);
+
             svFormPage = (ScrollView) inflater.inflate(R.layout.form_controls_fragment, null);
 
             /** use the controls creator to create form controls **/
@@ -198,13 +232,31 @@ public class EngineBean {
                     .setOnSubmitClickListener(callBack);
 
 
-            svFormPage = controlsCreator.generate(formFormat.getPages().get(i));
 
-            pagerAdapter.addView(svFormPage, i);
+            if(this.isHideRepeatPages){
+
+                if (!page.isRepeat()){
+                    svFormPage = controlsCreator.generate(page);
+                    pagerAdapter.addView(svFormPage, k);
+                    k = k + 1;
+                }else{
+                    REPEAT_FORMS.add(page); //Add the repeat pages over here
+                }
+
+            }else{
+                svFormPage = controlsCreator.generate(page);
+                pagerAdapter.addView(svFormPage, i);
+            }
+
             pagerAdapter.notifyDataSetChanged();
         }
 
+        LOG("Final Page size is " + k + " >> " + REPEAT_FORMS.size());
+
+
     }
+
+
 
 
 

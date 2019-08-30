@@ -1,18 +1,23 @@
 package com.kode.formscreatorlib.Engine;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 
 import com.kode.formscreatorlib.Model.FieldsForms;
 import com.kode.formscreatorlib.Model.Forms;
 import com.kode.formscreatorlib.Model.GotoIfForms;
+import com.kode.formscreatorlib.Model.PageForms;
+import com.kode.formscreatorlib.UI.RepeatFrame;
 import com.kode.formscreatorlib.Utils.FormsUtils;
 
 import java.util.List;
 
 import static com.kode.formscreatorlib.Utils.FormsUtils.LOG;
-import static com.kode.formscreatorlib.Utils.FormsUtils.convertModel;
+import static com.kode.formscreatorlib.Utils.FormsUtils.REPEAT_FORMS;
+import static com.kode.formscreatorlib.Utils.FormsUtils.parseInteger;
+import static java.lang.Integer.parseInt;
 
 public class GotoIfEngine {
 
@@ -104,7 +109,7 @@ public class GotoIfEngine {
     }
 
 
-    public void handleGotoSource(FieldsForms forms, final ViewPager viewPager, final MainPagerAdapter mAdapter) {
+    void handleGotoSource(FieldsForms forms, final ViewPager viewPager, final MainPagerAdapter mAdapter) {
         try {
             if (forms != null && forms.isGotoSource()) {
                 String savedAnswer = utils.getAnswer(GO_TO_SOURCE_TAG);
@@ -131,5 +136,37 @@ public class GotoIfEngine {
             e.printStackTrace();
         }
     }
+
+
+    void handleRepeat(FieldsForms forms, FragmentManager fragmentManager) {
+        if (forms.getRepeatBlock() != null && forms.getRepeatBlock().getRepeatValueFrom() != null) {
+
+            Forms f = utils.getSavedAnswer(forms.getRepeatBlock().getRepeatValueFrom());
+
+            int repeatCount = parseInteger(f.getAnswer());
+            String repeatFieldCode = forms.getRepeatBlock().getRepeatField();
+
+            LOG("Saved ans " + repeatCount);
+
+            for (PageForms pageForms : REPEAT_FORMS) {
+                if (pageForms.getFieldCode() != null && pageForms.getFieldCode().equalsIgnoreCase(repeatFieldCode)) {
+
+                    RepeatFrame frame = new RepeatFrame();
+                    frame.setPage(pageForms);
+                    frame.setHeaderTitle(forms.getRepeatBlock().getRepeatHeader());
+                    frame.setRepeatCount(repeatCount);
+                    frame.isPagingEnabled(true);
+                    frame.isShowQuestionCode(true);
+                    frame.setCancelable(false);
+                    frame.show(fragmentManager, "RepeatFrame");
+
+                    break;
+                }
+            }
+
+        }
+
+    }
+
 
 }

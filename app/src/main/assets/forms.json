@@ -206,13 +206,18 @@
 				{
 					"label":"Next",
 					"code":"A11b",
-					"type":"pagingButtons"
+					"type":"pagingButtons",
+					"repeatBlock" : {
+						"repeatField" : "A_05",
+						"repeatValueFrom" : "A15ii",
+						"repeatHeader" : "Please fill in the following details"
+					}
 				}
 			]
 		},
 		{
 			"fieldCode" : "A_05",
-			"repeat":"5",
+			"isRepeat":true,
 			"label":"Usual member or visitor present on census night(A12 or B12)",
 			"fields":[
 				{
@@ -499,8 +504,19 @@
 					"required" : "true",
 					"options":[
 						{
-							"01":"Medical Reson",
+							"01":"Medical Reason",
 							"02":"Another reason"
+						}
+					],
+					"showIf":[
+						{
+							"answer":"Another reason",
+							"visibleCodes" : [ "E02viii"]
+						},
+
+						{
+							"answer":"Medical Reason",
+							"hiddenCodes" : [ "E02viii"]
 						}
 					]
 				},
@@ -508,12 +524,9 @@
 					"label":"Main reason for travelling",
 					"code":"E02viii",
 					"type":"text",
-					"required" : "true",
-					"showIf":[
-						{
-							"answer":"2"
-						}
-					]
+					"isHidden" : true,
+					"required" : "true"
+
 				},
 
 				{
@@ -531,7 +544,6 @@
 		{
 			"fieldCode" : "A_10",
 			"label":"Social Demographic Characteristics",
-			"isRepeat":true,
 			"fields":[
 				{
 					"label":"Full Name  ",

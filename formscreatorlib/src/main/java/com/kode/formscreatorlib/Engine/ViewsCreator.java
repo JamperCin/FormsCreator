@@ -35,6 +35,7 @@ import com.kode.formscreatorlib.Model.DisabledViews;
 import com.kode.formscreatorlib.Model.FieldsForms;
 import com.kode.formscreatorlib.Model.Forms;
 import com.kode.formscreatorlib.Model.OptionsForms;
+import com.kode.formscreatorlib.Model.ShowIfForms;
 import com.kode.formscreatorlib.Model.ViewError;
 import com.kode.formscreatorlib.R;
 import com.kode.formscreatorlib.Utils.DatePickerClass;
@@ -60,11 +61,26 @@ public class ViewsCreator {
     private String spinnerItem = "";
 
     private ArrayList<ViewError> viewList;
-    private ArrayList<View> innerViewsList;
+    private ArrayList<View> innerViewsList, hiddenViews;
     private FormsUtils utils;
     private ViewError viewError;
     private boolean isShowQuestionCodes;
+    android.support.v4.app.FragmentManager fragmentManager;
 
+
+    public ViewsCreator(Activity context, android.support.v4.app.FragmentManager fragmentManager) {
+        this.mContext = context;
+        this.fragmentManager = fragmentManager;
+
+        params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.CENTER_VERTICAL;
+        params.setMargins(16, 16, 16, 16);
+        spinnerItem = "233";
+        viewList = new ArrayList<>();
+        innerViewsList = new ArrayList<>();
+        hiddenViews = new ArrayList<>();
+        utils = new FormsUtils(mContext);
+    }
 
     public ViewsCreator(Activity context) {
         this.mContext = context;
@@ -75,6 +91,7 @@ public class ViewsCreator {
         spinnerItem = "233";
         viewList = new ArrayList<>();
         innerViewsList = new ArrayList<>();
+        hiddenViews = new ArrayList<>();
         utils = new FormsUtils(mContext);
     }
 
@@ -153,6 +170,8 @@ public class ViewsCreator {
         utils.cacheStringData(value, field.getCode());
 
         makeViewActive(answer, field);
+
+        makeViewVisible(answer, field);
     }
 
 
@@ -217,6 +236,12 @@ public class ViewsCreator {
 
 
         linearLayout.addView(editText);
+
+        if (forms.isHidden()) {
+            linearLayout.setVisibility(View.GONE);
+            hiddenViews.add(linearLayout);
+        }
+
         return linearLayout;
     }
 
@@ -258,6 +283,12 @@ public class ViewsCreator {
         editText.setText("");
 
         linearLayout.addView(editText);
+
+        if (forms.isHidden()) {
+            linearLayout.setVisibility(View.GONE);
+            hiddenViews.add(linearLayout);
+        }
+
         return linearLayout;
     }
 
@@ -310,8 +341,11 @@ public class ViewsCreator {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (new ValidationClass(mContext).Validator(viewList))
+                if (new ValidationClass(mContext).Validator(viewList)) {
                     new GotoIfEngine(mContext).Builder(formsList, viewPager, adapter);
+
+                  new GotoIfEngine(mContext).handleRepeat(forms,fragmentManager);
+                }
 
                 LOG("Size " + viewList.size());
             }
@@ -690,6 +724,12 @@ public class ViewsCreator {
         addTags(forms.getCode());
 
         linearLayout.addView(radioGroup);
+
+        if (forms.isHidden()) {
+            linearLayout.setVisibility(View.GONE);
+            hiddenViews.add(linearLayout);
+        }
+
         return linearLayout;
     }
 
@@ -709,7 +749,7 @@ public class ViewsCreator {
     }
 
 
-    public LinearLayout datePicker(FieldsForms forms, final android.support.v4.app.FragmentManager fragmentManager) {
+    public LinearLayout datePicker(FieldsForms forms) {
         String text = forms.getLabel();
         final String tag = forms.getCode();
 
@@ -787,6 +827,11 @@ public class ViewsCreator {
 
         lin.addView(linearLayout);
 
+        if (forms.isHidden()) {
+            lin.setVisibility(View.GONE);
+            hiddenViews.add(lin);
+        }
+
         return lin;
     }
 
@@ -803,7 +848,7 @@ public class ViewsCreator {
 
         String question = header;
         if (this.isShowQuestionCodes)
-            question = tag + " : " + header;
+            question = "\n" + tag + " : " + header;
 
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         p.gravity = Gravity.CENTER_HORIZONTAL;
@@ -892,6 +937,62 @@ public class ViewsCreator {
         }
     }
 
+    private void makeViewVisible(String answer, FieldsForms forms) {
+        if (answer != null && !answer.isEmpty() && forms.getShowIf() != null && forms.getShowIf().size() > 0) {
+
+            for (ShowIfForms d : forms.getShowIf()) {
+
+                //Get the answer chosen by the user and use that to query for the hidden views by their TAG names and make them visible
+                if (d != null && d.getVisibleCodes() != null && d.getVisibleCodes().size() > 0) {
+                    if (d.getAnswer() != null && d.getAnswer().equalsIgnoreCase(answer)) {
+                        for (String code : d.getVisibleCodes()) {
+                            if (code != null && !code.isEmpty()) {
+                                for (View v : hiddenViews) {
+                                    String tag = "";
+                                    if (v.getTag() != null)
+                                        tag = v.getTag().toString();
+
+                                    LOG("TAGw >> " + tag + " >> " + code);
+
+                                    if (tag.equalsIgnoreCase(code)) {
+                                        v.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            }
+
+                            //saveEmptyForDisabledView(code); //Clear the previously saved answer for a hidden view
+                        }
+                        break;
+                    }
+                }
+
+                //Get all visible views and set them to gone
+                if (d != null && d.getHiddenCodes() != null && d.getHiddenCodes().size() > 0) {
+                    if (d.getAnswer() != null && d.getAnswer().equalsIgnoreCase(answer)) {
+                        for (String code : d.getHiddenCodes()) {
+                            if (code != null && !code.isEmpty()) {
+                                for (View v : hiddenViews) {
+                                    String tag = "";
+                                    if (v.getTag() != null)
+                                        tag = v.getTag().toString();
+
+                                    LOG("TAGw >> " + tag + " >> " + code);
+
+                                    if (tag.equalsIgnoreCase(code)) {
+                                        v.setVisibility(View.GONE);
+                                    }
+                                }
+                            }
+
+                        }
+                        break;
+                    }
+                }
+
+            }
+        }
+    }
+
 
     private void saveEmptyForDisabledView(final String tag) {
         AsyncTask.execute(new Runnable() {
@@ -912,16 +1013,6 @@ public class ViewsCreator {
             }
         });
 
-
-    }
-
-
-    public ArrayList<ViewError> getViewList() {
-        return viewList;
-    }
-
-    public ArrayList<View> getInnerViewsList() {
-        return innerViewsList;
     }
 
 

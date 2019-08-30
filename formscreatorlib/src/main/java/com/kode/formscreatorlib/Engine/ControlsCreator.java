@@ -27,6 +27,7 @@ public class ControlsCreator {
     private MainPagerAdapter mAdapter;
     private OnSubmitOnClick callBack;
     private boolean isShowQuestionCodes;
+    private boolean isHideRepeatPages;
 
     public ControlsCreator(Activity mContext, FragmentManager fragmentManager, ScrollView scrollView) {
         this.mContext = mContext;
@@ -89,9 +90,15 @@ public class ControlsCreator {
     }
 
 
+    public ControlsCreator isHideRepeatPages(boolean isHideRepeatPages){
+        this.isHideRepeatPages = isHideRepeatPages;
+        return this;
+    }
+
+
     private LinearLayout setControls(List<FieldsForms> fieldsBean, LinearLayout llFormPage) {
         String type;
-        ViewsCreator viewsCreator = new ViewsCreator(mContext).isShowQuestionCode(isShowQuestionCodes);
+        ViewsCreator viewsCreator = new ViewsCreator(mContext, fragmentManager).isShowQuestionCode(isShowQuestionCodes);
 
         for (FieldsForms field : fieldsBean) {
             type = field.getType();
@@ -147,7 +154,7 @@ public class ControlsCreator {
 
                 case "date":
                     if (fragmentManager != null) {
-                        LinearLayout datePicker = viewsCreator.datePicker(field, fragmentManager);
+                        LinearLayout datePicker = viewsCreator.datePicker(field);
                         llFormPage.addView(datePicker);
                     }
 

@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kode.formscreatorlib.BuildConfig;
 import com.kode.formscreatorlib.Model.Forms;
+import com.kode.formscreatorlib.Model.PageForms;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,6 +29,7 @@ public class FormsUtils {
     private Activity mContext;
     public static ArrayList<String> TAG_LIST = new ArrayList<>();
     public static String FORM_CODE = "";
+    public static ArrayList<PageForms> REPEAT_FORMS = new ArrayList<>();
 
     public FormsUtils(Activity mContext) {
         this.mContext = mContext;
@@ -254,5 +256,18 @@ public class FormsUtils {
             return "";
         }
     }
+
+
+    public static int parseInteger(String value) {
+        try {
+            if (value != null) {
+                return Integer.parseInt(value);
+            } else
+                return -1;
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
 
 }
