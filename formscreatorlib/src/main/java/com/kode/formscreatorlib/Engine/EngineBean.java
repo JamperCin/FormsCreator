@@ -246,6 +246,9 @@ public class EngineBean {
             }else{
                 svFormPage = controlsCreator.generate(page);
                 pagerAdapter.addView(svFormPage, i);
+
+                if (page.isRepeat())
+                    REPEAT_FORMS.add(page); //Add the repeat pages over here
             }
 
             pagerAdapter.notifyDataSetChanged();
