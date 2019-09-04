@@ -1,15 +1,17 @@
 package com.kode.formscreatorlib.Model;
 
+import java.util.ArrayList;
+
 public class RepeatBlock {
     private String repeatField;
-    private String repeatValueFrom;
+    private ArrayList<String> repeatValueFrom = new ArrayList<>();
     private String repeatHeader;
 
     public String getRepeatField() {
         return repeatField;
     }
 
-    public String getRepeatValueFrom() {
+    public ArrayList<String> getRepeatValueFrom() {
         return repeatValueFrom;
     }
 

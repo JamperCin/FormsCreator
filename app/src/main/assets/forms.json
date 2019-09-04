@@ -209,7 +209,7 @@
 					"type":"pagingButtons",
 					"repeatBlock" : {
 						"repeatField" : "A_05",
-						"repeatValueFrom" : "A15ii",
+						"repeatValueFrom" : ["A15ii", "A15i"],
 						"repeatHeader" : "Please fill in the following details"
 					}
 				}

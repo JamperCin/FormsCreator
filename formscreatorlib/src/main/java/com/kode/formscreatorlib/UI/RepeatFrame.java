@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kode.formscreatorlib.Callbacks.OnSubmitOnClick;
 import com.kode.formscreatorlib.Engine.ControlsCreator;
@@ -24,17 +25,17 @@ import java.util.ArrayList;
 import static com.kode.formscreatorlib.Utils.FormsUtils.LOG;
 
 
-public class RepeatFrame extends BottomSheetDialogFragment {
+public class RepeatFrame extends BottomSheetDialogFragment implements View.OnClickListener {
 
     CustomViewPager viewPager;
-    TextView textView;
+    TextView textView, cancelBtn_x;
     private int repeatCount = 0;
     private PageForms page;
     private MainPagerAdapter pagerAdapter;
     private boolean isPagingEnabled;
     private boolean isShowQuestionCodes;
     private String headerTitle = "";
-
+    private int closeCounter = 0;
 
     private ArrayList<PageForms> editedList = new ArrayList<>();
 
@@ -76,28 +77,27 @@ public class RepeatFrame extends BottomSheetDialogFragment {
      ***/
 
 
-
-    public RepeatFrame setPage(PageForms page){
+    public RepeatFrame setPage(PageForms page) {
         this.page = page;
         return this;
     }
 
-    public RepeatFrame setHeaderTitle(String headerTitle){
+    public RepeatFrame setHeaderTitle(String headerTitle) {
         this.headerTitle = headerTitle;
         return this;
     }
 
-    public RepeatFrame setRepeatCount(int repeatCount){
+    public RepeatFrame setRepeatCount(int repeatCount) {
         this.repeatCount = repeatCount;
         return this;
     }
 
-    public RepeatFrame isPagingEnabled(boolean isPagingEnabled){
+    public RepeatFrame isPagingEnabled(boolean isPagingEnabled) {
         this.isPagingEnabled = isPagingEnabled;
         return this;
     }
 
-    public RepeatFrame isShowQuestionCode(boolean isShowQuestionCodes){
+    public RepeatFrame isShowQuestionCode(boolean isShowQuestionCodes) {
         this.isShowQuestionCodes = isShowQuestionCodes;
         return this;
     }
@@ -106,10 +106,13 @@ public class RepeatFrame extends BottomSheetDialogFragment {
     private void setViewPager(View view) {
         viewPager = view.findViewById(R.id.viewPager_x);
         textView = view.findViewById(R.id.headerTitle_x);
-
+        cancelBtn_x = view.findViewById(R.id.cancelBtn_x);
         generateViews();
 
         textView.setText(headerTitle);
+
+        cancelBtn_x.setOnClickListener(this);
+        closeCounter = 0;
     }
 
 
@@ -150,7 +153,7 @@ public class RepeatFrame extends BottomSheetDialogFragment {
 
             ArrayList<FieldsForms> fieldsList = new ArrayList<>();
 
-            for (int k = 0; k < mForms.getFields().size(); k++){
+            for (int k = 0; k < mForms.getFields().size(); k++) {
                 FieldsForms field = mForms.getFields().get(k);
 
                 FieldsForms mField = new FieldsForms();
@@ -166,10 +169,10 @@ public class RepeatFrame extends BottomSheetDialogFragment {
                 mField.setRepeatBlock(field.getRepeatBlock());
                 mField.setRequired(field.getRequired());
                 mField.setShowIf(field.getShowIf());
-                mField.setCode(field.getCode() +  "_" + (i + 1) + "_" + (k + 1)); //Introduce new codes for the individual fields
+                mField.setCode(field.getCode() + "_" + (i + 1) + "_" + (k + 1)); //Introduce new codes for the individual fields
 
 
-                if((i == repeatCount -1) &&  (k == forms.getFields().size() - 1)) {
+                if ((i == repeatCount - 1) && (k == forms.getFields().size() - 1)) {
                     mField.setType("submitButton");
                     mField.setLabel("Save");
                 }
@@ -204,6 +207,15 @@ public class RepeatFrame extends BottomSheetDialogFragment {
     }
 
 
+    @Override
+    public void onClick(View view) {
+        if (closeCounter < 1)
+            Toast.makeText(getActivity(), "Click again to exit", Toast.LENGTH_SHORT).show();
+        else
+            dismiss();
+
+        closeCounter = closeCounter + 1;
+    }
 
 
 }

@@ -139,11 +139,19 @@ public class GotoIfEngine {
 
 
     void handleRepeat(FieldsForms forms, FragmentManager fragmentManager) {
-        if (forms.getRepeatBlock() != null && forms.getRepeatBlock().getRepeatValueFrom() != null) {
+        if (forms.getRepeatBlock() != null && forms.getRepeatBlock().getRepeatValueFrom() != null && forms.getRepeatBlock().getRepeatValueFrom().size() > 0) {
 
-            Forms f = utils.getSavedAnswer(forms.getRepeatBlock().getRepeatValueFrom());
+            int repeatCount = 0;
 
-            int repeatCount = parseInteger(f.getAnswer());
+            for (String s : forms.getRepeatBlock().getRepeatValueFrom()){
+                Forms f = utils.getSavedAnswer(s);
+                repeatCount = repeatCount + parseInteger(f.getAnswer());
+            }
+
+
+            if (repeatCount == 0)
+                return;
+
             String repeatFieldCode = forms.getRepeatBlock().getRepeatField();
 
             LOG("Saved ans " + repeatCount);
@@ -165,8 +173,9 @@ public class GotoIfEngine {
             }
 
         }
-
     }
+
+
 
 
 }

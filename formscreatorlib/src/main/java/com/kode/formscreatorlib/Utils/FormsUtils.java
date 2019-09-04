@@ -263,9 +263,9 @@ public class FormsUtils {
             if (value != null) {
                 return Integer.parseInt(value);
             } else
-                return -1;
+                return 0;
         } catch (Exception e) {
-            return -1;
+            return 0;
         }
     }
 
