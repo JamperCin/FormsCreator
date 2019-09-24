@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.ViewGroup;
 
 import com.kode.formscreatorlib.Model.FieldsForms;
 import com.kode.formscreatorlib.Model.Forms;
 import com.kode.formscreatorlib.Model.GotoIfForms;
 import com.kode.formscreatorlib.Model.PageForms;
 import com.kode.formscreatorlib.UI.RepeatFrame;
+import com.kode.formscreatorlib.UI.RepeatFrameDailog;
 import com.kode.formscreatorlib.Utils.FormsUtils;
 
 import java.util.List;
@@ -143,7 +145,7 @@ public class GotoIfEngine {
 
             int repeatCount = 0;
 
-            for (String s : forms.getRepeatBlock().getRepeatValueFrom()){
+            for (String s : forms.getRepeatBlock().getRepeatValueFrom()) {
                 Forms f = utils.getSavedAnswer(s);
                 repeatCount = repeatCount + parseInteger(f.getAnswer());
             }
@@ -159,14 +161,18 @@ public class GotoIfEngine {
             for (PageForms pageForms : REPEAT_FORMS) {
                 if (pageForms.getFieldCode() != null && pageForms.getFieldCode().equalsIgnoreCase(repeatFieldCode)) {
 
-                    RepeatFrame frame = new RepeatFrame();
+                    RepeatFrameDailog frame = new RepeatFrameDailog(mContext);
                     frame.setPage(pageForms);
                     frame.setHeaderTitle(forms.getRepeatBlock().getRepeatHeader());
                     frame.setRepeatCount(repeatCount);
                     frame.isPagingEnabled(true);
                     frame.isShowQuestionCode(true);
                     frame.setCancelable(false);
-                    frame.show(fragmentManager, "RepeatFrame");
+                    frame.setContexts(mContext, fragmentManager);
+                    frame.show();
+                    if (frame.getWindow() != null)
+                        frame.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    // frame.show(fragmentManager, "RepeatFrame");
 
                     break;
                 }
@@ -174,8 +180,6 @@ public class GotoIfEngine {
 
         }
     }
-
-
 
 
 }

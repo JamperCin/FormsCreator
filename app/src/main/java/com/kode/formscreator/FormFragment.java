@@ -64,7 +64,7 @@ public class FormFragment extends Fragment implements View.OnClickListener {
                 .setHeaderView(tvPageHeader)
                 .enablePaging(true)
                 .isShowQuestionCode(true)
-                .isHideRepeatPages(false)
+                .isHideRepeatPages(true)
                 .setOnSubmitClickListener(new OnSubmitOnClick() {
                     @Override
                     public void submit() {
