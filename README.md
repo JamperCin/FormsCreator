@@ -72,7 +72,45 @@ Every json should have a top most structure  like below :
 
 ```
 
-**: To create a any view  :**
+**: To create your list of pages, follow the following format to get your json rendered :**
+
+ **:fieldCode :** Which is the unique Code that denotes every single page created, (MANDATORY)
+ 
+ **:isRepeat :** Which is a boolean value to indicate whether this page will be created multiple times based on a value entered by user. By default this value is FALSE (OPTIONAL)
+ 
+ **:fields :** Which is the list of the individual views created in every single page.  (MANDATORY)
+ 
+ 
+```
+  {
+	"form":"Onboarding Forms For GCB",
+	"title": "Household Population Questionnaire",
+	"section":"Section B: Socio-Demographic Characteristics", 
+	"pages":[
+	
+	  {
+	   "fieldCode" : "Page_1",
+	   "isRepeat":true,
+       "fields":[ ]
+	  },
+	  
+	  {
+      	"fieldCode" : "Page_2",
+      	"isRepeat":false,
+        "fields":[ ]
+      },
+      {
+      	 "fieldCode" : "Page_3",
+      	 "isRepeat":false,
+         "fields":[ ]
+      }
+      
+	 ]
+	
+}
+
+```
+
 
 
 
