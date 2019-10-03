@@ -54,8 +54,11 @@ This project is to easily use json to create forms for quick onboarding  used by
 Every json should have a top most structure  like below :
 
  **:form :** Which is the name of the form to be rendered, (OPTIONAL)
+ 
  **:title :** Which is the title of the form to be shown on top of all the forms or on the toolbar, (OPTIONAL)
+ 
  **:section :** Which is the section in which this part of the json falls (OPTIONAL)
+ 
  **:pages :** Which is the list of the pages to be rendered, This array determines the number of pages to have or flip through in the viewpager. Every page contains list of views to be rendered. (MANDATORY)
  
 ```
