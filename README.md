@@ -92,7 +92,7 @@ Every json should have a top most structure  like below :
 	  {
 	   "fieldCode" : "Page_1",
 	   "isRepeat":true,
-       "fields":[ ]
+	   "fields":[ ]
 	  },
 	  
 	  {
