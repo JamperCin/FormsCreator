@@ -136,7 +136,8 @@ Every json should have a top most structure  like below :
 
 ```
 
-**NB :** Every first page should have a single button below the list of views to move the page to the next page like below
+**NB :** Every first page should have a single button below the list of views to move the page to the next page like below.
+Likewise, on the last page , add a submit button to get all the values entered by user
  
  
 ```
@@ -167,6 +168,19 @@ Every json should have a top most structure  like below :
           },
           
           {
+          	"label": "Type of residence",
+          	"code":"A07b",
+          	"type":"radio",
+          	"required": "true",
+          	"options":[
+          				{
+          				  "01":"Occupied housing unit",
+          				  "02":"Vacant housing Unit"
+          				}
+          			]
+        },
+          
+          {
           	"label":"Next",
           	"code":"first_Btn",
           	"type":"button"
@@ -182,7 +196,18 @@ Every json should have a top most structure  like below :
        {
       	 "fieldCode" : "Page_3",
       	 "isRepeat":false,
-         "fields":[ ]
+         "fields":[ 
+          
+          .......
+          
+          
+         {
+          "label":"Save",
+          "code":"A11b",
+          "type":"submitButton"
+         }
+         
+         ]
        }
       
 	 ]
@@ -191,6 +216,24 @@ Every json should have a top most structure  like below :
 
 ```
 
+
+**Sample forms should follow this format in order to be rendered :**
+Note : Every field should have a unique code and every page should have a unique code as well
+
+The various supported views for now that can be rendered include:
+```
+**: 1. textViewBold -> :** For rendering a textview with bolded style
+**: 2. textView -> :** For rendering a textview with normal style
+**: 3. text -> :** For rendering an EditText for entry
+**: 4. textarea -> :** For rendering a textArea field for entry
+**: 5. radio -> :** For rendering a radioGroup with radio buttons specifically for a purpose where data is object and follows specifi naming patterns. (Not recommended if you dont understand)
+**: 6. radioGroup -> :** For rendering a radioGroup with a list of radio buttons 
+**: 7. button -> :** For rendering a button, specifically for the first Visible button to move viewpager to next screen
+**: 8. pagingButtons -> :** For rendering a PREVIOUS and NEXT button, specifically for the subsequent screens to move viewpager to next screen and previous screen
+**: 9. date -> :** For rendering an editext and an imagepicker to allow user to select date from a date picker
+**: 10. space -> :** For rendering empty space between views, especially between a view and a button
+
+```
 
 **Register an onClickListener to the submit Button:**
  In this case, in the json, define a view type called **submitButton** at the part of the page where you want to submit your values or save data. 
@@ -244,25 +287,6 @@ String questionCode = f.getQuestionCode();
   String pageCode = f.getPageCode();
   String formCode = f.getFormCode();
 }
-```
-
-
-**Sample forms should follow this format in order to be renderred :**
-Note : Every field should have a unique code and every page should have a unique code as well
-
-The various supported views for now that can be rendered include:
-```
-**: 1. textViewBold -> :** For rendering a textview with bolded style
-**: 2. textView -> :** For rendering a textview with normal style
-**: 3. text -> :** For rendering an EditText for entry
-**: 4. textarea -> :** For rendering a textArea field for entry
-**: 5. radio -> :** For rendering a radioGroup with radio buttons specifically for a purpose where data is object and follows specifi naming patterns. (Not recommended if you dont understand)
-**: 6. radioGroup -> :** For rendering a radioGroup with a list of radio buttons 
-**: 7. button -> :** For rendering a button, specifically for the first Visible button to move viewpager to next screen
-**: 8. pagingButtons -> :** For rendering a PREVIOUS and NEXT button, specifically for the subsequent screens to move viewpager to next screen and previous screen
-**: 9. date -> :** For rendering an editext and an imagepicker to allow user to select date from a date picker
-**: 10. space -> :** For rendering empty space between views, especially between a view and a button
-
 ```
 
 
