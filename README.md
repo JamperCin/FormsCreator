@@ -12,6 +12,7 @@ This project is to easily use json to create forms for quick onboarding  used by
 	}
   
   **Step 2: Add the dependency to your dependencies in the build.gradle (Module:App level)**
+  
 
         dependencies {
 	        implementation 'com.github.JamperCin:formscreator:1.1.1'
@@ -38,8 +39,8 @@ This project is to easily use json to create forms for quick onboarding  used by
  new EngineBean(getActivity(), getFragmentManager()).Builder("forms.json", viewPager);
 ```
 
- **: If you have a textView which will display a text as a header, you can pass the textView before calling your Builder():**
- In this case, in the json, define a **title** in the form header section 
+ **If you have a textView which will display a text as a header, you can pass the textView before calling your Builder()**
+ In this case, in the json, define a **title** in the form header section.
   ```
    CustomViewPager viewPager = view.findViewById(R.id.viewPager); 
    TextView tvPageHeader = view.findViewById(R.id.header);
@@ -50,16 +51,16 @@ This project is to easily use json to create forms for quick onboarding  used by
 
 ```
 
-**:NB The format of json should be in this format in order to be rendered :**
+**NB The format of json should be in this format in order to be rendered**
 Every json should have a top most structure  like below :
 
- **:form :** Which is the name of the form to be rendered, (OPTIONAL)
+ **form :** Which is the name of the form to be rendered, (OPTIONAL)
  
- **:title :** Which is the title of the form to be shown on top of all the forms or on the toolbar, (OPTIONAL)
+ **title :** Which is the title of the form to be shown on top of all the forms or on the toolbar,as defined above (OPTIONAL)
  
- **:section :** Which is the section in which this part of the json falls (OPTIONAL)
+ **section :** Which is the section in which this part of the json falls (OPTIONAL)
  
- **:pages :** Which is the list of the pages to be rendered, This array determines the number of pages to have or flip through in the viewpager. Every page contains list of views to be rendered. (MANDATORY)
+ **pages :** Which is the list of the pages to be rendered, This array determines the number of pages to have or flip through in the viewpager. Every page contains list of views to be rendered. (MANDATORY)
  
 ```
   {
@@ -68,17 +69,17 @@ Every json should have a top most structure  like below :
 	"section":"Section B: Socio-Demographic Characteristics", 
 	"pages":[ ]
 	
-	}
+}
 
 ```
 
-**: To create your list of pages, follow the following format to get your json rendered :**
+**To create your list of pages, follow the following format to get your json rendered :**
 
- **:fieldCode :** Which is the unique Code that denotes every single page created, (MANDATORY)
+ **fieldCode :** Which is the unique Code that denotes every single page created, (MANDATORY)
  
- **:isRepeat :** Which is a boolean value to indicate whether this page will be created multiple times based on a value entered by user. By default this value is FALSE (OPTIONAL)
+ **isRepeat :** Which is a boolean value to indicate whether this page will be created multiple times based on a value entered by user. By default this value is FALSE (OPTIONAL)
  
- **:fields :** Which is the list of the individual views created in every single page.  (MANDATORY)
+ **fields :** Which is the list of the individual views created in every single page.  (MANDATORY)
  
  
 ```
@@ -114,7 +115,7 @@ Every json should have a top most structure  like below :
 
 
 
-**:Register an onClickListener to the submit Button:**
+**Register an onClickListener to the submit Button:**
  In this case, in the json, define a view type called **submitButton** at the part of the page where you want to submit your values or save data. 
 Sample json definition of submit button : 
 ```
@@ -169,7 +170,7 @@ String questionCode = f.getQuestionCode();
 ```
 
 
-**: Sample forms should follow this format in order to be renderred :**
+**Sample forms should follow this format in order to be renderred :**
 Note : Every field should have a unique code and every page should have a unique code as well
 
 The various supported views for now that can be rendered include:
