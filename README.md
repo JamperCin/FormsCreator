@@ -41,13 +41,39 @@ This project is to easily use json to create forms for quick onboarding  used by
  **: If you have a textView which will display a text as a header, you can pass the textView before calling your Builder():**
  In this case, in the json, define a **title** in the form header section 
   ```
-   CustomViewPager viewPager = view.findViewById(R.id.viewPager)
+   CustomViewPager viewPager = view.findViewById(R.id.viewPager); 
+   TextView tvPageHeader = view.findViewById(R.id.header);
+   
    new EngineBean(getActivity(), getFragmentManager())
                 .setHeaderView(tvPageHeader)
                 .Builder("forms.json", viewPager);
 
 ```
-**:Register an onClicklistener to the submit Button:**
+
+**:NB The format of json should be in this format in order to be rendered :**
+Every json should have a top most structure  like below :
+
+ **:form :** Which is the name of the form to be rendered, (OPTIONAL)
+ **:title :** Which is the title of the form to be shown on top of all the forms or on the toolbar, (OPTIONAL)
+ **:section :** Which is the section in which this part of the json falls (OPTIONAL)
+ **:pages :** Which is the list of the pages to be rendered, This array determines the number of pages to have or flip through in the viewpager. Every page contains list of views to be rendered. (MANDATORY)
+ 
+```
+  {
+	"form":"Onboarding Forms For GCB",
+	"title": "Household Population Questionnaire",
+	"section":"Section B: Socio-Demographic Characteristics", 
+	"pages":[ ]
+	
+	}
+
+```
+
+**: To create a any view  :**
+
+
+
+**:Register an onClickListener to the submit Button:**
  In this case, in the json, define a view type called **submitButton** at the part of the page where you want to submit your values or save data. 
 Sample json definition of submit button : 
 ```
