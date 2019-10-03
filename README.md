@@ -94,17 +94,16 @@ Every json should have a top most structure  like below :
 	   "isRepeat":true,
 	   "fields":[ ]
 	  },
-	  
 	  {
       	"fieldCode" : "Page_2",
       	"isRepeat":false,
         "fields":[ ]
-      },
-      {
+       },
+       {
       	 "fieldCode" : "Page_3",
       	 "isRepeat":false,
          "fields":[ ]
-      }
+       }
       
 	 ]
 	
@@ -112,7 +111,85 @@ Every json should have a top most structure  like below :
 
 ```
 
+**To create your individual views in each page follow the following format to get your json rendered :**
 
+ **label :** Which is the text to give the user a hint of what you want them input, (MANDATORY)
+ 
+ **code :** Which is a unique question code that will be used to retrieve the value entered for each view you create (MANDATORY)
+ 
+ **type :** Which is the type of view to be rendered. The types of views supported are listed below.  (MANDATORY)
+ 
+ **required :** Which is value to denote whether this field is mandatory or optional.  (OPTIONAL)
+ 
+ **options :** Which is list of options that can be used to create views like radioGroups, spinners etc.  (MANDATORY IF VIEW IS RadioGroup, Spinner etc)
+ 
+ **errorMessage :** Which is a custom error message to show to user if and only if the field is mandatory and user fails to meet requirements,  else a default message ("Required") is shown.  (OPTIONAL)
+
+ **inputType :** Which is a value from [0,1,2] which determines the input type for an EditText. Default is [0]  (OPTIONAL)
+
+
+**Remember , for any EditText, the following inputTypes are supported:**
+```
+"inputType":"0", -> For normal alphabetical Text
+"inputType":"1", -> For Numeric keypad
+"inputType":"2", -> For Email keypad
+
+```
+
+**NB :** Every first page should have a single button below the list of views to move the page to the next page like below
+ 
+ 
+```
+  {
+	"form":"Onboarding Forms For GCB",
+	"title": "Household Population Questionnaire",
+	"section":"Section B: Socio-Demographic Characteristics", 
+	"pages":[
+	
+	  {
+	   "fieldCode" : "Page_1",
+	   "isRepeat":true,
+	   "fields":[
+	    {
+          "label":"Ghana Post Digital Address",
+          "code":"A01",
+          "type":"text",
+          "required" : "true",
+          "errorMessage" : "Please enter digital address"
+        },
+        {
+           "label":"Phone Number",
+           "code":"A02",
+           "type":"text",
+           "required" : "true",
+           "inputType":"1"
+           "errorMessage" : "Please enter phone number"
+          },
+          
+          {
+          	"label":"Next",
+          	"code":"first_Btn",
+          	"type":"button"
+          }
+	    
+	    ]
+	  },
+	  {
+      	"fieldCode" : "Page_2",
+      	"isRepeat":false,
+        "fields":[ ]
+       },
+       {
+      	 "fieldCode" : "Page_3",
+      	 "isRepeat":false,
+         "fields":[ ]
+       }
+      
+	 ]
+	
+}
+
+```
 
 
 **Register an onClickListener to the submit Button:**
@@ -188,13 +265,7 @@ The various supported views for now that can be rendered include:
 
 ```
 
-Remember , for any EditText, the following inputTypes are supported: 
-```
-"inputType":"0", -> For normal alphabetical Text
-"inputType":"1", -> For Numeric keypad
-"inputType":"2", -> For Email keypad
 
-```
 
 ```
 {

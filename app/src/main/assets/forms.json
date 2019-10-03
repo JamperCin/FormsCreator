@@ -57,7 +57,8 @@
 					"label":"Detail Address of Structure",
 					"code":"A04",
 					"type":"textarea",
-					"required" : "true"
+					"required" : "true",
+					"errorMessage" : "Please enter the value"
 				},
 				{
 					"label":"Structure number of house/compound",
