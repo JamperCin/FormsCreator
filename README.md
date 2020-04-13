@@ -15,7 +15,7 @@ This project is to easily use json to create forms for quick onboarding  used by
   
 
         dependencies {
-	        implementation 'com.github.JamperCin:formscreator:1.1.1'
+	        implementation 'com.github.JamperCin:formscreator:1.1.5'
 	}
 
 
